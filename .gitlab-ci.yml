@@ -9,7 +9,8 @@ build-front-end-job:
   stage: build
   image: node:lts-bullseye
   variables:
-    PUBLIC_URL: https://dgb-galv.gitlab.io/apis-with-sql
+    # PUBLIC_URL: https://dgb-galv.gitlab.io/apis-with-sql
+    PUBLIC_URL: https://sjp19-public-resources.gitlab.io/project_templates/module1-project-gamma
   script:
     - cd ghi
     - npm install

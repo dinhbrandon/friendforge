@@ -11,6 +11,7 @@ build-front-end-job:
   variables:
     # PUBLIC_URL: https://dgb-galv.gitlab.io/apis-with-sql
     PUBLIC_URL: https://sjp19-public-resources.gitlab.io/project_templates/module3-project-gamma
+    REACT_APP_API_HOST: https://apis-with-sql.herokuapp.com
   script:
     - cd ghi
     - npm install

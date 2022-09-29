@@ -32,18 +32,32 @@ You have a project repository, now what? The next section lists all of the deliv
 
 ## Week #13 deliverables
 
-- [ ] Domain model
-- [ ] Page flow diagram
-- [ ] Wire-frame diagrams
+### Checklist 
 - [ ] Gitlab project is setup
 - [ ] Heroku account is setup
 - [ ] The skeleton app is deployed to GitLab pages and Heroku
+
+### Deliverables
+- [ ] Domain model
+- [ ] Wire-frame diagrams
+- [ ] API documentation
+- [ ] 
 
 ## Project layout
 
 The layout of the project is just like all of the projects you did with `docker-compose` in module #2. You will create a directory in the root of the repository for each service that you add to your project just like those previous projects were setup.
 
-There are two directories that have been added to the project that are for documentation specific to this group project. First, the `docs` directory is where you should put all of the design documents that are due at the end of week #13 as well as any other documentation that is generated over the course of the project. The second is the `journals` directory where each team member is required to keep a dev-journal. The dev-journal should be a single markdown file with an entry for each day the project was worked on?????
+### Directories
+
+Several directories have been added to your project. The directories `docs` and `journals` are places for you and your team-mates to, respectively, put any documentation about your project that you create and to put your project-journal entries. See the README file in each directory for more info.
+
+The other directories, `ghi` and `sample_service`, are sample services, that you can start building off of or use as a reference point.
+
+Inside of `ghi` is a minimal React app that has an "under construction" page. It is setup similarly to all of the other React projects that you have worked on.
+
+Inside of `sample_service` is a minimal FastAPI application. "Where are all the files?" you might ask? Well, the `main.py` file is the whole thing, and go take look inside of it... There's not even much in there..., hmm? That is FastAPI, we'll learn more about it in the coming days. Can you figure out what this little web-application does even though you haven't learned about FastAPI yet?
+
+### Other files
 
 The following project files have created as a minimal starting point. Please follow the guidance for each one for a most successful project.
 

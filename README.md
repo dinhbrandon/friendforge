@@ -1,47 +1,14 @@
 # Module3 Project Gamma
 
-## 🚧 Project Template Todos 🚧
-
-- [ ] ❗❗❗This section should be GONE by the time students see it ❗❗❗
-- [x] `.gitignore`
-- [x] `.gitlab-ci.yml`
-- [ ] `README.md`
-  - [ ] getting started instructions
-    - [ ] end of week deliverables
-      - domain model
-      - page flow diagram
-      - wire frames
-      - repo is setup
-      - Heroku account setup
-      - deployed
-    - [ ] project layout
-    - [ ] how to do the initial deploy
-- [x] `docker-compose.yml`
-  - front-end
-  - token/novel backend
-- [x] gitlab ci file
-  - build & deploy under-construction page to git-lab pages
-  - build & deploy token backend
-
-## 🚧 End of Project Template Todos 🚧
----
-
 ## Getting started
 
-You have a project repository, now what? The next section lists all of the deliverable that are due at the end of the week. Below is some guidance for getting started on the tasks for this week.
+You have a project repository, now what? The next section lists all of the deliverables that are due at the end of the week. Below is some guidance for getting started on the tasks for this week.
 
-## Week #13 deliverables
-
-### Checklist 
-- [ ] Gitlab project is setup
-- [ ] Heroku account is setup
-- [ ] The skeleton app is deployed to GitLab pages and Heroku
-
-### Deliverables
-- [ ] Domain model
+## Deliverables
 - [ ] Wire-frame diagrams
 - [ ] API documentation
-- [ ] 
+- [ ] Project is deployed to Heroku/GitLab-pages
+- [ ] GitLab issue board is setup and in use
 
 ## Project layout
 
@@ -72,6 +39,8 @@ The following project files have created as a minimal starting point. Please fol
 
 ## How to complete the initial deploy
 
+There will be further guidance on completing the initial deployment, but it just consists of these steps:
+
 - setup Heroku account and app
-- setup CI/CD variables in GitLab
+- setup 2 CI/CD variables in GitLab
 - push to main

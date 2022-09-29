@@ -1,0 +1,38 @@
+# stages:
+#   - test
+#   - build
+#   - deploy
+
+
+## BUILD
+build-front-end-job:
+  stage: build
+  image: node:lts-bullseye
+  variables:
+    PUBLIC_URL: https://dgb-galv.gitlab.io/apis-with-sql
+  script:
+    - cd ghi
+    - npm install
+    - npm run build
+    - cp build/index.html build/404.html
+  artifacts:
+    paths:
+      - ghi/build/
+
+## DEPLOY THE UI
+pages:  # THIS STEP MUST BE NAME PAGES
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  dependencies:
+    - build-front-end-job
+  needs:
+    - build-front-end-job
+  script:
+     # THE FIRST PART OF THIS COMMAND MUST BE THE DIRECTORY
+     # THAT YOU cd INTO TO BUILD IT PLUS THE build/ AT THE
+     # END
+    - mv ghi/build/ public
+  artifacts:
+    paths:
+      - public

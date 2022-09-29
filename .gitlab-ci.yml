@@ -20,6 +20,52 @@ build-front-end-job:
     paths:
       - ghi/build/
 
+build-fastapi-api-image-job:  # RENAME THIS
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  script:
+    - cd sample_service
+    - docker build -t ${CI_REGISTRY_IMAGE}/fastapi_api:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/fastapi_api:latest ${CI_REGISTRY_IMAGE}/fastapi_api:$CI_JOB_ID
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push ${CI_REGISTRY_IMAGE}/fastapi_api:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/fastapi_api:latest
+
+deploy-fastapi-api-image-job:  # RENAME THIS
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: deploy
+  image: docker:20.10.16
+  needs:
+    - build-fastapi-api-image-job
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+    - docker pull ${CI_REGISTRY_IMAGE}/fastapi_api:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/fastapi_api:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
+    - docker push registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
+
+release-fastapi-api-image-job:  # RENAME THIS
+  stage: deploy
+  image: node:10.17-alpine
+  needs:
+    - deploy-fastapi-api-image-job
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    - apk add curl bash
+    - curl https://cli-assets.heroku.com/install.sh | sh
+  script:
+    - heroku container:release web --app $HEROKU_FASTAPI_APP
+
+
+
 ## DEPLOY THE UI
 pages:  # THIS STEP MUST BE NAME PAGES
   stage: deploy

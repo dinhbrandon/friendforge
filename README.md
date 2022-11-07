@@ -7,6 +7,11 @@ lists all of the deliverables that are due at the end of the
 week. Below is some guidance for getting started on the
 tasks for this week.
 
+## Install Extensions
+
+- Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
+- Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+
 ## Deliverables
 
 - [ ] Wire-frame diagrams

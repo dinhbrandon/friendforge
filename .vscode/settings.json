@@ -1,0 +1,6 @@
+{
+  "editor.formatOnPaste": true,
+  "python.formatting.provider": "black",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

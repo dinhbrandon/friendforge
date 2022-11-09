@@ -1,17 +1,40 @@
-# stages:
-#   - test
-#   - build
-#   - deploy
+stages:
+  - test
+  - build
+  - deploy
 
+# Run flake8 to check for code quality
+lint-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - pip install flake8
+    - flake8 sample_service
 
-## BUILD
+# Run the unit tests
+# api-unit-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   needs:
+#     - lint-test-job
+#   script:
+#     - cd sample_service
+#     - pip install -r requirements.txt
+#     - python -m pytest
+
+# Build the React/JavaScript front-end
 build-front-end-job:
   stage: build
   image: node:lts-bullseye
+  needs:
+    - lint-test-job
   variables:
-    # PUBLIC_URL: https://dgb-galv.gitlab.io/apis-with-sql
-    PUBLIC_URL: https://sjp19-public-resources.gitlab.io/project_templates/module3-project-gamma
-    REACT_APP_API_HOST: https://apis-with-sql.herokuapp.com
+    # If either of these variables is defined in the GitLab
+    # CI/CD variables, that value will override the value here.
+    # You need to substitute in your real values for
+    # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
+    PUBLIC_URL: https://GROUP_NAME.gitlab.io/PROJECT_NAME/
+    REACT_APP_SAMPLE_SERVICE_API_HOST: https://WEBSERVICE_NAME.onrender.com
   script:
     - cd ghi
     - npm install
@@ -21,54 +44,8 @@ build-front-end-job:
     paths:
       - ghi/build/
 
-build-fastapi-api-image-job:  # RENAME THIS
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  stage: build
-  image: docker:20.10.16
-  services:
-    - docker:20.10.16-dind
-  script:
-    - cd sample_service
-    - docker build -t ${CI_REGISTRY_IMAGE}/fastapi_api:latest .
-    - docker tag ${CI_REGISTRY_IMAGE}/fastapi_api:latest ${CI_REGISTRY_IMAGE}/fastapi_api:$CI_JOB_ID
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push ${CI_REGISTRY_IMAGE}/fastapi_api:$CI_JOB_ID
-    - docker push ${CI_REGISTRY_IMAGE}/fastapi_api:latest
-
-deploy-fastapi-api-image-job:  # RENAME THIS
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  stage: deploy
-  image: docker:20.10.16
-  needs:
-    - build-fastapi-api-image-job
-  services:
-    - docker:20.10.16-dind
-  script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-    - docker pull ${CI_REGISTRY_IMAGE}/fastapi_api:latest
-    - docker tag ${CI_REGISTRY_IMAGE}/fastapi_api:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
-    - docker push registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
-
-release-fastapi-api-image-job:  # RENAME THIS
-  stage: deploy
-  image: node:10.17-alpine
-  needs:
-    - deploy-fastapi-api-image-job
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  before_script:
-    - apk add curl bash
-    - curl https://cli-assets.heroku.com/install.sh | sh
-  script:
-    - heroku container:release web --app $HEROKU_FASTAPI_APP
-
-
-
-## DEPLOY THE UI
-pages:  # THIS STEP MUST BE NAME PAGES
+# Deploy the React/JavaScript front-end to GitLab pages
+pages:
   stage: deploy
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
@@ -77,9 +54,6 @@ pages:  # THIS STEP MUST BE NAME PAGES
   needs:
     - build-front-end-job
   script:
-     # THE FIRST PART OF THIS COMMAND MUST BE THE DIRECTORY
-     # THAT YOU cd INTO TO BUILD IT PLUS THE build/ AT THE
-     # END
     - mv ghi/build/ public
   artifacts:
     paths:

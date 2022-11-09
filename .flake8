@@ -1,0 +1,2 @@
+[flake8]
+exclude = ghi,docs,journals,sample_service/migrations

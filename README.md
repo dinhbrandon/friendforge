@@ -9,16 +9,16 @@ tasks for this week.
 
 ## Install Extensions
 
-- Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
-- Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+* Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
+* Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
 
 ## Deliverables
 
-- [ ] Wire-frame diagrams
-- [ ] API documentation
-- [ ] Project is deployed to Heroku/GitLab-pages
-- [ ] GitLab issue board is setup and in use
-- [ ] Journals
+* [ ] Wire-frame diagrams
+* [ ] API documentation
+* [ ] Project is deployed to Render.com/GitLab-pages
+* [ ] GitLab issue board is setup and in use
+* [ ] Journals
 
 ## Project layout
 
@@ -67,21 +67,21 @@ for you automatically.
 
 ### Other files
 
-The following project files have created as a minimal
+The following project files have been created as a minimal
 starting point. Please follow the guidance for each one for
 a most successful project.
 
-- `docker-compose.yaml`: there isn't much in here, just a
+* `docker-compose.yaml`: there isn't much in here, just a
   **really** simple UI and FastAPI service. Add services
   (like a database) to this file as you did with previous
   projects in module #2.
-- `.gitlab-ci.yml`: This is your "ci/cd" file where you will
+* `.gitlab-ci.yml`: This is your "ci/cd" file where you will
   configure automated unit tests, code quality checks, and
   the building and deployment of your production system.
   Currently, all it does is deploy an "under construction"
   page to your production UI on GitLab and a sample backend
-  to Heroku. We will learn much more about this file.
-- `.gitignore`: This is a file that prevents unwanted files
+  to Render.com. We will learn much more about this file.
+* `.gitignore`: This is a file that prevents unwanted files
   from getting added to your repository, files like
   `pyc` files, `__pycache__`, etc. We've set it up so that
   it has a good default configuration for Python projects.
@@ -91,6 +91,57 @@ a most successful project.
 There will be further guidance on completing the initial
 deployment, but it just consists of these steps:
 
-- setup Heroku account and app
-- setup 2 CI/CD variables in GitLab
-- push to main
+### Setup GitLab repo/project
+
+* make sure this project is in a group. If it isn't, stop
+  now and move it to a GitLab group
+* remove the fork relationship: In GitLab go to:
+  
+  Settings -> General -> Advanced -> Remove fork relationship
+
+* add these GitLab CI/CD variables:
+  * PUBLIC_URL : this is your gitlab pages URL
+  * SAMPLE_SERVICE_API_HOST: enter "blank" for now
+
+#### Your GitLab pages URL
+
+You can't find this in GitLab until after you've done a deploy
+but you can figure it out yourself from your GitLab project URL.
+
+If this is your project URL
+
+https://gitlab.com/GROUP_NAME/PROJECT_NAME
+
+then your GitLab pages URL will be
+
+https://GROUP_NAME.gitlab.io/PROJECT_NAME
+
+### Create render.com account and application
+
+* create account on render.com
+* one person create a group and invite all other members
+* create a new "Web Service"
+  * authenticate with GitLab and choose your project
+  * Enter fields:
+    * Name: name of your service
+    * Root Directory: the directory of your service in your git repo.
+      For this example use "sample_service".
+    * Environment: Docker
+    * Plan Type: Free
+  * click the "Create Web Service" button to create it
+  * the build will succeed and it will look like the server is running,
+    most likely, in 6-10 minutes, it will fail.
+  * click "Manual Deploy" -> "Deploy latest commit" and the service
+    should deploy successfully.
+
+### Update GitLab CI/CD variables
+
+Copy the service URL for your new render.com service and then paste
+that into the value for the SAMPLE_SERVICE_API_HOST CI/CD variable
+in GitLab.
+
+### Deploy it
+
+Merge a change into main to kick off the initial deploy. Once the build pipeline
+finishes you should be able to see an "under construction" page on your GitLab
+pages site.

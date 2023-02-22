@@ -9,16 +9,16 @@ tasks for this week.
 
 ## Install Extensions
 
-* Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
-* Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+- Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
+- Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
 
 ## Deliverables
 
-* [ ] Wire-frame diagrams
-* [ ] API documentation
-* [ ] Project is deployed to Render.com/GitLab-pages
-* [ ] GitLab issue board is setup and in use
-* [ ] Journals
+- [ ] Wire-frame diagrams
+- [ ] API documentation
+- [ ] Project is deployed to Render.com/GitLab-pages
+- [ ] GitLab issue board is setup and in use
+- [ ] Journals
 
 ## Project layout
 
@@ -71,17 +71,17 @@ The following project files have been created as a minimal
 starting point. Please follow the guidance for each one for
 a most successful project.
 
-* `docker-compose.yaml`: there isn't much in here, just a
+- `docker-compose.yaml`: there isn't much in here, just a
   **really** simple UI and FastAPI service. Add services
   (like a database) to this file as you did with previous
   projects in module #2.
-* `.gitlab-ci.yml`: This is your "ci/cd" file where you will
+- `.gitlab-ci.yml`: This is your "ci/cd" file where you will
   configure automated unit tests, code quality checks, and
   the building and deployment of your production system.
   Currently, all it does is deploy an "under construction"
   page to your production UI on GitLab and a sample backend
-  to Render.com. We will learn much more about this file.
-* `.gitignore`: This is a file that prevents unwanted files
+  to CapRover. We will learn much more about this file.
+- `.gitignore`: This is a file that prevents unwanted files
   from getting added to your repository, files like
   `pyc` files, `__pycache__`, etc. We've set it up so that
   it has a good default configuration for Python projects.
@@ -93,15 +93,15 @@ deployment, but it just consists of these steps:
 
 ### Setup GitLab repo/project
 
-* make sure this project is in a group. If it isn't, stop
+- make sure this project is in a group. If it isn't, stop
   now and move it to a GitLab group
-* remove the fork relationship: In GitLab go to:
-  
+- remove the fork relationship: In GitLab go to:
+
   Settings -> General -> Advanced -> Remove fork relationship
 
-* add these GitLab CI/CD variables:
-  * PUBLIC_URL : this is your gitlab pages URL
-  * SAMPLE_SERVICE_API_HOST: enter "blank" for now
+- add these GitLab CI/CD variables:
+  - PUBLIC_URL : this is your gitlab pages URL
+  - SAMPLE_SERVICE_API_HOST: enter "blank" for now
 
 #### Your GitLab pages URL
 
@@ -116,23 +116,10 @@ then your GitLab pages URL will be
 
 https://GROUP_NAME.gitlab.io/PROJECT_NAME
 
-### Create render.com account and application
+### Initialize CapRover
 
-* create account on render.com
-* one person create a group and invite all other members
-* create a new "Web Service"
-  * authenticate with GitLab and choose your project
-  * Enter fields:
-    * Name: name of your service
-    * Root Directory: the directory of your service in your git repo.
-      For this example use "sample_service".
-    * Environment: Docker
-    * Plan Type: Free
-  * click the "Create Web Service" button to create it
-  * the build will succeed and it will look like the server is running,
-    most likely, in 6-10 minutes, it will fail.
-  * click "Manual Deploy" -> "Deploy latest commit" and the service
-    should deploy successfully.
+1. Attain IP address and domain from an instructor
+1. Follow the steps in the CD Cookbook in Learn.
 
 ### Update GitLab CI/CD variables
 

@@ -4,7 +4,7 @@ stages:
   - deploy
 
 # Run flake8 to check for code quality
-lint-test-job:
+Linting:
   image: python:3-bullseye
   stage: test
   script:
@@ -12,7 +12,7 @@ lint-test-job:
     - flake8 sample_service
 
 # Run unit tests
-api-unit-test-job:
+API Unit Tests:
   image: python:3-bullseye
   stage: test
   needs:
@@ -23,7 +23,7 @@ api-unit-test-job:
     - python -m pytest
 
 # Build the React/JavaScript front-end
-build-front-end-job:
+Build Front End:
   stage: build
   image: node:lts-bullseye
   needs:
@@ -59,11 +59,11 @@ pages:
     paths:
       - public
 
-build-docker-main:
-  image: docker:19.03.1
+Build Sample Service:
+  image: docker:20-dind
   stage: build
   services:
-    - docker:19.03.1-dind
+    - docker:20-dind
   before_script:
     - export DOCKER_REGISTRY_USER=$CI_REGISTRY_USER # built-in GitLab Registry User
     - export DOCKER_REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD # built-in GitLab Registry Password

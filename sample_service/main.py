@@ -16,9 +16,9 @@ app.add_middleware(
 
 @app.get("/api/date-details")
 def date_details():
-    now = datetime.date.now()
+    now = datetime.datetime.now()
     return {
-        "launch_details": {
+        "date_details": {
             "year": now.year,
             "month": now.month,
             "day": now.day,

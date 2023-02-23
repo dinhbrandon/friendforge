@@ -16,7 +16,7 @@ function App() {
       let data = await response.json();
 
       if (response.ok) {
-        console.log("Got date data!");
+        console.log("Received date data!");
         setDateInfo(data.date_details);
       } else {
         console.log("Drat! Something happened!");

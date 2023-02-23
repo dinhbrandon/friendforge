@@ -24,6 +24,6 @@ def date_details():
             "day": now.day,
             "hour": now.hour,
             "min": now.minute,
-            "tz:": str(now.astimezone().tzinfo),
+            "tz": str(now.astimezone().tzinfo),
         }
     }

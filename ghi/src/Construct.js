@@ -5,7 +5,7 @@ function Construct(props) {
     <div className="App">
       <header className="App-header">
         <h1>Hello World!</h1>
-        <h2>The current Date is:</h2>
+        <h2>The current date is:</h2>
         <h3>
           {props.info.year}-{pad2(props.info.month)}-{pad2(props.info.day)}
         </h3>

@@ -4,7 +4,7 @@ stages:
   - deploy
 
 # Run flake8 to check for code quality
-Linting:
+lint-test-job:
   image: python:3-bullseye
   stage: test
   script:
@@ -12,7 +12,7 @@ Linting:
     - flake8 sample_service
 
 # Run unit tests
-API Unit Tests:
+api-unit-tests:
   image: python:3-bullseye
   stage: test
   needs:
@@ -23,7 +23,7 @@ API Unit Tests:
     - python -m pytest
 #
 # # Build the React/JavaScript front-end
-# Build Front End:
+# build-front-end-job:
 #   stage: build
 #   image: node:lts-bullseye
 #   needs:

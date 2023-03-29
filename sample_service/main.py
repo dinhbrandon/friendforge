@@ -19,11 +19,10 @@ app.add_middleware(
 def launch_details():
     return {
         "launch_details": {
-            "year": 2022,
-            "month": 12,
-            "day": "9",
+            "module": 3,
+            "week": 17,
+            "day": 5,
             "hour": 19,
-            "min": 0,
-            "tz:": "PST"
+            "min": "00"
         }
     }

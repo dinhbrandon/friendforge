@@ -1,4 +1,9 @@
-# Module3 Project Gamma
+# Friend Forge
+Members:
+-Brandon Dinh
+-Ramon Duarte
+-Ellen Nulty
+-Taylor Harris
 
 ## Getting started
 

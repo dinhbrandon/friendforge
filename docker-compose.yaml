@@ -1,13 +1,30 @@
-# volumes:
+volumes:
+  project-data:
+    external: true
 services:
-  fastapi:
+  api:
     build:
-      context: sample_service
-      dockerfile: Dockerfile.dev
+      context: ./api
+      dockerfile: ./Dockerfile.dev
+    environment:
+      DATABASE_URL: postgresql://api:1234abc@db/friendforge
+      WAIT_HOSTS: db:5432
+      PORT: 8000
     ports:
-      - 8000:8000
+      - "8000:8000"
     volumes:
-      - ./sample_service:/app
+      - ./api:/app
+  db:
+    build:
+      context: ./db
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - project-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES=api
+      - POSTGRES_PASSWORD=1234abc
+    ports:
+      - "15432:5432"
 
   ghi:
     image: node:lts-bullseye

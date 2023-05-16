@@ -7,22 +7,20 @@ services:
       context: ./api
       dockerfile: ./Dockerfile.dev
     environment:
-      DATABASE_URL: postgresql://api:1234abc@db/friendforge
-      WAIT_HOSTS: db:5432
+      DATABASE_URL: postgresql://api:1234abc@db/project-data
       PORT: 8000
     ports:
       - "8000:8000"
     volumes:
       - ./api:/app
   db:
-    build:
-      context: ./db
-      dockerfile: ./Dockerfile.dev
+    image: postgres:latest
     volumes:
       - project-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_MULTIPLE_DATABASES=api
-      - POSTGRES_PASSWORD=1234abc
+      POSTGRES_DATABASES: friendforge
+      POSTGRES_USER: friendforge
+      POSTGRES_PASSWORD: friendforge
     ports:
       - "15432:5432"
 

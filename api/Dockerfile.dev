@@ -6,9 +6,9 @@ WORKDIR /deps
 COPY requirements.txt requirements.txt
 RUN python -m pip install -r requirements.txt
 WORKDIR /app
-CMD /wait && uvicorn main:app --reload --host 0.0.0.0
+# CMD /wait && uvicorn main:app --reload --host 0.0.0.0
 
 # If you're using a relational database and want migrations
 # to be run automatically, delete the previous CMD line and
 # uncomment this CMD line
-# CMD /wait && python -m migrations up && uvicorn main:app --reload --host 0.0.0.0
+CMD /wait && python -m migrations up && uvicorn main:app --reload --host 0.0.0.0

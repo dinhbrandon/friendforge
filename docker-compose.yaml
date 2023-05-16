@@ -7,7 +7,7 @@ services:
       context: ./api
       dockerfile: ./Dockerfile.dev
     environment:
-      DATABASE_URL: postgresql://api:1234abc@db/project-data
+      DATABASE_URL: postgresql://api:friendforge@db/project-data
       PORT: 8000
     ports:
       - "8000:8000"

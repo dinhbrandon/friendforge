@@ -7,12 +7,16 @@ services:
       context: ./api
       dockerfile: ./Dockerfile.dev
     environment:
-      DATABASE_URL: postgresql://api:friendforge@db/project-data
-      PORT: 8000
+      DATABASE_URL: postgresql://friendforge:friendforge@db/friendforge
+      WAIT_HOSTS: db:5432
+      WAIT_TIMEOUT: 240
+    depends_on:
+      - db
     ports:
       - "8000:8000"
     volumes:
       - ./api:/app
+    platform: linux/amd64
   db:
     image: postgres:latest
     volumes:
@@ -33,6 +37,7 @@ services:
     ports:
       - "3000:3000"
     environment:
+      WATCHPACK_POLLING: true
       HOST_OS: ${OS}
       NODE_ENV: development
       HOST: "0.0.0.0"

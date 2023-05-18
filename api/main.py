@@ -4,11 +4,13 @@ from routers import user_account
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from routers import interests
+from routers import group_names
 
 app = FastAPI()
 app.include_router(user_account.router)
 app.include_router(authenticator.router)
 app.include_router(interests.router)
+app.include_router(group_names.router)
 
 app.add_middleware(
     CORSMiddleware,

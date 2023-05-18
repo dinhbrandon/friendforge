@@ -7,6 +7,7 @@ services:
       context: ./api
       dockerfile: ./Dockerfile.dev
     environment:
+      SIGNING_KEY: placeholder
       DATABASE_URL: postgresql://friendforge:friendforge@db/friendforge
       WAIT_HOSTS: db:5432
       WAIT_TIMEOUT: 240

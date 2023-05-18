@@ -1,0 +1,21 @@
+footer {
+  background-color: #1f1f1f;
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px;
+  color: #efeded;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+footer a {
+  text-decoration: none;
+  padding: 0px 20px;
+  color: #efeded;
+  transition: opacity .2s;
+}
+
+footer a:hover {
+  opacity: 0.7;
+}

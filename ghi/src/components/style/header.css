@@ -1,0 +1,37 @@
+.header-logo {
+  width: 80px;
+}
+
+.header-title {
+  text-decoration: none;
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 35px;
+  margin: auto 5px;
+  color: #efeded;
+  font-weight: 700;
+}
+
+nav {
+  background-color: #1f1f1f;
+  padding: 20px;
+}
+
+.top-nav {
+  display: flex;
+}
+
+.inside-center {
+  padding: auto;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.nav-link {
+  text-decoration: none;
+  padding: 0px 5px;
+}
+
+.nav-div {
+  height: 3px;
+  background-color: #efeded;
+}

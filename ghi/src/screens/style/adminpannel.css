@@ -1,0 +1,15 @@
+.admin-pannel {
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.admin-pannel a {
+  text-decoration: none;
+  color: #333;
+  transition: all .03s;
+  font-size: 18px;
+}
+
+.admin-pannel a:hover{
+  opacity: .7;
+}

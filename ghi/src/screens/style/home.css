@@ -1,0 +1,86 @@
+.home-body {
+  background-color: #1f1f1f;
+  color: #efeded;
+  display: flex;
+  flex-flow: row wrap;
+  /* gap: 20px; */
+}
+
+.home-body div {
+  flex: 1 1 0;
+  width: 0;
+  padding: 10px 20px;
+  min-width: 300px;
+}
+
+.home-signup {
+  background: linear-gradient(
+    50deg,
+    rgba(255, 255, 255, 0.4) 12%,
+    rgba(255, 255, 255, 0.1) 77%
+  );
+  background-blend-mode: ;
+  box-shadow: 0px 4px 20px 5px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  /* width: 100%; */
+  /* height: 100%; */
+  /* padding: 10px; */
+  margin: 20px;
+  /* min-width: 400px; */
+}
+
+.gradient-bg {
+  background-color:hsla(21,64%,48%,1);
+  background-image:
+  radial-gradient(at 21% 44%, hsla(21,64%,48%,1) 0px, transparent 50%),
+  radial-gradient(at 35% 10%, hsla(46,65%,56%,1) 0px, transparent 50%),
+  radial-gradient(at 70% 12%, hsla(33,62%,52%,1) 0px, transparent 50%),
+  radial-gradient(at 12% 67%, hsla(46,65%,56%,1) 0px, transparent 50%),
+  radial-gradient(at 72% 22%, hsla(20,64%,48%,1) 0px, transparent 50%),
+  radial-gradient(at 95% 26%, hsla(46,65%,56%,1) 0px, transparent 50%),
+  radial-gradient(at 30% 81%, hsla(20,64%,48%,1) 0px, transparent 50%),
+  radial-gradient(at 77% 81%, hsla(33,62%,52%,1) 0px, transparent 50%),
+  radial-gradient(at 44% 42%, hsla(33,62%,52%,1) 0px, transparent 50%);
+}
+
+.home-steps {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 20px 20px 50px 20px;
+  margin: auto;
+  justify-content: center;
+  align-content: center;
+  height: 100%;
+  gap: 60px;
+}
+
+.how-step {
+  flex: 1 1 0;
+  min-width: 300px;
+  max-width: 300px;
+  padding: 10px 20px;
+  /* background-color: pink; */
+  border-radius: 20px;
+  text-align: center;
+  background: linear-gradient(
+    50deg,
+    rgba(255, 255, 255, 0.4) 12%,
+    rgba(255, 255, 255, 0.1) 77%
+  );
+  background-blend-mode: ;
+  box-shadow: 0px 4px 20px 5px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.home-steps img {
+  max-width: 200px;
+}
+
+.step-text {
+  text-align: center;
+  padding: 20px;
+  font-weight: 500;
+}

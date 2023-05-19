@@ -12,6 +12,9 @@ class InterestOut(BaseModel):
     id: int
     name: str
 
+class InterestsOut(BaseModel):
+    interests: list[InterestOut]
+
 
 class InterestRepository:
     def create(self, interest: InterestIn) -> InterestOut:

@@ -9,7 +9,7 @@ function LoginForm() {
             <p>
               Log In
             </p>
-              <input type="text" className='field' placeholder="Name"/>
+              <input type="text" className='field' placeholder="Email"/>
               <input type="password" className='field' placeholder="Password"/>
               <button className='button1'>Submit</button>
 

@@ -8,7 +8,7 @@ export default function Header() {
       <div className="top-nav">
         <div className="inside-center">
           <img src={logo} alt="Logo" className="header-logo inside-center" />
-          <a class="header-title text-start inside-center" href="/">
+          <a className="header-title text-start inside-center" href="/">
             Friend Forge
           </a>
         </div>

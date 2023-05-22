@@ -9,7 +9,7 @@ function CssStyle() {
       <p className='center-txt'>Note: Base Bootstrap is installed, feel free to use those tags as well if they work.</p>
 
       <div>
-        <table class="table">
+        <table className="table">
           <thead>
             <tr>
               <th scope="col">class name</th>

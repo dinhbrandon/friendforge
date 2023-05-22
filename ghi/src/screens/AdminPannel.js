@@ -5,11 +5,12 @@ function AdminPannel() {
   return (
     <div className='admin-pannel'>
       <h1 className='center-txt extra-p60'>Admin Pannel</h1>
-      <a href='#'>Groups</a><br/>
-      <a href='#'>Focuses</a><br/>
-      <a href='#'>Interests</a><br/>
-      <a href='#'>Group Icons</a><br/>
-      <a href='#'>Users</a><br/>
+      <a href='/admin/groups'>Groups</a><br/>
+      <a href='/admin/focus'>Focuses</a><br/>
+      <a href='/admin/interest'>Interests</a><br/>
+      <a href='/admin/icons'>Group Icons</a><br/>
+      <a href='/admin/names'>Group Names</a><br/>
+      <a href='/admin/users'>Users</a><br/>
     </div>
   )
 }

@@ -8,12 +8,14 @@ class ProfileIn(BaseModel):
     location: str
     # user_account_id: int ---> this field is removed and will now populate automatically based on authenticated user
 
-class ProfileOut(BaseModel):
+class ProfileOutCreation(BaseModel):
     id: int
     about_me: str
     profile_photo: str
     location: str
     user_account_id: int
+
+class ProfileOut(ProfileOutCreation):
     username: str
     first_name: str
     date_of_birth: str
@@ -55,7 +57,7 @@ class ProfileRepository:
                     return [
                         ProfileInterestOut(
                         id=record[0],
-                        user_profile_id = record[1],
+                        user_profile_id=record[1],
                         interest_id=record[2]
                         )
                         for record in db
@@ -131,7 +133,7 @@ class ProfileRepository:
                 return interests
 
 
-    def create(self, user_account_id, profile: ProfileIn) -> ProfileOut:
+    def create(self, user_account_id, profile: ProfileIn) -> Union[ProfileOutCreation, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -155,9 +157,33 @@ class ProfileRepository:
         except Exception as e:
             print(e)
             return {"message": "could not create profile"}
+        
+    def get_all(self) -> Union[Error, List[ProfileOutCreation]]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT id, about_me, profile_photo, location, user_account_id
+                        FROM user_profile
+                        """
+                    )
+                    return [
+                        ProfileOutCreation(
+                            id=record[0],
+                            about_me = record[1],
+                            profile_photo=record[2],
+                            location=record[3],
+                            user_account_id=record[4],
+                        )
+                        for record in db
+                    ]
+
+        except Exception as e:
+            print(e)
+            # return {"message": "Could not get all interests"}
 
     def get_one(self, profile_id):
-        print("This is the profile ID: ", profile_id)
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -196,6 +222,31 @@ class ProfileRepository:
         except Exception as e:
             print(e)
             return {"message": "error retrieving profile"}
+    
+    def update(self, user_account_id, profile: ProfileIn) -> Union[ProfileOutCreation, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE user_profile 
+                        SET about_me = %s, profile_photo = %s, location = %s
+                        WHERE user_account_id = %s
+                        RETURNING id, user_account_id
+                        """,
+                        [
+                            profile.about_me,
+                            profile.profile_photo,
+                            profile.location,
+                            user_account_id
+
+                        ]
+                    )
+                    id = result.fetchone()[0]
+                    return self.profile_in_to_out(id, user_account_id, profile)
+        except Exception as e:
+            print(e)
+            # return {"message": "Could not update profile"}
 
     def create_user_profile_interest(self, profile_interest: ProfileInterestIn, user_account_id: int) -> ProfileInterestOut:
         try:
@@ -240,4 +291,4 @@ class ProfileRepository:
 
     def profile_in_to_out(self, id: int, user_account_id: int, profile: ProfileIn):
         old_data = profile.dict()
-        return ProfileOut(id=id, user_account_id=user_account_id, **old_data)
+        return ProfileOutCreation(id=id, user_account_id=user_account_id, **old_data)

@@ -1,12 +1,27 @@
 from fastapi import APIRouter, Depends, Response
+from pydantic import BaseModel
 from typing import Union, List, Optional
-from queries.user_profile import ProfileIn, ProfileOut, ProfileRepository, Error, ProfileInterestIn, ProfileInterestOut, Junction, JunctionsOut
-from queries.interests import InterestsOut, Error
+from queries.user_profile import ProfileIn, ProfileOut, ProfileOutCreation, ProfileRepository, Error, ProfileInterestIn, ProfileInterestOut, Junction, JunctionsOut
+# from queries.interests import InterestsOut, Error
 from authenticator import authenticator
+
+class Error(BaseModel):
+    message: str
 
 router = APIRouter(prefix="/api")
 
-@router.post("/profile", response_model=Union[ProfileOut, Error])
+@router.put("/profile/{profile_id}", response_model=Union[ProfileOutCreation, Error])
+def update_profile(
+    profile: ProfileIn,
+    repo: ProfileRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    user_account_id = account_data["id"]
+    # profile_id = repo.get_profile_id_by_user_account(user_account_id)
+    return repo.update(user_account_id, profile)
+    
+
+@router.post("/profile", response_model=Union[ProfileOutCreation, Error])
 def create_profile(
     profile: ProfileIn,
     response: Response,
@@ -14,7 +29,17 @@ def create_profile(
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
     user_account_id = account_data["id"]
-    return repo.create(user_account_id, profile)
+    profile_id = repo.get_profile_id_by_user_account(user_account_id)
+    if profile_id == None:
+        return repo.create(user_account_id, profile)
+    else:
+        return {"Error": "Only one profile per account allowed."}
+
+@router.get("/profile", response_model=Union[List[ProfileOutCreation], Error])
+def get_all_profiles(
+    repo: ProfileRepository = Depends(),
+):
+    return repo.get_all()
 
 @router.get("/profile/{profile_id}", response_model=Optional[ProfileOut])
 def get_one_profile(
@@ -25,6 +50,7 @@ def get_one_profile(
 ) -> ProfileOut:
     profile = repo.get_one(profile_id)
     return profile
+
 
 @router.get("/profile/{profile_id}/interests", response_model=Union[JunctionsOut, Error])
 def get_user_profile_interests(

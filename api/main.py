@@ -6,6 +6,7 @@ from routers import group_focus
 import os
 from routers import interests
 from routers import group_names
+from routers import groups
 
 app = FastAPI()
 app.include_router(group_focus.router)
@@ -13,6 +14,7 @@ app.include_router(user_account.router)
 app.include_router(authenticator.router)
 app.include_router(interests.router)
 app.include_router(group_names.router)
+app.include_router(groups.router)
 
 app.add_middleware(
     CORSMiddleware,

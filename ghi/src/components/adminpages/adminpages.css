@@ -1,0 +1,87 @@
+.admin-top {
+  background-color: #1f1f1f;
+  color: #efeded;
+  text-align: center;
+  border-radius: 0px 0px 80px 80px;
+  padding: 20px;
+}
+
+.admin-top a {
+  text-decoration: none;
+  color: #D18D39;
+  transition: all .2s;
+}
+
+.admin-top a:hover {
+  opacity: 70%;
+}
+
+.admin-body {
+  display: flex;
+  margin: 20px;
+  flex-flow: row wrap;
+  gap: 20px;
+}
+
+.admin-list {
+  flex: 1 1 0;
+}
+
+.admin-create {
+  flex: 1 1 0;
+}
+
+.admin.create {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #e8e8e8;
+  box-shadow: 2px 2px 10px #ccc;
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 20px
+}
+
+.card-header .log {
+  margin: 0;
+  font-size: 24px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-align: right;
+}
+
+input {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: 0.5s;
+}
+
+button {
+  width: 100%;
+  background-color: #C9632C;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ccc;
+  color: black;
+}

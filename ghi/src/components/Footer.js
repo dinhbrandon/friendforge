@@ -9,10 +9,10 @@ function Footer() {
     <footer>
       <p>© Friend Forge 2023</p>
       <p>
-        <a href="#">About Us</a>
-        <a href="#">Contact Us</a>
-        <a href="#">Careers</a>
-        <a href="#">TOS</a>
+        <a href="/aboutus">About Us</a>
+        <a href="/contactus">Contact Us</a>
+        <a href="/carreers">Careers</a>
+        <a href="/tos">TOS</a>
       </p>
       <p>
         <a href="#"><img src={facebook}/></a>

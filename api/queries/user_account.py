@@ -58,6 +58,33 @@ class UserAccountQueries(): #Queries should be a parameter
         except Exception as e:
             print(e)
             return {"message": "Could not get that user"}
+    
+    def get_account_detail(self, id: int) -> UserAccountOutWithPassword:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id
+                            , email
+                            , username
+                            , password
+                            , date_of_birth
+                            , first_name
+                            , last_name
+                            , phone_number
+                        FROM user_account
+                        WHERE id = %s
+                        """,
+                        [id]
+                    )
+                    record = result.fetchone()
+                    if record is None:
+                        return None
+                    return self.record_to_user_account_out(record)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get that user"}
         
 
     def delete(self, user_id: int) -> bool:

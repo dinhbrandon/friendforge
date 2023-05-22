@@ -25,6 +25,18 @@ class HttpError(BaseModel):
 
 router = APIRouter(prefix="/api")
 
+@router.get("/token", response_model=AccountToken | None)
+async def get_token(
+        request: Request,
+        account: UserAccountOut = Depends(authenticator.try_get_current_account_data)
+) -> AccountToken | None:
+        if authenticator.cookie_name in request.cookies:
+                return {
+                        "access_token": request.cookies[authenticator.cookie_name],
+                        "type": "Bearer",
+                        "account": account,
+                }
+
 @router.post("/users", response_model=AccountToken | HttpError)
 async def create_user_account(
     user_account: UserAccountIn,
@@ -70,13 +82,13 @@ def delete_user_account(
         return repo.delete(user_id)
 
 # Need to figure out how to get one user by ID without conflicting w/ acct create
-@router.get("/users/{user_email}", response_model=Optional[UserAccountOut])
+@router.get("/users/{user_id}", response_model=Optional[UserAccountOut])
 def get_one_user_account(
-        user_email: str,
+        user_id: int,
         response: Response,
         repo: UserAccountQueries = Depends(),
 ) -> UserAccountOut:
-        user_account = repo.get_one(user_email)
+        user_account = repo.get_account_detail(user_id)
         if user_account is None:
                 response.status_code = 404
         return user_account

@@ -17,6 +17,7 @@ def create_focus(
     response: Response,
     repo: GroupFocusRepository = Depends(),
 ):
+
     return repo.create(focus)
 
 

@@ -55,7 +55,7 @@ function Home() {
       </div>
 
       <div className='step-text extra-p60'>
-        <a className='button-bold' href='/signup'>Join now!</a>
+        <button className='button-bold'>Join now!</button>
       </div>
     </div>
 

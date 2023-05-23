@@ -9,9 +9,9 @@ function LoginForm() {
             <p>
               Log In
             </p>
-              <input type="text" className='field' placeholder="Email"/>
-              <input type="password" className='field' placeholder="Password"/>
-              <button className='button1'>Submit</button>
+              <input type="text" className='small-input' placeholder="Email"/>
+              <input type="password" className='small-input' placeholder="Password"/>
+              <button className='button-1'>Submit</button>
 
               <p>Dont have an account? <a href='/signup'>Join now!</a> </p>
           </form>

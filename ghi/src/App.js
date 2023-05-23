@@ -12,6 +12,8 @@ import AdminIcons from './components/adminpages/AdminIcons'
 import AdminInterests from './components/adminpages/AdminInterests'
 import AdminNames from './components/adminpages/AdminNames'
 import AdminUsers from './components/adminpages/AdminUsers'
+import CreateProfile from './screens/CreateProfile'
+import Forge from './screens/Forge'
 
 
 
@@ -22,6 +24,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/signup/profile" element={<CreateProfile />} />
+        <Route path="/forge" element={<Forge />} />
         {/* routes for admin AdminPannel pages */}
         <Route path="/admin" element={<AdminPannel />} />
         <Route path="/admin/cssstyle" element={<CssStyle />} />

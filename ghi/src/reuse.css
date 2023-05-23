@@ -36,7 +36,7 @@ h3 {
 }
 
 /* button bold styling, can be used on buttons and links */
-.button-bold {
+/* .button-bold {
   padding-left: 33px;
   padding-right: 33px;
   padding-bottom: 16px;
@@ -59,6 +59,56 @@ h3 {
 .button-bold:active {
   transform: scale(0.97);
   box-shadow: 7px 5px 56px -10px #333333;
+} */
+
+
+.button-bold {
+  height: 50px;
+  margin: 5px;
+  width: 50%;
+  background: #333;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-family: "Chakra Petch", sans-serif;
+  border: solid #404C5D 1px;
+  font-size: 16px;
+  color: rgb(161, 161, 161);
+  -webkit-transition: 500ms;
+  transition: 500ms;
+  border-radius: 5px;
+  background: linear-gradient(145deg, #2e2d2d, #212121);
+  -webkit-box-shadow: -1px -5px 15px #41465B,
+                5px  5px 15px #41465B,
+    inset      5px  5px 10px #212121,
+    inset     -5px -5px 10px #212121;
+  box-shadow: -1px -5px 15px #41465B,
+                5px  5px 15px #41465B,
+    inset      5px  5px 10px #212121,
+    inset     -5px -5px 10px #212121;
+}
+
+.button-bold:hover {
+  -webkit-box-shadow: 1px 1px 13px #20232e,
+                    -1px -1px 13px #545b78;
+  box-shadow: 1px 1px 13px #20232e,
+              -1px -1px 13px #545b78;
+  color: #d6d6d6;
+  -webkit-transition: 500ms;
+  transition: 500ms;
+}
+
+.button-bold:active {
+  -webkit-box-shadow: 1px 1px 13px #20232e,
+                      -1px -1px 33px #545b78;
+  box-shadow: 1px 1px 13px #20232e,
+              -1px -1px 33px #545b78;
+  color: #d6d6d6;
+  -webkit-transition: 100ms;
+  transition: 100ms;
 }
 /*  */
 

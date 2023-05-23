@@ -17,7 +17,6 @@ def create_focus(
     response: Response,
     repo: GroupFocusRepository = Depends(),
 ):
-    response.status_code = 400
     return repo.create(focus)
 
 

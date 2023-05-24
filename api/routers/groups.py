@@ -6,9 +6,12 @@ from queries.groups import (
     GroupIn,
     GroupOut,
     GroupRepository,
+    GroupUpdateIn,
+    GroupMemberIn,
+    GroupMemberOut
 )
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 
 @router.get("/groups", response_model=Union[List[GroupOut], Error])
@@ -30,9 +33,21 @@ def create_group(
 
 @router.put("/groups/{group_id}", response_model=Union[GroupOut, Error])
 def edit_group(
-    group_id: int,
-    group: GroupIn,
+    group: GroupUpdateIn,
     repo: GroupRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
+    group_id = ["id"]
     return repo.update(group_id, group)
+
+# @router.post("/groups/{group_id}", response_model=Union[GroupOut, Error])
+
+@router.post("/group/member", response_model=Union[GroupMemberOut, Error])
+def add_member(
+    group_member: GroupMemberIn,
+    reponse: Response,
+    repo: GroupRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    user_account_id = account_data["id"]
+    return repo.create_group_member(group_member, user_account_id)

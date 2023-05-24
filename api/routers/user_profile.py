@@ -8,7 +8,7 @@ from authenticator import authenticator
 class Error(BaseModel):
     message: str
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 @router.put("/profile/{profile_id}", response_model=Union[ProfileOutCreation, Error])
 def update_profile(
@@ -19,7 +19,7 @@ def update_profile(
     user_account_id = account_data["id"]
     # profile_id = repo.get_profile_id_by_user_account(user_account_id)
     return repo.update(user_account_id, profile)
-    
+
 
 @router.post("/profile", response_model=Union[ProfileOutCreation, Error])
 def create_profile(
@@ -97,12 +97,10 @@ def delete_user_profile_interest(
         all_junction_ids = [junction.id for junction in all_junctions]
         list_user_interests = [interest['user_profile_interest_id'] for interest in user_interests]
         print(all_junction_ids)
-        
+
         if junction_id in list_user_interests:
             return repo.delete_interests_profile_junction(junction_id)
         else:
             return {"error": "Relational ID of profile and interest does not exist on that profile."}
     else:
         return {"error": "Profile not found"}
-
-   

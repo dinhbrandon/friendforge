@@ -23,7 +23,7 @@ class HttpError(BaseModel):
 
 
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
@@ -41,7 +41,7 @@ async def get_token(
 async def create_user_account(
     user_account: UserAccountIn,
     request: Request,
-    response: Response, 
+    response: Response,
     repo: UserAccountQueries = Depends(),
     ):
         hashed_password = authenticator.hash_password(user_account.password)

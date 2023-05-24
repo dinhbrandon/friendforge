@@ -1,6 +1,6 @@
 import React from 'react'
 import "./style/createprofile.css"
-import CreateProfileForm from '../components/signup/CreateProfileForm'
+import CreateProfileForm from '../components/authorization/CreateProfileForm'
 
 function CreateProfile() {
   return (

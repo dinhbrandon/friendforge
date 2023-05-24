@@ -7,7 +7,7 @@ services:
       context: ./api
       dockerfile: ./Dockerfile.dev
     environment:
-      SIGNING_KEY: placeholder
+      SIGNING_KEY: d9857f15e75146d8c7d2db1681ce19a779e89bc620e2e0c2e9a316fd48b81fdf
       DATABASE_URL: postgresql://friendforge:friendforge@db/friendforge
       WAIT_HOSTS: db:5432
       WAIT_TIMEOUT: 240
@@ -43,4 +43,4 @@ services:
       NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
-      REACT_APP_SAMPLE_SERVICE_API_HOST: ${REACT_APP_SAMPLE_SERVICE_API_HOST}
+      REACT_APP_API_HOST: http://localhost:8000

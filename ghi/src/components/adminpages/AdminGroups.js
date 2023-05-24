@@ -4,7 +4,7 @@ import "./adminpages.css"
 function AdminGroups() {
   return (
     <div>
-      List all with a link to create new
+      i think this should just show the name of the group, group id, and link to the group page  in the table for us admins to view
     </div>
   )
 }

@@ -37,7 +37,7 @@ class Junction(BaseModel):
 
 class JunctionsOut(BaseModel):
     interests: List[Junction]
-    
+
 
 class Error(BaseModel):
     name: str
@@ -80,7 +80,7 @@ class ProfileRepository:
                         """,
                         [user_account_id]
                     )
-                
+
                     row = db.fetchone()
                     if row:
                         return row[0]
@@ -157,7 +157,7 @@ class ProfileRepository:
         except Exception as e:
             print(e)
             return {"message": "could not create profile"}
-        
+
     def get_all(self) -> Union[Error, List[ProfileOutCreation]]:
         try:
             with pool.connection() as conn:
@@ -202,7 +202,7 @@ class ProfileRepository:
                     interest_names = []
                     for interest in interests:
                         interest_names.append(interest["name"])
-    
+
                     row = db.fetchone()
                     if row:
                         profile_data = {
@@ -222,14 +222,14 @@ class ProfileRepository:
         except Exception as e:
             print(e)
             return {"message": "error retrieving profile"}
-    
+
     def update(self, user_account_id, profile: ProfileIn) -> Union[ProfileOutCreation, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        UPDATE user_profile 
+                        UPDATE user_profile
                         SET about_me = %s, profile_photo = %s, location = %s
                         WHERE user_account_id = %s
                         RETURNING id, user_account_id
@@ -278,7 +278,7 @@ class ProfileRepository:
                         ]
                     )
                     id = result.fetchone()[0]
-        
+
                     return self.profile_interest_in_to_out(id, profile_id, profile_interest)
         except Exception as e:
             print(e)

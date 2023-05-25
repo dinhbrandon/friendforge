@@ -11,7 +11,7 @@ steps = [
         );
         """,
 
-        ## Drop the table
+    #     ## Drop the table
 
         """
         DROP TABLE user_profile;

@@ -8,7 +8,7 @@ from queries.group_focus import (
     )
 
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 
 @router.post("/group_focus", response_model=Union[GroupFocusOut, Error])
@@ -17,7 +17,6 @@ def create_focus(
     response: Response,
     repo: GroupFocusRepository = Depends(),
 ):
-
     return repo.create(focus)
 
 

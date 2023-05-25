@@ -51,3 +51,12 @@ def add_member(
 ):
     user_account_id = account_data["id"]
     return repo.create_group_member(group_member, user_account_id)
+
+@router.get("/group/{group_id}/members")
+def get_members(
+    group_id: int,
+    repo: GroupRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    user_account_id = account_data["id"]
+    return repo.get_members_in_group(group_id, user_account_id)

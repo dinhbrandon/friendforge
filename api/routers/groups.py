@@ -8,6 +8,7 @@ from queries.groups import (
     GroupOutWithAll,
     GroupRepository,
     GroupUpdateIn,
+    GroupUpdateOut,
     GroupMemberIn,
     GroupMemberOut,
     SingleGroupOut
@@ -33,13 +34,14 @@ def create_group(
     print(group)
     return repo.create(group)
 
-@router.put("/groups/{group_id}", response_model=Union[GroupOut, Error])
+@router.put("/groups/{group_id}", response_model=Union[GroupUpdateOut, Error])
 def edit_group(
+    group_id: int,
     group: GroupUpdateIn,
     repo: GroupRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
-    group_id = ["id"]
+    # group_id = ["id"]
     return repo.update(group_id, group)
 
 @router.get("/groups/{group_id}", response_model=SingleGroupOut)

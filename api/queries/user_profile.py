@@ -263,7 +263,23 @@ class ProfileRepository:
                         [user_account_id]
                     )
                     profile_id = result.fetchone()[0]
-                    # We will then insert profile_id associated with user into the junction table
+                    # We will then insert profile_id associated with user into the junction table\
+                    result = db.execute(
+                        """
+                        SELECT upi.user_profile_id, upi.interest_id
+                        FROM user_profile_interests upi
+                        WHERE upi.user_profile_id = %s AND upi.interest_id = %s
+                        """,
+                        [
+                            profile_id,
+                            profile_interest.interest_id
+                        ]
+                    )
+
+                    interests = result.fetchall()
+                    if len(interests) > 0:
+                        return {"message": "You're already have this interest"}
+
                     result = db.execute(
                         """
                         INSERT INTO user_profile_interests (

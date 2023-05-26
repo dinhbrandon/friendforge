@@ -10,7 +10,6 @@ class Error(BaseModel):
 class GroupIn(BaseModel):
     focus_id: int
 
-
 class GroupOut(BaseModel):
     id: int
     focus_id: int
@@ -31,6 +30,11 @@ class SingleGroupOut(BaseModel):
     members: Optional[list]
 
 class GroupUpdateIn(BaseModel):
+    name: str
+    icon_photo: str
+
+class GroupUpdateOut(BaseModel):
+    id: int
     name: str
     icon_photo: str
 
@@ -104,7 +108,7 @@ class GroupRepository:
                         }
 
                     return group_info
-    
+
         except Exception as e:
             print(e)
             return {"message": "Could not get group"}
@@ -124,10 +128,10 @@ class GroupRepository:
                         [group_id]
                         # search PIG from group ID -> return user_profiles
                     )
-                    
+
                     members = []
                     rows = result.fetchall()
-                
+
 
                     for row in rows:
                         member = {
@@ -136,8 +140,8 @@ class GroupRepository:
                             # "first_name": row[2],
                         }
                         members.append(member["profile_id"])
-                
-                    
+
+
                     for member in members:
                         result = db.execute(
                         """
@@ -149,7 +153,7 @@ class GroupRepository:
                         """,
                         [group_id]
                     )
-                    
+
                     group_member_info_list = []
                     rows = result.fetchall()
                     for row in rows:
@@ -157,16 +161,16 @@ class GroupRepository:
                             "id": row[0],
                             "profile_url": row[1],
                             "first_name": row[2],
-                            "relational_id": row[3] 
+                            "relational_id": row[3]
                         }
                         group_member_info_list.append(group_member_info)
-                    
+
                     return group_member_info_list
         except Exception as e:
             print(e)
             return {"message": "Could not get members"}
-    
-            
+
+
     def get_profile_groups(self, profile_id: int):
         try:
             with pool.connection() as conn:
@@ -186,7 +190,7 @@ class GroupRepository:
                         group_info = {
                             "group_id": group[0],
                             "name": group[1],
-                            "photo": group[2], 
+                            "photo": group[2],
                         }
                         group_list.append(group_info)
                     return group_list
@@ -195,7 +199,7 @@ class GroupRepository:
             return {"message": "Could not get user's groups"}
 
 
-    def update(self, group_id, group: GroupIn) -> Union[GroupUpdateIn, Error]:
+    def update(self, group_id, group: GroupUpdateIn) -> Union[GroupUpdateOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -203,8 +207,8 @@ class GroupRepository:
                         """
                         UPDATE groups
                         SET name = %s, icon_photo = %s
-                        WHERE group_id = %s
-                        RETURNING id, group_id
+                        WHERE groups.id = %s
+                        RETURNING id
                         """,
                         [
                             group.name,
@@ -213,7 +217,9 @@ class GroupRepository:
                         ]
                     )
                     id = result.fetchone()[0]
-                    return self.group_in_to_out(id, group_id, group)
+                    # return self.group_in_to_out(group_id, group)
+                    old_data = group.dict()
+                    return GroupUpdateOut(id=id, **old_data)
         except Exception as e:
             print(e)
             return {"message": "Could not update group"}

@@ -13,7 +13,6 @@
 }
 
 .login-form:hover {
-  border-image: linear-gradient(163deg, #C9632C 0%, #D8B646 100%);
   border-width: 5px;
   box-shadow: 0px 0px 30px 1px hsla(46, 65%, 56%, 0.31);
 }
@@ -33,33 +32,41 @@
   opacity: 0.7;
 }
 
-.field {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-  border-radius: 10px;
-  padding: 0.6em;
-  border: none;
-  outline: none;
-  color: white;
+.small-input {
   background-color: #1f1f1f;
-  box-shadow: inset 1px 3px 5px rgb(5, 5, 5);
+  max-width: 190px;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid #C9632C;
+  border-radius: 8px;
+  color: #FFFFFF;
+  max-width: 100%;
 }
 
-.button1 {
-  padding: 0.5em;
-  padding-left: 1.1em;
-  padding-right: 1.1em;
-  border-radius: 20px;
-  margin-right: 0.5em;
-  border: none;
-  outline: none;
-  transition: .4s ease-in-out;
-  background-image: linear-gradient(163deg, #C9632C 0%, #D8B646 100%);
-  color: #1e1e1e;
+.small-input:focus {
+  background-color: #212121;
+  outline-color: #D8B646;
+  box-shadow: -3px -3px 15px #D8B646;
+  transition: .1s;
+  transition-property: box-shadow;
 }
 
-.button1:hover {
-  background-image: linear-gradient(163deg, #D8B646 0%, #C9632C 100%);
+
+.button-1 {
+  align-items: center;
+  background-image: linear-gradient(144deg,#C9632C, #D18D39 50%,#D8B646);
+  border: 0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-size: 18px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  padding: 3px;
+  text-decoration: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  transition: all .3s;
 }

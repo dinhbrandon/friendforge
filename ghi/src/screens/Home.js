@@ -1,11 +1,14 @@
 import React from 'react'
+import useToken from "@galvanize-inc/jwtdown-for-react";
 import stepone from "./images/stepone.png";
 import steptwo from "./images/steptwo.png";
 import stepthree from "./images/stepthree.png";
-import LoginForm from '../components/LoginForm'
+import LoginForm from '../components/authorization/LoginForm'
+import LoggedIn from '../components/authorization/LoggedIn'
 import "./style/home.css"
 
 function Home() {
+  const { token } = useToken()
   return (
     <>
 
@@ -19,7 +22,9 @@ function Home() {
         </p>
       </div>
       <div>
-        <LoginForm />
+        {!token && <LoginForm />}
+        {token && <LoggedIn />}
+
       </div>
     </div>
 
@@ -54,9 +59,6 @@ function Home() {
           </div>
       </div>
 
-      <div className='step-text extra-p60'>
-        <a className='button-bold' href='/signup'>Join now!</a>
-      </div>
     </div>
 
     </>

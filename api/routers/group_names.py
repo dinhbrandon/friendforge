@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Response
 from typing import Union, List, Optional
 from queries.group_names import GroupNameIn, GroupNameOut, GroupNameRepository, Error
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 @router.post("/group_names", response_model=Union[GroupNameOut, Error])
 def create_group_name(

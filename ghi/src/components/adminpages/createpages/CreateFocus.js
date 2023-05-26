@@ -19,7 +19,7 @@ function CreateFocus() {
 
     const response = await fetch(url, newFocus)
     if (response.ok) {
-      setName()
+      setName('')
     }
   }
 

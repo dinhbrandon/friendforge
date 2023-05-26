@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Response
 from typing import Union, List, Optional
 from queries.interests import InterestIn, InterestOut, InterestRepository, Error
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 @router.post("/interests", response_model=Union[InterestOut, Error])
 def create_interest(

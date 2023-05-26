@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import "./reuse.css";
 

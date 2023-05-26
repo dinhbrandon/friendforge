@@ -13,7 +13,7 @@ please check UB dictionary for terminology if needed
 ### Quick Use CSS for all pages
 all of these are class names that can be quickly added to anything to alter the element.
 More indepth explinations and some examples of reuseable style can be found in the Style Guide
-[Style Guide](http://localhost:3000/admin/cssstyle)
+
 
 - center-txt - will center any text
 - extra-p60 - add 60px of padding around all side. good for quickly pushing other elements away from selected tag.

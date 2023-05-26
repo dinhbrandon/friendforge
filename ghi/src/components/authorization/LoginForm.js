@@ -1,31 +1,30 @@
 import React, { useState } from 'react'
 import useToken from '@galvanize-inc/jwtdown-for-react'
-import "../style/loginform.css"
+import { useNavigate } from "react-router-dom";
+
 
 // this will log in a user and set the token in local storage
 function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { login } = useToken()
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault()
     login(email, password)
     e.target.reset()
-    console.log(e)
+    navigate('/')
   }
 
 
 
   return (
     <>
-          <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
-            <p>
-              Log In
-            </p>
-              <input name='email' type="text" className='small-input' placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
-              <input type="password" className='small-input' placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-              <button className='button-1' type='submit' value='login'>Log In</button>
+          <form className="form-control w-full" onSubmit={(e) => handleSubmit(e)}>
+              <input name='email' type="text" className='input input-bordered w-full my-2' placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
+              <input type="password" className='input input-bordered w-full my-2' placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
+              <button className='btn btn-secondary my-2' type='submit' value='login'>Log In</button>
 
               <p>Dont have an account? <a href='/signup'>Join now!</a> </p>
           </form>

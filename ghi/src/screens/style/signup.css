@@ -8,81 +8,16 @@
   justify-content: center;
 }
 
-.signup-body p {
-  text-align: center;
-}
-
-.signup-body img {
-  max-width: 200px;
-}
-
-.body-fix {
-  display: flex;
-  align-items: center;
-  flex-flow: row wrap;
-  /* text-align: center; */
-  max-width: 60%;
-}
-
-.body-fix div {
-  flex: 1 1 0;
-}
-
-
-.signup-form-body {
-  text-align: center;
-  display: flex;
-  align-items: center;
-}
-
-.signup-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background: #1f1f1f;
-  padding: 20px;
-  color: white;
-  text-align: center;
-  font-size: 14px;
-  flex: 1 1 0;
-  align-items: center;
-}
-
-.signup-input {
-  background-color: #1f1f1f;
-  max-width: 190px;
-  height: 40px;
-  padding: 10px;
-  border: 1px solid #C9632C;
-  border-radius: 8px;
-  color: #FFFFFF;
-  max-width: 60%;
-}
-
-.signup-input:focus {
-  background-color: #212121;
-  outline-color: #D8B646;
-  box-shadow: -3px -3px 15px #D8B646;
-  transition: .1s;
-  transition-property: box-shadow;
-}
-
-
-.signup-button {
-  align-items: center;
-  background-image: linear-gradient(144deg,#C9632C, #D18D39 50%,#D8B646);
-  border: 0;
-  border-radius: 8px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  display: flex;
-  font-size: 18px;
-  justify-content: center;
-  line-height: 1em;
-  max-width: 60%;
-  padding: 3px;
-  text-decoration: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  transition: all .3s;
+.gradient-bg {
+  background-color:hsla(21,64%,48%,1);
+  background-image:
+  radial-gradient(at 21% 44%, hsla(21,64%,48%,1) 0px, transparent 50%),
+  radial-gradient(at 35% 10%, hsla(46,65%,56%,1) 0px, transparent 50%),
+  radial-gradient(at 70% 12%, hsla(33,62%,52%,1) 0px, transparent 50%),
+  radial-gradient(at 12% 67%, hsla(46,65%,56%,1) 0px, transparent 50%),
+  radial-gradient(at 72% 22%, hsla(20,64%,48%,1) 0px, transparent 50%),
+  radial-gradient(at 95% 26%, hsla(46,65%,56%,1) 0px, transparent 50%),
+  radial-gradient(at 30% 81%, hsla(20,64%,48%,1) 0px, transparent 50%),
+  radial-gradient(at 77% 81%, hsla(33,62%,52%,1) 0px, transparent 50%),
+  radial-gradient(at 44% 42%, hsla(33,62%,52%,1) 0px, transparent 50%);
 }

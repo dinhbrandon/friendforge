@@ -11,7 +11,8 @@ from queries.groups import (
     GroupUpdateOut,
     GroupMemberIn,
     GroupMemberOut,
-    SingleGroupOut
+    SingleGroupOut,
+    ProfileOut
 )
 
 router = APIRouter()
@@ -34,6 +35,23 @@ def create_group(
     print(group)
     return repo.create(group)
 
+@router.delete("/groups/{group_id}/members/{profile_id}", response_model=Union[bool, Error])
+def remove_member(
+    group_id: int,
+    profile_id: int,
+    repo: GroupRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+) -> bool:
+    return repo.delete_member(group_id, profile_id)
+
+@router.delete("/groups/{group_id}", response_model=Union[bool, Error])
+def delete_group(
+    group_id: int,
+    repo: GroupRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+) -> bool:
+    return repo.delete(group_id)
+
 @router.put("/groups/{group_id}", response_model=Union[GroupUpdateOut, Error])
 def edit_group(
     group_id: int,
@@ -44,7 +62,7 @@ def edit_group(
     # group_id = ["id"]
     return repo.update(group_id, group)
 
-@router.get("/groups/{group_id}", response_model=SingleGroupOut)
+@router.get("/groups/{group_id}", response_model=Union[SingleGroupOut, Error])
 def get_one(
     group_id: int,
     repo: GroupRepository = Depends(),
@@ -62,7 +80,7 @@ def add_member(
     user_account_id = account_data["id"]
     return repo.create_group_member(group_member, user_account_id)
 
-@router.get("/group/{group_id}/members")
+@router.get("/group/{group_id}/members", response_model=Union[List[ProfileOut], Error])
 def get_members(
     group_id: int,
     repo: GroupRepository = Depends(),
@@ -70,6 +88,8 @@ def get_members(
 ):
     return repo.get_members_in_group(group_id)
 
+
+# Figure out how to accept a response model, list is not working
 @router.get("/profile/{profile_id}/groups")
 def get_user_profile_groups(
     profile_id: int,

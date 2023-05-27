@@ -96,7 +96,6 @@ def delete_user_profile_interest(
         all_junctions = repo.get_all_interest_junctions()
         all_junction_ids = [junction.id for junction in all_junctions]
         list_user_interests = [interest['user_profile_interest_id'] for interest in user_interests]
-        print(all_junction_ids)
 
         if junction_id in list_user_interests:
             return repo.delete_interests_profile_junction(junction_id)

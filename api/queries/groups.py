@@ -6,6 +6,11 @@ from typing import List, Union, Optional
 class Error(BaseModel):
     message: str
 
+class ProfileOut(BaseModel):
+    id: int
+    profile_photo: Optional[str]
+    first_name: str
+    relational_id: int
 
 class GroupIn(BaseModel):
     focus_id: int
@@ -35,8 +40,8 @@ class GroupUpdateIn(BaseModel):
 
 class GroupUpdateOut(BaseModel):
     id: int
-    name: str
-    icon_photo: str
+    name: Optional[str]
+    icon_photo: Optional[str]
 
 
 class GroupMemberIn(BaseModel):
@@ -48,7 +53,57 @@ class GroupMemberOut(BaseModel):
     group_id: int
     user_profile_id: int
 
+
 class GroupRepository:
+
+    def delete_member(self, group_id: int, profile_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT pig.user_profile_id
+                        FROM profiles_in_group AS pig
+                        JOIN user_profile ON (pig.user_profile_id = user_profile.id)
+                        WHERE pig.group_id = %s
+                        """,
+                        [group_id]
+                    )
+                    rows = db.fetchall()
+                    members = [row[0] for row in rows]
+                    print(members)
+
+                    if profile_id in members:
+                        db.execute(
+                        """
+                        DELETE FROM profiles_in_group
+                        WHERE group_id = %s AND user_profile_id = %s
+                        """,
+                        [group_id, profile_id]
+                    )
+                        return True
+                    return {"message": "Member not found in group"} 
+
+        except Exception as e:
+            print(e)
+            return {"message": "Issue with given group ID or profile ID."}
+
+    def delete(self, group_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    rows = db.execute(
+                        """
+                        DELETE FROM groups
+                        WHERE id = %s
+                        """,
+                        [group_id]
+                    )
+                    return rows > 0 # Returns True if row is deleted
+        except Exception as e:
+            print(e)
+            return {"message": "This group does not exist."}
+
     def get_groups(self) -> Union[Error, List[GroupOutWithAll]]:
         try:
             with pool.connection() as conn:
@@ -113,7 +168,7 @@ class GroupRepository:
             print(e)
             return {"message": "Could not get group"}
 
-    def get_members_in_group(self, group_id: int):
+    def get_members_in_group(self, group_id: int) -> ProfileOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -126,18 +181,13 @@ class GroupRepository:
                         WHERE pig.group_id = %s
                         """,
                         [group_id]
-                        # search PIG from group ID -> return user_profiles
                     )
-
                     members = []
                     rows = result.fetchall()
-
 
                     for row in rows:
                         member = {
                             "profile_id": row[0],
-                            # "profile_photo": row[1],
-                            # "first_name": row[2],
                         }
                         members.append(member["profile_id"])
 
@@ -159,19 +209,18 @@ class GroupRepository:
                     for row in rows:
                         group_member_info = {
                             "id": row[0],
-                            "profile_url": row[1],
+                            "profile_photo": row[1],
                             "first_name": row[2],
                             "relational_id": row[3]
                         }
                         group_member_info_list.append(group_member_info)
-
                     return group_member_info_list
         except Exception as e:
             print(e)
             return {"message": "Could not get members"}
 
 
-    def get_profile_groups(self, profile_id: int):
+    def get_profile_groups(self, profile_id: int) -> GroupUpdateOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -199,7 +248,7 @@ class GroupRepository:
             return {"message": "Could not get user's groups"}
 
 
-    def update(self, group_id, group: GroupUpdateIn) -> Union[GroupUpdateOut, Error]:
+    def update(self, group_id, group: GroupUpdateIn) -> GroupUpdateOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -240,7 +289,6 @@ class GroupRepository:
                             group.focus_id,
                         ]
                     )
-                    print("testing")
                     id = result.fetchone()[0]
                     return self.group_in_to_out(id, group)
         except Exception as e:
@@ -274,9 +322,14 @@ class GroupRepository:
                     rows = result.fetchall()
                     for row in rows:
                         groups.append(row[2])
+                    
+                    group_members = self.get_members_in_group(group_member.group_id)
+                    print(len(group_members))
 
                     if group_member.group_id in groups:
                         return {"message": "You're already in this group"}
+                    elif len(group_members) >= 5:
+                        return {"message": "This group is full"}
 
                     result = db.execute(
                         """

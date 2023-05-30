@@ -3,6 +3,7 @@ from queries.pool import pool
 from typing import List, Union, Optional
 
 
+
 class Error(BaseModel):
     message: str
 
@@ -17,11 +18,9 @@ class GroupIn(BaseModel):
 
 class GroupOut(BaseModel):
     id: int
-    focus_id: int
+    focus: str
 
-class GroupOutWithAll(BaseModel):
-    id: int
-    focus_id: int
+class GroupOutWithAll(GroupOut):
     name: Optional[str]
     icon_photo: Optional[str]
     chatroom_id: Optional[str]
@@ -29,10 +28,12 @@ class GroupOutWithAll(BaseModel):
 class SingleGroupOut(BaseModel):
     id: int
     focus_id: int
+    focus: str
     name: Optional[str]
     icon_photo: Optional[str]
     chatroom_id: Optional[str]
     members: Optional[list]
+    number_of_members: Optional[int]
 
 class GroupUpdateIn(BaseModel):
     name: str
@@ -104,32 +105,31 @@ class GroupRepository:
             print(e)
             return {"message": "This group does not exist."}
 
-    def get_groups(self) -> Union[Error, List[GroupOutWithAll]]:
+    def get_groups(self) -> Union[Error, List[SingleGroupOut]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    result = db.execute(
+                    db.execute(
                         """
-                        SELECT id, focus_id, name, icon_photo, chatroom_id
-                        FROM groups
+                        SELECT id
+                        FROM groups 
                         ORDER BY id;
                         """
                     )
-
+                    result = db.fetchall()
+                        
                     return [
-                        GroupOutWithAll(
-                            id=record[0],
-                            focus_id=record[1],
-                            name = record[2],
-                            icon_photo = record[3],
-                            chatroom_id = record[4],
-                        )
-                        for record in db
+                        self.get_one_group(record[0])
+                        for record in result
                     ]
 
         except Exception as e:
             print(e)
             return {"message": "Could not get groups"}
+        
+    # SELECT id, gf.name, g.name, g.icon_photo, g.chatroom_id
+    # FROM groups g
+    # JOIN group_focus gf ON gf.id = g.focus_id
 
     def get_one_group(self, group_id) -> SingleGroupOut:
         try:
@@ -137,9 +137,10 @@ class GroupRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, focus_id, name, icon_photo, chatroom_id
-                        FROM groups
-                        WHERE id = %s
+                        SELECT g.id, g.focus_id, gf.name, g.name, g.icon_photo, g.chatroom_id
+                        FROM groups g
+                        JOIN group_focus gf ON gf.id = g.focus_id
+                        WHERE g.id = %s
                         """,
                         [group_id]
                     )
@@ -147,8 +148,11 @@ class GroupRepository:
                     group_members = self.get_members_in_group(group_id)
 
                     members = []
+
                     for member in group_members:
                         members.append(member)
+
+                    num_members = len(members)
 
 
                     rows = result.fetchall()
@@ -156,10 +160,12 @@ class GroupRepository:
                         group_info = {
                             "id": row[0],
                             "focus_id": row[1],
-                            "name": row[2],
-                            "icon_photo": row[3],
-                            "chatroom_id": row[4],
-                            "members": members
+                            "focus": row[2],
+                            "name": row[3],
+                            "icon_photo": row[4],
+                            "chatroom_id": row[5],
+                            "members": members,
+                            "number_of_members": num_members
                         }
 
                     return group_info
@@ -324,7 +330,6 @@ class GroupRepository:
                         groups.append(row[2])
                     
                     group_members = self.get_members_in_group(group_member.group_id)
-                    print(len(group_members))
 
                     if group_member.group_id in groups:
                         return {"message": "You're already in this group"}

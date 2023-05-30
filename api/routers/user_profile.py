@@ -5,10 +5,20 @@ from queries.user_profile import ProfileIn, ProfileOut, ProfileOutCreation, Prof
 # from queries.interests import InterestsOut, Error
 from authenticator import authenticator
 
-class Error(BaseModel):
-    message: str
 
 router = APIRouter()
+
+# Added function for front-end use
+@router.get("/profile_id/get", response_model = Union[int, Error])
+def get_profile_id(
+    user_id: int,
+    repo: ProfileRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    profile_id = repo.get_profile_id_by_user_account(user_id)
+    return profile_id
+
+
 
 @router.put("/profile/{profile_id}", response_model=Union[ProfileOutCreation, Error])
 def update_profile(

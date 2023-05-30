@@ -35,12 +35,17 @@ function useProfile(token) {
     }
   };
 
-  if (user.id) {
-    getID();
-  }
-  if (id) {
-    getProfile();
-  }
+  useEffect(() => {
+    if (user.id) {
+      getID();
+    }
+  }, [user.id, token]);
+
+  useEffect(() => {
+    if (id) {
+      getProfile();
+    }
+  }, [id, token]);
 
   return { profile };
 }

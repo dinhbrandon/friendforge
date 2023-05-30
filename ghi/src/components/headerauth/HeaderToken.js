@@ -15,6 +15,7 @@ function HeaderToken() {
     logout();
     navigate("/");
   };
+  console.log(profile);
 
   return (
     <>
@@ -30,7 +31,7 @@ function HeaderToken() {
       <div className="dropdown dropdown-end">
         <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
           <div className="w-10 rounded-full">
-            <img src="" />
+            <img src={profile.profile_photo} />
           </div>
         </label>
         <ul
@@ -38,7 +39,6 @@ function HeaderToken() {
           className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-neutral rounded-box w-52 text-base-content"
         >
           <li>Welcome {user.username}</li>
-          <li>you live in {profile.location}</li>
           <li>
             <a href="">Profile</a>
           </li>

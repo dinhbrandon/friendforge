@@ -10,7 +10,7 @@ function CreateInterest() {
     }
     console.log(name)
 
-    const url = 'http://localhost:8000/api/interests'
+    const url = 'http://localhost:8000/interests'
     const newInterest ={
     method: 'POST',
     body: JSON.stringify(data),

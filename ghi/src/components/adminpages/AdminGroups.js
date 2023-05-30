@@ -1,4 +1,6 @@
 import React, { useState, useEffect }  from 'react'
+import CreateGroup from './createpages/CreateGroup'
+import UpdateGroupName from './createpages/UpdateGroupName'
 import "./adminpages.css"
 
 function AdminGroups() {
@@ -31,7 +33,10 @@ function AdminGroups() {
           <thead>
             <tr>
               <th scope="col">Group ID</th>
+              <th scope="col">Group Focus ID</th>
               <th scope="col">Group Name</th>
+              {/* <th scope="col">Group Icon Photo</th>
+              <th scope="col">Group Chatroom ID</th> */}
             </tr>
           </thead>
           <tbody>
@@ -39,16 +44,24 @@ function AdminGroups() {
             {group.map((groups) => (
               <tr key={groups.id}>
                 <th>{groups.id}</th>
-                <td>{groups.name}</td>
+                <th>{groups.focus_id}</th>
+                <td>{groups.name ? groups.name: "no group name"}</td>
+                {/* <td>{groups.icon_photo ? groups.icon_photo: "no group photo"}</td>
+                <td>{groups.chatroom_id ? groups.chatroom_id: "no chatroom id"}</td> */}
               </tr>
             ))}
-
 
           </tbody>
         </table>
 
         </div>
 
+        <div className='admin-create'>
+          <CreateGroup />
+        </div>
+        <div className='admin-create'>
+          <UpdateGroupName />
+        </div>
       </div>
     </>
   )

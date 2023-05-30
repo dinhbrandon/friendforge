@@ -50,13 +50,12 @@ async def create_user_account(
         except DuplicateAccountError:
                 raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
-                        detail="Cannot create an account with those credentials",
+                        detail="An account already exists with this email.",
                 )
         form = UserAccountForm(username=user_account.email, password=user_account.password)
         token = await authenticator.login(response, request, form, repo)
         return AccountToken(account=account, **token.dict())
-        # response.status_code = 400
-        # return repo.create(user_account)
+
 
 
 @router.get("/users", response_model=Union[List[UserAccountOut], Error])

@@ -40,7 +40,7 @@ class JunctionsOut(BaseModel):
 
 
 class Error(BaseModel):
-    name: str
+    message: str
 
 class ProfileRepository:
 
@@ -68,7 +68,7 @@ class ProfileRepository:
             # return {"message": "Could not get all interests"}
 
 
-    def get_profile_id_by_user_account(self, user_account_id: int):
+    def get_profile_id_by_user_account(self, user_account_id: int) -> int:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -88,7 +88,7 @@ class ProfileRepository:
                         return None
         except Exception as e:
             print(e)
-            return None
+            return {"message": "This user has no profile created."}
 
 
     def delete_interests_profile_junction(self, junction_id: int) -> bool:

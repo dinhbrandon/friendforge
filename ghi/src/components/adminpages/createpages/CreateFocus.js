@@ -9,7 +9,7 @@ function CreateFocus() {
       name,
     }
 
-    const url = 'http://localhost:8000/api/group_focus'
+    const url = 'http://localhost:8000/group_focus'
     const newFocus ={
     method: 'POST',
     body: JSON.stringify(data),

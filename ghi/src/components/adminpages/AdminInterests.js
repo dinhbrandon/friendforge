@@ -6,7 +6,7 @@ function AdminInterests() {
   const [interest, setInterest] = useState([])
 
   const loadInterests = async () => {
-    const response = await fetch('http://localhost:8000/api/interests')
+    const response = await fetch('http://localhost:8000/interests')
     if (response.ok) {
       const data = await response.json()
       setInterest(data)

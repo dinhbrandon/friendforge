@@ -7,7 +7,7 @@ function AdminFocus() {
 
   // load the list of focuses
   async function loadFocus() {
-    const response = await fetch('http://localhost:8000/api/group_focus')
+    const response = await fetch('http://localhost:8000/group_focus')
     if (response.ok) {
       const data = await response.json()
       setFocus(data)

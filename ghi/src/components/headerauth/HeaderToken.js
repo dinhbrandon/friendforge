@@ -29,7 +29,7 @@ function HeaderToken() {
               </div>
             </label>
             <ul tabIndex="0" className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-neutral rounded-box w-52 text-base-content">
-              {/* <li>Welcome {user.username}</li> */}
+              <li>Welcome {user.username}</li>
               <li><a href=''>Profile</a></li>
               <li><a href=''>Settings</a></li>
               <li><a onClick={handleLogout}>Logout</a></li>

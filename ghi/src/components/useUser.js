@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // this grabs the data from the logged in user and returns in in a dictionary so we can use the users data in other components
 
 const useUser = (token) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const getUser = async () => {

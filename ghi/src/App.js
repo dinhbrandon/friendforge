@@ -16,6 +16,7 @@ import AdminNames from './components/adminpages/AdminNames'
 import AdminUsers from './components/adminpages/AdminUsers'
 import CreateProfile from './screens/CreateProfile'
 import Forge from './screens/Forge'
+import MyGroups from "./screens/MyGroups";
 
 
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup/profile" element={<CreateProfile />} />
             <Route path="/forge" element={<Forge />} />
+            <Route path="/mygroups" element={<MyGroups />} />
             {/* routes for admin AdminPannel pages */}
             <Route path="/admin" element={<AdminPannel />} />
             <Route path="/admin/focus" element={<AdminFocus />} />

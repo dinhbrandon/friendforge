@@ -8,7 +8,7 @@ function Forge() {
     <div className='top-body'>
       <h2>Forge!</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis interdum ex. Fusce rhoncus blandit porta.
+        This is the forge.
       </p>
     </div>
     <div className='card-diplay'>

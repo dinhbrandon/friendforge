@@ -5,7 +5,6 @@ from queries.groups import (
     Error,
     GroupIn,
     GroupOut,
-    GroupOutWithAll,
     GroupRepository,
     GroupUpdateIn,
     GroupUpdateOut,
@@ -18,7 +17,7 @@ from queries.groups import (
 router = APIRouter()
 
 
-@router.get("/groups", response_model=Union[List[GroupOutWithAll], Error])
+@router.get("/groups", response_model=Union[List[SingleGroupOut], Error])
 def get_groups(
     repo: GroupRepository = Depends(),
 ):

@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from queries.pool import pool
 from typing import List, Union, Optional
 from queries.interests import InterestRepository
-from queries.user_profile import ProfileRepository
 import numpy as np
 
 
@@ -21,11 +20,6 @@ class GroupIn(BaseModel):
 class GroupOut(BaseModel):
     group_id: int
     focus_id: int
-
-# class GroupOutWithAll(GroupOut):
-#     name: Optional[str]
-#     icon_photo: Optional[str]
-#     chatroom_id: Optional[str]
 
 class SingleGroupOut(BaseModel):
     id: int
@@ -58,37 +52,21 @@ class GroupMemberOut(BaseModel):
 
 
 class GroupRepository:
-    # profile_repo = ProfileRepository()
-    # get_profile_id = profile_repo.get_profile_id_by_user_account()
-    # interest_repo = InterestRepository()
-    # get_interests = interest_repo.get_all()
 
-    # def get_interests(self):
-    #     try:
-    #         with pool.connection() as conn:
-    #             with conn.cursor() as db:
-    #                 db.execute(
-    #                     """
-    #                     SELECT name
-    #                     FROM interests
-    #                     ORDER BY name;
-    #                     """
-    #                 )
-    #                 result = db.fetchall()
-    #                 return [record[0] for record in result]
-
-    def generate_interest_vector(self, interests, all_interests):
-        vector = np.zeros(len(all_interests))
+    def generate_interest_vector(self, user_interests, all_interests):
+        vector = np.zeros(len(all_interests), dtype=int)
         for i, interest in enumerate(all_interests):
-            if interest.id not in interests:
+            if interest.id in user_interests:
                 vector[i] = 1
-        return vector
+        return vector.tolist()
     
-    def generate_user_interest_vector(self, user_account_id):
+    def generate_user_interest_vector(self, user_profile_id):
         interest_repo = InterestRepository()
         all_interests = interest_repo.get_all()
-        profile_repo = ProfileRepository()
-        user_profile_id = profile_repo.get_profile_id_by_user_account(user_account_id)
+
+        # only for if we want to use logged in user
+        # profile_repo = ProfileRepository()
+        # user_profile_id = profile_repo.get_profile_id_by_user_account(user_account_id)
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -101,22 +79,11 @@ class GroupRepository:
                         [user_profile_id]
                     )
                     result = db.fetchall()
-            
-                    
-                    vectors = {}
-                    for record in result:
-                        user_profile_id = record[0]
-                        interest_id = record[1]
-                        interests = [interest_id]
-                        # print(interests)
-                        vector = self.generate_interest_vector(interests, all_interests)
+                    user_interests = [record[1] for record in result]
+                    interest_array = self.generate_interest_vector(user_interests, all_interests)
+                    vector = {user_profile_id: interest_array}
 
-                        vectors[user_profile_id] = vector
-                        print(vector)
-                    print(vectors)
-
-                    # print(vector)
-                    return vectors
+                    return vector
         except Exception as e:
             print(e)
             return {"message": "Could not generate interest vector for user."}
@@ -165,7 +132,7 @@ class GroupRepository:
                         """,
                         [group_id]
                     )
-                    return rows > 0 # Returns True if row is deleted
+                    return rows > 0 
         except Exception as e:
             print(e)
             return {"message": "This group does not exist."}

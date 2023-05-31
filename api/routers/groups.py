@@ -17,21 +17,13 @@ from queries.groups import (
 router = APIRouter()
 
 
-
-# @router.get("/interest_vector")
-# def get_user_interest_vector(
-#     repo.GroupRepository = Depends(),
-#     account_data: dict = Depends(authenticator.get_current_account_data),
-# ):
-# print("hey")
-
 @router.get("/interest_vector")
 def get_user_interest_vector(
+    user_profile_id = None,
     repo: GroupRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    user_account_id = account_data["id"]
-    return repo.generate_user_interest_vector(user_account_id)
+    return repo.generate_user_interest_vector(user_profile_id)
 
 @router.get("/groups", response_model=Union[List[SingleGroupOut], Error])
 def get_groups(

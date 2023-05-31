@@ -1,6 +1,5 @@
 import React, { useState, useEffect }  from 'react'
 import CreateGroup from './createpages/CreateGroup'
-import UpdateGroupName from './createpages/UpdateGroupName'
 import "./adminpages.css"
 
 function AdminGroups() {
@@ -58,9 +57,6 @@ function AdminGroups() {
 
         <div className='admin-create'>
           <CreateGroup />
-        </div>
-        <div className='admin-create'>
-          <UpdateGroupName />
         </div>
       </div>
     </>

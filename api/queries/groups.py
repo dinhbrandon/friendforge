@@ -1,7 +1,9 @@
 from pydantic import BaseModel
 from queries.pool import pool
 from typing import List, Union, Optional
-
+from queries.interests import InterestRepository
+from queries.user_profile import ProfileRepository
+import numpy as np
 
 
 class Error(BaseModel):
@@ -17,13 +19,13 @@ class GroupIn(BaseModel):
     focus_id: int
 
 class GroupOut(BaseModel):
-    id: int
-    focus: str
+    group_id: int
+    focus_id: int
 
-class GroupOutWithAll(GroupOut):
-    name: Optional[str]
-    icon_photo: Optional[str]
-    chatroom_id: Optional[str]
+# class GroupOutWithAll(GroupOut):
+#     name: Optional[str]
+#     icon_photo: Optional[str]
+#     chatroom_id: Optional[str]
 
 class SingleGroupOut(BaseModel):
     id: int
@@ -56,6 +58,69 @@ class GroupMemberOut(BaseModel):
 
 
 class GroupRepository:
+    # profile_repo = ProfileRepository()
+    # get_profile_id = profile_repo.get_profile_id_by_user_account()
+    # interest_repo = InterestRepository()
+    # get_interests = interest_repo.get_all()
+
+    # def get_interests(self):
+    #     try:
+    #         with pool.connection() as conn:
+    #             with conn.cursor() as db:
+    #                 db.execute(
+    #                     """
+    #                     SELECT name
+    #                     FROM interests
+    #                     ORDER BY name;
+    #                     """
+    #                 )
+    #                 result = db.fetchall()
+    #                 return [record[0] for record in result]
+
+    def generate_interest_vector(self, interests, all_interests):
+        vector = np.zeros(len(all_interests))
+        for i, interest in enumerate(all_interests):
+            if interest.id not in interests:
+                vector[i] = 1
+        return vector
+    
+    def generate_user_interest_vector(self, user_account_id):
+        interest_repo = InterestRepository()
+        all_interests = interest_repo.get_all()
+        profile_repo = ProfileRepository()
+        user_profile_id = profile_repo.get_profile_id_by_user_account(user_account_id)
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT user_profile_id, interest_id
+                        FROM user_profile_interests
+                        WHERE user_profile_id = %s;
+                        """,
+                        [user_profile_id]
+                    )
+                    result = db.fetchall()
+            
+                    
+                    vectors = {}
+                    for record in result:
+                        user_profile_id = record[0]
+                        interest_id = record[1]
+                        interests = [interest_id]
+                        # print(interests)
+                        vector = self.generate_interest_vector(interests, all_interests)
+
+                        vectors[user_profile_id] = vector
+                        print(vector)
+                    print(vectors)
+
+                    # print(vector)
+                    return vectors
+        except Exception as e:
+            print(e)
+            return {"message": "Could not generate interest vector for user."}
+                
 
     def delete_member(self, group_id: int, profile_id: int) -> bool:
         try:
@@ -127,9 +192,6 @@ class GroupRepository:
             print(e)
             return {"message": "Could not get groups"}
         
-    # SELECT id, gf.name, g.name, g.icon_photo, g.chatroom_id
-    # FROM groups g
-    # JOIN group_focus gf ON gf.id = g.focus_id
 
     def get_one_group(self, group_id) -> SingleGroupOut:
         try:
@@ -272,7 +334,6 @@ class GroupRepository:
                         ]
                     )
                     id = result.fetchone()[0]
-                    # return self.group_in_to_out(group_id, group)
                     old_data = group.dict()
                     return GroupUpdateOut(id=id, **old_data)
         except Exception as e:
@@ -296,7 +357,9 @@ class GroupRepository:
                         ]
                     )
                     id = result.fetchone()[0]
-                    return self.group_in_to_out(id, group)
+                    group_out = GroupOut(group_id=id, focus_id=group.focus_id)
+                    return group_out
+
         except Exception as e:
             print(e)
             return {"message": "could not create group"}
@@ -359,7 +422,10 @@ class GroupRepository:
     def group_member_in_to_out(self, id: int, profile_id: int, group_member: GroupMemberIn):
         old_data = group_member.dict()
         return GroupMemberOut(id=id, user_profile_id=profile_id, **old_data)
+    
 
-    def group_in_to_out(self, id: int, group: GroupIn):
-        old_data = group.dict()
-        return GroupOut(id=id, **old_data)
+    # Commented out this method as we are setting all response models inside of function
+    # def group_in_to_out(self, id: int, group: GroupIn):
+    #     old_data = group.dict()
+    #     print(id, group)
+    #     return GroupOut(id=id, **old_data)

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Response
 from authenticator import authenticator
-from typing import Union, List, Optional
+from typing import Union, List
 from queries.groups import (
     Error,
     GroupIn,
@@ -17,6 +17,22 @@ from queries.groups import (
 router = APIRouter()
 
 
+
+# @router.get("/interest_vector")
+# def get_user_interest_vector(
+#     repo.GroupRepository = Depends(),
+#     account_data: dict = Depends(authenticator.get_current_account_data),
+# ):
+# print("hey")
+
+@router.get("/interest_vector")
+def get_user_interest_vector(
+    repo: GroupRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    user_account_id = account_data["id"]
+    return repo.generate_user_interest_vector(user_account_id)
+
 @router.get("/groups", response_model=Union[List[SingleGroupOut], Error])
 def get_groups(
     repo: GroupRepository = Depends(),
@@ -26,13 +42,12 @@ def get_groups(
 
 @router.post("/groups", response_model=Union[GroupOut, Error])
 def create_group(
-    group: GroupIn,
+    focus: GroupIn,
     response: Response,
     repo: GroupRepository = Depends(),
     # account_data: dict = Depends(authenticator.get_current_account_data)
 ):
-    print(group)
-    return repo.create(group)
+    return repo.create(focus)
 
 @router.delete("/groups/{group_id}/members/{profile_id}", response_model=Union[bool, Error])
 def remove_member(
@@ -96,3 +111,43 @@ def get_user_profile_groups(
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
     return repo.get_profile_groups(profile_id)
+
+
+# FORGE ALGORITHM
+# 1. Create a dictionary or a map to represent the staging pool.
+#    - The key would be the group focus.
+#    - The value would be a list of users interested in that group focus.
+
+# 2. When a user wants to join a group with a specific focus:
+#    - Check if the group focus exists in the staging pool.
+#      - If it exists, add the user to the corresponding list.
+#      - If it doesn't exist, create a new key in the staging pool with the group focus and add the user to that list.
+
+# 3. Dynamically form groups based on compatibility metrics:
+#    - While there are users in the staging pool:
+#      - Iterate through the staging pool and select the group focus with the highest number of users.
+#      - Retrieve the list of users for that group focus.
+#      - Sort the users in the list based on a compatibility metric (e.g., cosine similarity) with the user who initiated the match-making system.
+#      - Form a group with the user who initiated the match-making system and the users with the highest compatibility scores.
+#      - Remove the formed group members from the staging pool.
+
+# 4. If the group is not full, fill it with remaining users:
+#    - Retrieve the remaining users in the staging pool.
+#    - Sort the remaining users based on the compatibility metric with the user who initiated the match-making system.
+#    - Add the remaining users to the group until it reaches the maximum capacity.
+#    - Remove the added users from the staging pool.
+
+# 5. Repeat the process to form additional groups if needed.
+
+# 6. Update the staging pool dynamically:
+#    - Allow users to leave the staging pool or change their group focus.
+#    - When a user leaves the staging pool, remove them from the corresponding group focus list.
+#    - When a user changes their group focus, move them from the previous group focus list to the new group focus list.
+
+# 7. Continuously evaluate and adjust group compositions:
+#    - Periodically re-evaluate the compatibility metrics and adjust group compositions if necessary.
+#    - Consider factors like new user additions, user departures, or changes in user preferences.
+
+# 8. Output the final formed groups.
+
+

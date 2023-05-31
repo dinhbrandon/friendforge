@@ -15,6 +15,7 @@ function HeaderToken() {
     logout();
     navigate("/");
   };
+
   console.log(profile);
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useNavigate } from "react-router-dom";
 // import useUser from "../useUser";
 
 function CreateProfileForm() {
@@ -7,6 +8,7 @@ function CreateProfileForm() {
   const [about_me, setAboutMe] = useState("");
   const [profile_photo, setProfilePhoto] = useState("");
   const [location, setLocation] = useState("");
+  const navigate = useNavigate();
 
   // handle the form submission
   const handleSubmit = async (e) => {
@@ -35,7 +37,12 @@ function CreateProfileForm() {
       setAboutMe("");
       setProfilePhoto("");
       setLocation("");
+      navigate("/signup/profile/interests");
     }
+  };
+
+  const handelNavigate = () => {
+    navigate("/signup/profile/interests");
   };
 
   return (
@@ -89,7 +96,9 @@ function CreateProfileForm() {
               </div>
 
               <div>
-                <button className="btn btn-primary my-10">To the Forge!</button>
+                <button className="btn btn-primary my-10">
+                  Pick my Interests
+                </button>
                 {/* This might need to lead to interests in the future */}
               </div>
             </form>

@@ -16,6 +16,7 @@ import AdminNames from "./components/adminpages/AdminNames";
 import AdminUsers from "./components/adminpages/AdminUsers";
 import CreateProfile from "./screens/CreateProfile";
 import Forge from "./screens/Forge";
+import ChatRoom from "./components/chat/ChatRoom";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/admin/interests" element={<AdminInterests />} />
           <Route path="/admin/names" element={<AdminNames />} />
           <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/room/:id" element={<ChatRoom />} />
           {/* end edmin pannel routes */}
         </Routes>
         <Footer />

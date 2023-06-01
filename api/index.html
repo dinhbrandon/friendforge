@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat</title>
+  </head>
+  <body>
+    <h1>WebSocket Chat</h1>
+    <form id="message-form">
+      <input type="text" id="messageText" autocomplete="off"/>
+      <button>Send</button>
+    </form>
+    <ul id='messages'>
+    </ul>
+    <script>
+      // Create a new WebSocket to the FastAPI server
+      const ws = new WebSocket(`ws://${location.host}/ws`);
+
+      // When a message arrives, handle it with this function
+      ws.addEventListener('message', event => {
+        const messages = document.getElementById('messages')
+        const message = document.createElement('li')
+        const content = document.createTextNode(event.data)
+        message.appendChild(content)
+        messages.appendChild(message)
+      });
+
+      // Get the form and, when someone submits it, cancel
+      // that event and send the message over the WebSocket
+      const form = document.getElementById('message-form');
+      form.addEventListener('submit', event => {
+        event.preventDefault()
+        const input = document.getElementById("messageText")
+        ws.send(input.value)
+        input.value = ''
+      });
+    </script>
+  </body>
+</html>

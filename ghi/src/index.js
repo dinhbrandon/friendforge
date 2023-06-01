@@ -4,7 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import "./index.css";
-import "./reuse.css";
+// import "./reuse.css";
 
 
 

@@ -16,7 +16,7 @@ function HeaderToken() {
     navigate("/");
   };
 
-  console.log(profile);
+  // console.log(profile);
 
   return (
     <>

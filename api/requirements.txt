@@ -11,4 +11,6 @@ python-multipart==0.0.5
 aiofiles>=0.8.0,<0.9.0
 psycopg[binary,pool]==3.1.3
 numpy
-
+python-socketio==5.8.0
+python-socketio[asyncio_client]
+websockets==11.0.3

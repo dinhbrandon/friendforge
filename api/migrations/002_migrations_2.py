@@ -10,15 +10,12 @@ steps = [
             date_of_birth VARCHAR(1000) NOT NULL,
             first_name VARCHAR(25) NOT NULL,
             last_name VARCHAR(25) NOT NULL,
-            phone_number VARCHAR(15) NOT NULL UNIQUE
-
+            phone_number VARCHAR(15) NOT NULL UNIQUE,
+            account_type_id INTEGER NOT NULL REFERENCES account_type(id)
         );
         """,
-
-        ## Drop the table
-
         """
-        DROP TABLE user_accounts;
+        DROP TABLE user_account;
         """
     ]
 ]

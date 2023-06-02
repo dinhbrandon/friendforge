@@ -13,15 +13,3 @@ steps = [
         """
     ]
 ]
-
-    # [
-    #     """
-    #     CREATE TABLE chatroom (
-    #     id SERIAL PRIMARY KEY NOT NULL,
-    #     group_id INTEGER NOT NULL REFERENCES groups(id) ON DELETE CASCADE
-    #     );
-    #     """,
-    #     """
-    #     DROP TABLE chatroom;
-    #     """
-    # ],

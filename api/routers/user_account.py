@@ -15,6 +15,11 @@ class UserAccountForm(BaseModel):
         username: str
         password: str
 
+# class AccountUpdateForm(UserAccountForm):
+#         first_name: str
+#         last_name: str
+#         phone_number: str
+
 class AccountToken(Token):
         account: UserAccountOut
 
@@ -70,7 +75,17 @@ def get_all_user_accounts(
 #         user_id: int,
 #         user_account: UserAccountIn,
 #         repo: UserAccountQueries = Depends(),
-# ) -> Union[Error, UserAccountOut]:
+#         account_data: dict = Depends(authenticator.get_current_account_data)
+# ):
+#         hashed_password = authenticator.hash_password(user_account.password)
+#         try:
+#                 account = repo.update(user_account, hashed_password)
+#         except DuplicateAccountError:
+#                 raise HTTPException(
+#                         status_code=status.HTTP_400_BAD_REQUEST,
+#                         detail="Could not update account.",
+#                 )
+#         form = AccountUpdateForm(username=user_account.email, password=user_account.password, first_name=user_account.first_name, last_name=user_account.last_name, phone_number=user_account.phone_number)
 #         return repo.update(user_id, user_account)
 
 @router.delete("/users/{user_id}", response_model=bool)

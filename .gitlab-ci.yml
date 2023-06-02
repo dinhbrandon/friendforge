@@ -2,7 +2,7 @@
 services:
   - docker:dind
 
-build-fastapi-service-image:
+build-api-service-image:
   stage: build
   image: docker:git
   variables:
@@ -102,3 +102,5 @@ lint-test-job:
 #     - docker run caprover/cli-caprover caprover deploy --caproverUrl $CAPROVER_URL --caproverPassword $CAPROVER_PASSWORD --caproverApp $CAPROVER_APP --imageName $CONTAINER_FULL_IMAGE_NAME_WITH_TAG
 #   only:
 #     - main
+
+#Testing

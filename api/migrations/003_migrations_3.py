@@ -10,12 +10,10 @@ steps = [
             user_account_id INTEGER NOT NULL REFERENCES user_account(id) ON DELETE CASCADE
         );
         """,
-
-    #     ## Drop the table
-
+        #     ## Drop the table
         """
         DROP TABLE user_profile;
-        """
+        """,
     ],
     [
         """
@@ -27,6 +25,6 @@ steps = [
         """,
         """
         DROP TABLE user_profile_interests;
-        """
-    ]
+        """,
+    ],
 ]

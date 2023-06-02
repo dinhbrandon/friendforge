@@ -8,7 +8,7 @@ steps = [
         """,
         """
         DROP TABLE interests;
-        """
+        """,
     ],
     [
         # Create the table
@@ -21,7 +21,7 @@ steps = [
         # Drop the table
         """
         DROP TABLE group_focus;
-        """
+        """,
     ],
     [
         """
@@ -32,6 +32,6 @@ steps = [
         """,
         """
         DROP TABLE account_type;
-        """
-    ]
+        """,
+    ],
 ]

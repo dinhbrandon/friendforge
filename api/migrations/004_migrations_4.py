@@ -13,7 +13,7 @@ steps = [
         # Drop the table
         """
         DROP TABLE groups;
-        """
+        """,
     ],
     [
         """
@@ -25,6 +25,6 @@ steps = [
         """,
         """
         DROP TABLE profiles_in_group;
-        """
-    ]
+        """,
+    ],
 ]

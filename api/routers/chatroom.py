@@ -1,23 +1,22 @@
-from fastapi import (
-    APIRouter,
-    WebSocket,
-    WebSocketDisconnect,
-    Depends
-)
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends
 from fastapi.responses import HTMLResponse
-from queries.chatroom import MessageIn, MessageOut, MessageRepository
+from queries.chatroom import MessageRepository
 import json
-from authenticator import authenticator
+# from authenticator import authenticator
 
 router = APIRouter()
+
 
 @router.get("/chatroom")
 def homepage():
     with open("index.html") as f:
         return HTMLResponse(f.read())
 
+
 connections = []
 print("#1", connections)
+
+
 @router.websocket("/ws")
 async def websocket_endpoint(
     websocket: WebSocket,
@@ -34,7 +33,7 @@ async def websocket_endpoint(
             data = await websocket.receive_text()
             print(data)
             message = repo.create(profile_id, group_id, data)
-            print("3", data) #content of message sent
+            print("3", data)  # content of message sent
             print("6", message)
             for connection in connections:
                 await connection.send_text(json.dumps(message))

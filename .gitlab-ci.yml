@@ -2,7 +2,7 @@
 services:
   - docker:dind
 
-build-fastapi-service-image:
+build-api-service-image:
   stage: build
   image: docker:git
   variables:

@@ -19,9 +19,14 @@ import Forge from "./screens/Forge";
 import ChatRoom from "./components/chat/ChatRoom";
 
 function App() {
+
+  const domain = /https:\/\/[^/]+/;
+  //VERIFY IF CORRECT???
+  const basename = process.env.PUBLIC_URL.replace(domain, '/friendforge');
+
   return (
     <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
-      <BrowserRouter basename="/">
+      <BrowserRouter basename={basename}>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

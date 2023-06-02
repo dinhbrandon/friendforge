@@ -22,16 +22,32 @@ app.include_router(user_profile.router)
 app.include_router(chatroom.router)
 
 
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=[
+#         os.environ.get("CORS_HOST", "http://localhost:3000")
+#     ],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+origins = [
+    "http://localhost:3000",
+    os.environ.get("CORS_HOST", None),
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        os.environ.get("CORS_HOST", "http://localhost:3000")
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+@app.get("/")
+def root():
+    return {"message": "Hello World"}
 
 @app.get("/api/launch-details")
 def launch_details():

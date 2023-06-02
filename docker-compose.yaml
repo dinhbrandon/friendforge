@@ -7,14 +7,14 @@ services:
       context: ./api
       dockerfile: ./Dockerfile.dev
     environment:
-      SIGNING_KEY: d9857f15e75146d8c7d2db1681ce19a779e89bc620e2e0c2e9a316fd48b81fdf
-      DATABASE_URL: postgresql://friendforge:friendforge@db/friendforge
-      WAIT_HOSTS: db:5432
-      WAIT_TIMEOUT: 240
+      SIGNING_KEY: ${SIGNING_KEY}
+      DATABASE_URL: ${DATABASE_URL}
+      WAIT_HOSTS: ${WAIT_HOSTS}
+      WAIT_TIMEOUT: ${WAIT_TIMEOUT}
     depends_on:
       - db
     ports:
-      - "8000:8000"
+      - "8000:80"
     volumes:
       - ./api:/app
     platform: linux/amd64
@@ -23,9 +23,9 @@ services:
     volumes:
       - project-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DATABASES: friendforge
-      POSTGRES_USER: friendforge
-      POSTGRES_PASSWORD: friendforge
+      POSTGRES_DATABASES: ${POSTGRES_DATABASES}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "15432:5432"
 
@@ -38,9 +38,9 @@ services:
     ports:
       - "3000:3000"
     environment:
-      WATCHPACK_POLLING: true
-      HOST_OS: ${OS}
-      NODE_ENV: development
-      HOST: "0.0.0.0"
-      PUBLIC_URL: http://localhost:3000
-      REACT_APP_API_HOST: http://localhost:8000
+      WATCHPACK_POLLING: ${WATCHPACK_POLLING}
+      HOST_OS: ${HOST_OS}
+      NODE_ENV: ${NODE_ENV}
+      HOST: ${HOST}
+      PUBLIC_URL: ${PUBLIC_URL
+      REACT_APP_API_HOST: ${REACT_APP_API_HOST}

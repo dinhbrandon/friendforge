@@ -1,3 +1,21 @@
+
+services:
+  - docker:dind
+
+build-fastapi-service-image:
+  stage: build
+  image: docker:git
+  variables:
+    GITLAB_IMAGE: ${CI_REGISTRY_IMAGE}/sample_service_image
+  before_script:
+    # $CI_JOB_TOKEN is variable automatically added by Gitlab: see https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#variables-reference
+    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
+  script:
+    - docker build --tag $GITLAB_IMAGE:latest sample_service
+    - docker push $GITLAB_IMAGE:latest
+  only:
+    - main
+
 stages:
   - test
   - build

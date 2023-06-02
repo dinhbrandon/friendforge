@@ -1,12 +1,15 @@
 from pydantic import BaseModel
-from typing import Optional, List, Union
+from typing import List, Union
 from queries.pool import pool
+
 
 class ProfileIn(BaseModel):
     about_me: str
     profile_photo: str
     location: str
-    # user_account_id: int ---> this field is removed and will now populate automatically based on authenticated user
+    # user_account_id: int ---> this field is removed and
+    # will now populate automatically based on authenticated user
+
 
 class ProfileOutCreation(BaseModel):
     id: int
@@ -15,25 +18,30 @@ class ProfileOutCreation(BaseModel):
     location: str
     user_account_id: int
 
+
 class ProfileOut(ProfileOutCreation):
     username: str
     first_name: str
     date_of_birth: str
     interests: List[str]
 
+
 class ProfileInterestIn(BaseModel):
     # user_profile_id: int
     interest_id: int
+
 
 class ProfileInterestOut(BaseModel):
     id: int
     user_profile_id: int
     interest_id: int
 
+
 class Junction(BaseModel):
     id: int
     name: str
     user_profile_interest_id: int
+
 
 class JunctionsOut(BaseModel):
     interests: List[Junction]
@@ -42,9 +50,11 @@ class JunctionsOut(BaseModel):
 class Error(BaseModel):
     message: str
 
-class ProfileRepository:
 
-    def get_all_interest_junctions(self) -> Union[Error, List[ProfileInterestOut]]:
+class ProfileRepository:
+    def get_all_interest_junctions(
+        self,
+    ) -> Union[Error, List[ProfileInterestOut]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -56,9 +66,9 @@ class ProfileRepository:
                     )
                     return [
                         ProfileInterestOut(
-                        id=record[0],
-                        user_profile_id=record[1],
-                        interest_id=record[2]
+                            id=record[0],
+                            user_profile_id=record[1],
+                            interest_id=record[2],
                         )
                         for record in db
                     ]
@@ -66,7 +76,6 @@ class ProfileRepository:
         except Exception as e:
             print(e)
             # return {"message": "Could not get all interests"}
-
 
     def get_profile_id_by_user_account(self, user_account_id: int) -> int:
         try:
@@ -78,7 +87,7 @@ class ProfileRepository:
                         FROM user_profile
                         WHERE user_account_id = %s
                         """,
-                        [user_account_id]
+                        [user_account_id],
                     )
 
                     row = db.fetchone()
@@ -90,7 +99,6 @@ class ProfileRepository:
             print(e)
             return {"message": "This user has no profile created."}
 
-
     def delete_interests_profile_junction(self, junction_id: int) -> bool:
         try:
             with pool.connection() as conn:
@@ -100,7 +108,7 @@ class ProfileRepository:
                         DELETE FROM user_profile_interests
                         WHERE id = %s
                         """,
-                        [junction_id]
+                        [junction_id],
                     )
                     return True
         except Exception as e:
@@ -114,7 +122,8 @@ class ProfileRepository:
                     """
                     SELECT interest.id, interest.name, upi.id
                     FROM interests interest
-                    JOIN user_profile_interests upi ON(interest.id = upi.interest_id)
+                    JOIN user_profile_interests upi
+                    ON (interest.id = upi.interest_id)
                     WHERE upi.user_profile_id = %s
                     ORDER BY interest.name
                     """,
@@ -132,8 +141,9 @@ class ProfileRepository:
                     interests.append(interest)
                 return interests
 
-
-    def create(self, user_account_id, profile: ProfileIn) -> Union[ProfileOutCreation, Error]:
+    def create(
+        self, user_account_id, profile: ProfileIn
+    ) -> Union[ProfileOutCreation, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -149,8 +159,8 @@ class ProfileRepository:
                             profile.about_me,
                             profile.profile_photo,
                             profile.location,
-                            user_account_id
-                        ]
+                            user_account_id,
+                        ],
                     )
                     id = result.fetchone()[0]
                     return self.profile_in_to_out(id, user_account_id, profile)
@@ -164,14 +174,15 @@ class ProfileRepository:
                 with conn.cursor() as db:
                     db.execute(
                         """
-                        SELECT id, about_me, profile_photo, location, user_account_id
+                        SELECT id, about_me, profile_photo,
+                        location, user_account_id
                         FROM user_profile
                         """
                     )
                     return [
                         ProfileOutCreation(
                             id=record[0],
-                            about_me = record[1],
+                            about_me=record[1],
                             profile_photo=record[2],
                             location=record[3],
                             user_account_id=record[4],
@@ -190,12 +201,14 @@ class ProfileRepository:
                     # Get profile details
                     db.execute(
                         """
-                        SELECT UP.id, UP.about_me, UP.profile_photo, UP.location, UP.user_account_id, UA.username, UA.first_name, UA.date_of_birth
+                        SELECT UP.id, UP.about_me, UP.profile_photo,
+                        UP.location, UP.user_account_id, UA.username,
+                        UA.first_name, UA.date_of_birth
                         FROM user_profile AS UP
                         JOIN user_account AS UA ON UP.user_account_id = UA.id
                         WHERE UP.id = %s
                         """,
-                        [profile_id]
+                        [profile_id],
                     )
                     interests = self.get_interests_user_profile(profile_id)
 
@@ -214,7 +227,7 @@ class ProfileRepository:
                             "username": row[5],
                             "first_name": row[6],
                             "date_of_birth": row[7],
-                            "interests": interest_names
+                            "interests": interest_names,
                         }
                         return profile_data
                     else:
@@ -223,7 +236,9 @@ class ProfileRepository:
             print(e)
             return {"message": "error retrieving profile"}
 
-    def update(self, user_account_id, profile: ProfileIn) -> Union[ProfileOutCreation, Error]:
+    def update(
+        self, user_account_id, profile: ProfileIn
+    ) -> Union[ProfileOutCreation, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -238,9 +253,8 @@ class ProfileRepository:
                             profile.about_me,
                             profile.profile_photo,
                             profile.location,
-                            user_account_id
-
-                        ]
+                            user_account_id,
+                        ],
                     )
                     id = result.fetchone()[0]
                     return self.profile_in_to_out(id, user_account_id, profile)
@@ -248,7 +262,9 @@ class ProfileRepository:
             print(e)
             # return {"message": "Could not update profile"}
 
-    def create_user_profile_interest(self, profile_interest: ProfileInterestIn, user_account_id: int) -> ProfileInterestOut:
+    def create_user_profile_interest(
+        self, profile_interest: ProfileInterestIn, user_account_id: int
+    ) -> ProfileInterestOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -260,20 +276,18 @@ class ProfileRepository:
                         FROM user_profile
                         WHERE user_account_id = %s
                         """,
-                        [user_account_id]
+                        [user_account_id],
                     )
                     profile_id = result.fetchone()[0]
-                    # We will then insert profile_id associated with user into the junction table\
+                    # We will then insert profile_id associated
+                    # with user into the junction table\
                     result = db.execute(
                         """
                         SELECT upi.user_profile_id, upi.interest_id
                         FROM user_profile_interests upi
                         WHERE upi.user_profile_id = %s AND upi.interest_id = %s
                         """,
-                        [
-                            profile_id,
-                            profile_interest.interest_id
-                        ]
+                        [profile_id, profile_interest.interest_id],
                     )
 
                     interests = result.fetchall()
@@ -288,23 +302,29 @@ class ProfileRepository:
                         VALUES (%s, %s)
                         RETURNING id
                         """,
-                        [
-                            profile_id,
-                            profile_interest.interest_id
-                        ]
+                        [profile_id, profile_interest.interest_id],
                     )
                     id = result.fetchone()[0]
 
-                    return self.profile_interest_in_to_out(id, profile_id, profile_interest)
+                    return self.profile_interest_in_to_out(
+                        id, profile_id, profile_interest
+                    )
         except Exception as e:
             print(e)
             return {"message": "could not add interest"}
 
-    def profile_interest_in_to_out(self, id: int, profile_id: int, profile_interest: ProfileInterestIn):
+    def profile_interest_in_to_out(
+        self, id: int, profile_id: int, profile_interest: ProfileInterestIn
+    ):
         old_data = profile_interest.dict()
-        return ProfileInterestOut(id=id, user_profile_id=profile_id, **old_data)
+        return ProfileInterestOut(
+            id=id, user_profile_id=profile_id, **old_data
+        )
 
-
-    def profile_in_to_out(self, id: int, user_account_id: int, profile: ProfileIn):
+    def profile_in_to_out(
+        self, id: int, user_account_id: int, profile: ProfileIn
+    ):
         old_data = profile.dict()
-        return ProfileOutCreation(id=id, user_account_id=user_account_id, **old_data)
+        return ProfileOutCreation(
+            id=id, user_account_id=user_account_id, **old_data
+        )

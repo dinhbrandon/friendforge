@@ -16,6 +16,6 @@ steps = [
         """,
         """
         DROP TABLE user_account;
-        """
+        """,
     ]
 ]

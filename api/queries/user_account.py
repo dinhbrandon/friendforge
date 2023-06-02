@@ -1,13 +1,17 @@
 from pydantic import BaseModel
-from typing import List, Union, Optional
+from typing import List, Union
+
 # from datetime import date
 from queries.pool import pool
 
-class Error (BaseModel):
+
+class Error(BaseModel):
     message: str
+
 
 class DuplicateAccountError(ValueError):
     pass
+
 
 class UserAccountIn(BaseModel):
     email: str
@@ -19,6 +23,7 @@ class UserAccountIn(BaseModel):
     phone_number: str
     account_type_id: int
 
+
 class UserAccountOut(BaseModel):
     id: int
     email: str
@@ -29,11 +34,12 @@ class UserAccountOut(BaseModel):
     phone_number: str
     account_type_id: int
 
+
 class UserAccountOutWithPassword(UserAccountOut):
     hashed_password: str
 
-class UserAccountQueries(): #Queries should be a parameter
 
+class UserAccountQueries:  # Queries should be a parameter
     def get_one(self, email: str) -> UserAccountOutWithPassword:
         try:
             with pool.connection() as conn:
@@ -52,7 +58,7 @@ class UserAccountQueries(): #Queries should be a parameter
                         FROM user_account
                         WHERE email = %s
                         """,
-                        [email]
+                        [email],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -80,7 +86,7 @@ class UserAccountQueries(): #Queries should be a parameter
                         FROM user_account
                         WHERE id = %s
                         """,
-                        [id]
+                        [id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -89,7 +95,6 @@ class UserAccountQueries(): #Queries should be a parameter
         except Exception as e:
             print(e)
             return {"message": "Could not get that user"}
-
 
     def delete(self, user_id: int) -> bool:
         try:
@@ -100,13 +105,12 @@ class UserAccountQueries(): #Queries should be a parameter
                         DELETE FROM user_account
                         WHERE id = %s
                         """,
-                        [user_id]
+                        [user_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
-
 
     def get_all(self) -> Union[Error, List[UserAccountOut]]:
         try:
@@ -114,7 +118,8 @@ class UserAccountQueries(): #Queries should be a parameter
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, email, username, date_of_birth, first_name, last_name, phone_number, account_type_id
+                        SELECT id, email, username, date_of_birth, first_name,
+                        last_name, phone_number, account_type_id
                         FROM user_account
                         ORDER BY id;
                         """
@@ -127,39 +132,43 @@ class UserAccountQueries(): #Queries should be a parameter
             print(e)
             return {"message": "Could not get all user accounts"}
 
-
-    def create(self, user_account: UserAccountIn, hashed_password: str) -> UserAccountOutWithPassword:
+    def create(
+        self, user_account: UserAccountIn, hashed_password: str
+    ) -> UserAccountOutWithPassword:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
-                            """
+                        """
                             INSERT INTO user_account
-                                (email, username, password, date_of_birth, first_name, last_name, phone_number, account_type_id)
+                                (email, username, password, date_of_birth,
+                                first_name, last_name,
+                                phone_number, account_type_id)
                             VALUES
                             (%s, %s, %s, %s, %s, %s, %s, %s)
                             RETURNING id;
                             """,
-                            [
-                                user_account.email,
-                                user_account.username,
-                                hashed_password,
-                                user_account.date_of_birth,
-                                user_account.first_name,
-                                user_account.last_name,
-                                user_account.phone_number,
-                                user_account.account_type_id
-                                ]
-
+                        [
+                            user_account.email,
+                            user_account.username,
+                            hashed_password,
+                            user_account.date_of_birth,
+                            user_account.first_name,
+                            user_account.last_name,
+                            user_account.phone_number,
+                            user_account.account_type_id,
+                        ],
                     )
                     id = result.fetchone()[0]
-                    return self.user_account_in_to_out(id, user_account, hashed_password) # Should be UserAccountOutWithPassword?
+                    return self.user_account_in_to_out(
+                        id, user_account, hashed_password
+                    )  # Should be UserAccountOutWithPassword?
         except Exception as e:
             print(e)
             return {"message": "Create did not work"}
 
-
-    # def update(self, user_id: int, user_account: UserAccountIn, hashed_password: str) -> Union[UserAccountOut, Error]:
+    # def update(self, user_id: int, user_account: UserAccountIn,
+    # hashed_password: str) -> Union[UserAccountOut, Error]:
     #     try:
     #         with pool.connection() as conn:
     #             with conn.cursor() as db:
@@ -188,10 +197,13 @@ class UserAccountQueries(): #Queries should be a parameter
     #         print(e)
     #         return {"message": "Could not update user account"}
 
-
-    def user_account_in_to_out(self, id: int, user_account: UserAccountIn, hashed_password: str):
+    def user_account_in_to_out(
+        self, id: int, user_account: UserAccountIn, hashed_password: str
+    ):
         prev_data = user_account.dict()
-        return UserAccountOutWithPassword(id=id, hashed_password=hashed_password, **prev_data)
+        return UserAccountOutWithPassword(
+            id=id, hashed_password=hashed_password, **prev_data
+        )
 
     def record_to_user_account_out(self, record) -> UserAccountOutWithPassword:
         return UserAccountOutWithPassword(
@@ -203,7 +215,7 @@ class UserAccountQueries(): #Queries should be a parameter
             first_name=record[5],
             last_name=record[6],
             phone_number=record[7],
-            account_type_id=record[8]
+            account_type_id=record[8],
         )
 
     def record_to_user_account_out_np(self, record) -> UserAccountOut:
@@ -215,5 +227,5 @@ class UserAccountQueries(): #Queries should be a parameter
             first_name=record[4],
             last_name=record[5],
             phone_number=record[6],
-            account_type_id=record[7]
+            account_type_id=record[7],
         )

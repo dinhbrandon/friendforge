@@ -2,5 +2,7 @@
   "editor.formatOnPaste": true,
   "python.formatting.provider": "black",
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true
 }

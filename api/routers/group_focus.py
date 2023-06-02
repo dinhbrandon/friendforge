@@ -5,7 +5,7 @@ from queries.group_focus import (
     GroupFocusIn,
     GroupFocusRepository,
     GroupFocusOut,
-    )
+)
 
 
 router = APIRouter()
@@ -27,7 +27,9 @@ def get_group_focus(
     return repo.get_group_focus()
 
 
-@router.put("/group_focus/{group_focus_id}", response_model=Union[GroupFocusOut, Error])
+@router.put(
+    "/group_focus/{group_focus_id}", response_model=Union[GroupFocusOut, Error]
+)
 def update_group_focus(
     group_focus_id: int,
     focus: GroupFocusIn,
@@ -44,7 +46,9 @@ def delete_group_focus(
     return repo.delete(group_focus_id)
 
 
-@router.get("/group_focus/{group_focus_id}", response_model=Optional[GroupFocusOut])
+@router.get(
+    "/group_focus/{group_focus_id}", response_model=Optional[GroupFocusOut]
+)
 def get_one_focus(
     group_focus_id: int,
     response: Response,

@@ -10,6 +10,6 @@ steps = [
         """,
         """
         DROP TABLE messages;
-        """
+        """,
     ]
 ]

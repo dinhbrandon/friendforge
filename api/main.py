@@ -9,6 +9,7 @@ from routers import group_names
 from routers import groups
 from routers import user_profile
 from routers import chatroom
+from routers import account_type
 
 
 app = FastAPI()
@@ -20,6 +21,7 @@ app.include_router(group_names.router)
 app.include_router(groups.router)
 app.include_router(user_profile.router)
 app.include_router(chatroom.router)
+app.include_router(account_type.router)
 
 
 # app.add_middleware(

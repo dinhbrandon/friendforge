@@ -42,5 +42,5 @@ services:
       HOST_OS: ${HOST_OS}
       NODE_ENV: ${NODE_ENV}
       HOST: ${HOST}
-      PUBLIC_URL: ${PUBLIC_URL
+      PUBLIC_URL: ${PUBLIC_URL}
       REACT_APP_API_HOST: ${REACT_APP_API_HOST}

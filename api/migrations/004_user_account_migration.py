@@ -3,7 +3,7 @@ steps = [
         ## Create the table
         """
         CREATE TABLE user_account (
-		    id SERIAL PRIMARY KEY NOT NULL, 
+		    id SERIAL PRIMARY KEY NOT NULL,
             email VARCHAR(1000) NOT NULL UNIQUE,
             username VARCHAR(1000) NOT NULL UNIQUE,
             password VARCHAR(1000) NOT NULL,

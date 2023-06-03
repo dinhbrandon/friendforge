@@ -132,9 +132,6 @@ def delete_user_profile_interest(
         if junction_id in list_user_interests:
             return repo.delete_interests_profile_junction(junction_id)
         else:
-            return {
-                "error":
-                "Relational ID does not exist"
-            }
+            return {"error": "Relational ID does not exist"}
     else:
         return {"error": "Profile not found"}

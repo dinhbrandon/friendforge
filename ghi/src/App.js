@@ -10,18 +10,16 @@ import AdminPannel from "./screens/AdminPannel";
 import SelectInterests from "./components/authorization/SelectInterests";
 import AdminFocus from "./components/adminpages/AdminFocus";
 import AdminGroups from "./components/adminpages/AdminGroups";
-import AdminIcons from "./components/adminpages/AdminIcons";
 import AdminInterests from "./components/adminpages/AdminInterests";
-import AdminNames from "./components/adminpages/AdminNames";
 import AdminUsers from "./components/adminpages/AdminUsers";
 import CreateProfile from "./screens/CreateProfile";
 import Forge from "./screens/Forge";
-// import ChatRoom from "./components/chat/ChatRoom";
+import GroupHome from "./screens/GroupHome";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
   //VERIFY IF CORRECT???
-  const basename = process.env.PUBLIC_URL.replace(domain, "/friendforge");
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
 
   return (
     <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
@@ -36,13 +34,12 @@ function App() {
             element={<SelectInterests />}
           />
           <Route path="/forge" element={<Forge />} />
+          <Route path="/group/:id" element={<GroupHome />} />
           {/* routes for admin AdminPannel pages */}
           <Route path="/admin" element={<AdminPannel />} />
           <Route path="/admin/focus" element={<AdminFocus />} />
           <Route path="/admin/groups" element={<AdminGroups />} />
-          <Route path="/admin/icons" element={<AdminIcons />} />
           <Route path="/admin/interests" element={<AdminInterests />} />
-          <Route path="/admin/names" element={<AdminNames />} />
           <Route path="/admin/users" element={<AdminUsers />} />
           {/* <Route path="/room/:id" element={<ChatRoom />} /> */}
           {/* end edmin pannel routes */}

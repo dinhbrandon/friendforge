@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-
 // this grabs the data from the logged in user and returns in in a dictionary so we can use the users data in other components
 
 const useUser = (token) => {
@@ -8,7 +7,7 @@ const useUser = (token) => {
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await fetch('http://localhost:8000/token', {
+      const res = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
         credentials: "include",
         headers: {
           Authorization: `bearer ${token}`,

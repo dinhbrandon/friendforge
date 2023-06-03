@@ -21,7 +21,7 @@ function CreateProfileForm() {
 
     console.log(profileData);
 
-    const url = "http://localhost:8000/profile";
+    const url = `${process.env.REACT_APP_API_HOST}/profile`;
     const newProfile = {
       method: "POST",
       credentials: "include",

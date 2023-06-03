@@ -25,7 +25,7 @@ export default function Header() {
 
   if (token) {
     return (
-      <nav>
+      <nav className="bg-base-100">
         <div className="navbar bg-base-100">
           <div className="flex-1">
             <a className="header-logo" href="/">
@@ -41,7 +41,7 @@ export default function Header() {
   }
 
   return (
-    <nav>
+    <nav className="bg-base-100">
       <div className="navbar bg-base-100">
         <div className="flex-1">
           <a className="header-logo" href="/">

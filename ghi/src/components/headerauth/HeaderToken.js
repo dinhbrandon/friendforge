@@ -18,28 +18,31 @@ function HeaderToken() {
 
   // console.log(profile);
 
+  console.log(profile);
+
   return (
     <>
-      <ul className="menu menu-horizontal px-1 text-base-content">
-        <li>
-          <a href="/">Home</a>
-        </li>
-        <li>
-          <a href="/forge">Forge</a>
-        </li>
-      </ul>
+      <div className="menu menu-horizontal px-1 text-base-content ">
+        <a href="/" className="btn btn-ghost rounded-btn">
+          HOME
+        </a>
+
+        <a href="/forge" className="btn btn-ghost rounded-btn">
+          FORGE
+        </a>
+      </div>
       <HeaderGroups />
       <div className="dropdown dropdown-end">
-        <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
-          <div className="w-10 rounded-full">
+        <label tabIndex="0" className="btn btn-ghost btn-circle avatar mx-2">
+          <div className="w-10 rounded-full ">
             <img src={profile.profile_photo} />
           </div>
         </label>
         <ul
           tabIndex="0"
-          className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-neutral rounded-box w-52 text-base-content"
+          className="mt-3 p-5 shadow menu menu-compact dropdown-content bg-neutral rounded-box w-52 text-base-content z-[1]"
         >
-          <li>Welcome {user.username}</li>
+          <li>Welcome {user.username}!</li>
           <li>
             <a href="">Profile</a>
           </li>

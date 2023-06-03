@@ -1,32 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 function CreateFocus() {
-  const [name, setName] = useState('')
+  const [name, setName] = useState("");
 
   async function handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     const data = {
       name,
-    }
+    };
 
-    const url = 'http://localhost:8000/group_focus'
-    const newFocus ={
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-    }}
+    const url = `${process.env.REACT_APP_API_HOST}/group_focus`;
+    const newFocus = {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-    const response = await fetch(url, newFocus)
+    const response = await fetch(url, newFocus);
     if (response.ok) {
-      setName('')
+      setName("");
     }
   }
 
   const handleName = (event) => {
-    setName(event.target.value)
-  }
-
+    setName(event.target.value);
+  };
 
   return (
     <>
@@ -35,21 +35,26 @@ function CreateFocus() {
           <div className="log">Create new Focus</div>
         </div>
         <form onSubmit={handleSubmit}>
-
           <div className="form-group">
-            <label htmlFor='name'>Name</label>
-            <input type="text" id='name' value={name} onChange={handleName} placeholder='name' name='name' required />
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={handleName}
+              placeholder="name"
+              name="name"
+              required
+            />
           </div>
 
           <div className="form-group">
             <button>Create New</button>
           </div>
-
         </form>
       </div>
-
     </>
-  )
+  );
 }
 
-export default CreateFocus
+export default CreateFocus;

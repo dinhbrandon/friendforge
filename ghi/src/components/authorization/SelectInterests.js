@@ -7,7 +7,7 @@ function SelectInterests() {
   const [interest, setInterest] = useState([]);
 
   async function loadInterest() {
-    const response = await fetch("http://localhost:8000/interests");
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/interests`);
     if (response.ok) {
       const data = await response.json();
       setInterest(data);
@@ -34,14 +34,17 @@ function SelectInterests() {
       };
       console.log(interest_id);
 
-      const response = await fetch("http://localhost:8000/profile/interests", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(interestData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOST}/profile/interests`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(interestData),
+        }
+      );
 
       if (response.ok) {
         // Handle success

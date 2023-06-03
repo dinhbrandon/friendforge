@@ -328,5 +328,3 @@ class ProfileRepository:
         return ProfileOutCreation(
             id=id, user_account_id=user_account_id, **old_data
         )
-
-# testing

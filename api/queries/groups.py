@@ -58,6 +58,20 @@ class GroupMemberOut(BaseModel):
 
 
 class GroupRepository:
+
+    def get_match_percentage(self, profile_1, profile_2):
+        profile_1_vector = self.generate_user_interest_vector(profile_1)
+        profile_2_vector = self.generate_user_interest_vector(profile_2)
+
+        person_1 = profile_1_vector[profile_1]
+        person_2 = profile_2_vector[profile_2]
+
+        intersection = sum(x == y == 1 for x, y in zip(person_1, person_2))
+        union = sum(x == 1 or y == 1 for x, y in zip(person_1, person_2))
+        jaccard_coefficient = intersection / union if union != 0 else 0.0
+
+        return jaccard_coefficient
+
     def generate_interest_vector(self, user_interests, all_interests):
         vector = np.zeros(len(all_interests), dtype=int)
         for i, interest in enumerate(all_interests):
@@ -68,11 +82,6 @@ class GroupRepository:
     def generate_user_interest_vector(self, user_profile_id):
         interest_repo = InterestRepository()
         all_interests = interest_repo.get_all()
-
-        # only for if we want to use logged in user
-        # profile_repo = ProfileRepository()
-        # user_profile_id =
-        # profile_repo.get_profile_id_by_user_account(user_account_id)
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:

@@ -15,7 +15,7 @@ def homepage():
 
 
 connections = []
-print("#1", connections)
+# print("#1", connections)
 
 
 @router.websocket("/ws")

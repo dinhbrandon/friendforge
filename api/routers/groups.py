@@ -17,6 +17,17 @@ from queries.groups import (
 router = APIRouter()
 
 
+@router.get("/match_strength")
+def get_match_strength(
+        user_profile_id_1=None,
+        user_profile_id_2=None,
+        repo: GroupRepository = Depends(),
+        account_data: dict = Depends(authenticator.get_current_account_data),
+
+):
+    return repo.get_match_percentage(user_profile_id_1, user_profile_id_2)
+
+
 @router.get("/interest_vector")
 def get_user_interest_vector(
     user_profile_id=None,

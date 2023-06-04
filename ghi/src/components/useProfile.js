@@ -8,7 +8,7 @@ function useProfile(token) {
 
   const getID = async () => {
     const res = await fetch(
-      `http://localhost:8000/profile_id/get?user_id=${user.id}`,
+      `${process.env.REACT_APP_API_HOST}/profile_id/get?user_id=${user.id}`,
       {
         credentials: "include",
         headers: {
@@ -23,7 +23,7 @@ function useProfile(token) {
   };
 
   const getProfile = async () => {
-    const res = await fetch(`http://localhost:8000/profile/${id}`, {
+    const res = await fetch(`${process.env.REACT_APP_API_HOST}/profile/${id}`, {
       credentials: "include",
       headers: {
         Authorization: `bearer ${token}`,

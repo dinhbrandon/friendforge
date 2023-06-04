@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {},
   },
@@ -14,8 +12,8 @@ module.exports = {
           primary: "#C9632C",
           secondary: "#D18D39",
           accent: "#D8B646",
-          neutral: "#333333",
-          "base-100": "#1f1f1f",
+          neutral: "#2b2b2b",
+          "base-100": "#131313",
           info: "#afafaf",
           success: "#C7D18C",
           warning: "#D8C586",
@@ -26,4 +24,4 @@ module.exports = {
       "forest",
     ],
   },
-}
+};

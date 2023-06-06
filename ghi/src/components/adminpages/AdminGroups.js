@@ -32,18 +32,18 @@ function AdminGroups() {
                 <th scope="col">Group ID</th>
                 <th scope="col">Group Focus ID</th>
                 <th scope="col">Group Name</th>
-                {/* <th scope="col">Group Icon Photo</th>
-              <th scope="col">Group Chatroom ID</th> */}
+                <th scope="col">Group Icon Photo</th>
+              <th scope="col">Group Members</th>
               </tr>
             </thead>
             <tbody>
               {group.map((groups) => (
                 <tr key={groups.id}>
                   <th>{groups.id}</th>
-                  <th>{groups.focus_id}</th>
+                  <th>{groups.focus}</th>
                   <td>{groups.name ? groups.name : "no group name"}</td>
-                  {/* <td>{groups.icon_photo ? groups.icon_photo: "no group photo"}</td>
-                <td>{groups.chatroom_id ? groups.chatroom_id: "no chatroom id"}</td> */}
+                  <td>{groups.icon_photo ? groups.icon_photo: "no group photo"}</td>
+                  <td>{groups.number_of_members ? groups.number_of_members: "no members"}</td>
                 </tr>
               ))}
             </tbody>

@@ -52,9 +52,9 @@ build-front-end-job:
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
     PUBLIC_URL: https://blacksmith-collaborative.gitlab.io/friendforge
-    REACT_APP_SAMPLE_SERVICE_API_HOST: https://sample-service.WEBSERVICE_NAME.mod3projects.com
+    # REACT_APP_SAMPLE_SERVICE_API_HOST: https://sample-service.WEBSERVICE_NAME.mod3projects.com
   script:
-    - cd /Users/brandon/portfolio/friendforge/ghi/build/
+    - cd ghi
     - npm install
     - npm run build
     - cp build/index.html build/404.html

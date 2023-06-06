@@ -71,9 +71,10 @@ class GroupRepository:
             group_in_focus_id = self.focus_id_to_group_in(focus_id)
             self.create(group_in_focus_id)
             print("New group created")
-            eligible_groups = self.get_groups()  # Get updated list of all groups
+            eligible_groups = self.get_groups()
             for group in all_groups:
-                if group['focus_id'] == int(focus_id) and group['focus_id'] < 5:
+                if (group['focus_id'] == int(focus_id) and
+                        group['focus_id'] < 5):
                     eligible_groups.append(group)
 
         if eligible_groups:
@@ -81,12 +82,6 @@ class GroupRepository:
             target_group = eligible_groups[0]
             group_in = self.group_id_to_group_member_in(target_group['id'])
             self.create_group_member(group_in, user_account_id)
-               
-        # else:
-        #     print("New group created")
-        #     # group_in_focus_id = self.focus_id_to_group_in(focus_id)
-        #     # self.create(group_in_focus_id)
-
 
     def get_match_percentage(self, profile_1, profile_2):
         profile_1_vector = self.generate_user_interest_vector(profile_1)
@@ -435,6 +430,6 @@ class GroupRepository:
 
     def group_id_to_group_member_in(self, group_id: int):
         return GroupMemberIn(group_id=group_id)
-    
+
     def focus_id_to_group_in(self, focus_id: int):
         return GroupIn(focus_id=focus_id)

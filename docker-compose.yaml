@@ -21,7 +21,7 @@ services:
   db:
     image: postgres:latest
     volumes:
-      - project-data:/var/lib/postgresql/data
+      - project-data:/var/lib/postgresql
     environment:
       POSTGRES_DATABASES: ${POSTGRES_DATABASES}
       POSTGRES_USER: ${POSTGRES_USER}

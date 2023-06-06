@@ -1,13 +1,14 @@
-from fastapi import APIRouter
 from fastapi.testclient import TestClient
 from main import app
 from queries.interests import InterestRepository
 
 client = TestClient(app)
 
+
 class EmptyInterestRepository:
     def get_all(self):
         return []
+
 
 class CreateInterestRepository:
     def create(self, interest):

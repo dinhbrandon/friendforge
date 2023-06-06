@@ -58,6 +58,44 @@ class GroupMemberOut(BaseModel):
 
 
 class GroupRepository:
+
+    def forge(self, focus_id, user_account_id):
+        print("USER ACCOUNT ID:", user_account_id)
+        all_groups = self.get_groups()
+        eligible_groups = []
+        for group in all_groups:
+            if group['focus_id'] == int(focus_id) and group['focus_id'] < 5:
+                eligible_groups.append(group)
+        if not eligible_groups:
+            print("No eligible groups")
+            group_in_focus_id = self.focus_id_to_group_in(focus_id)
+            self.create(group_in_focus_id)
+            print("New group created")
+            eligible_groups = self.get_groups()
+            for group in all_groups:
+                if (group['focus_id'] == int(focus_id) and
+                        group['focus_id'] < 5):
+                    eligible_groups.append(group)
+
+        if eligible_groups:
+            print("User added to an existing group")
+            target_group = eligible_groups[0]
+            group_in = self.group_id_to_group_member_in(target_group['id'])
+            self.create_group_member(group_in, user_account_id)
+
+    def get_match_percentage(self, profile_1, profile_2):
+        profile_1_vector = self.generate_user_interest_vector(profile_1)
+        profile_2_vector = self.generate_user_interest_vector(profile_2)
+
+        person_1 = profile_1_vector[profile_1]
+        person_2 = profile_2_vector[profile_2]
+
+        intersection = sum(x == y == 1 for x, y in zip(person_1, person_2))
+        union = sum(x == 1 or y == 1 for x, y in zip(person_1, person_2))
+        jaccard_coefficient = intersection / union if union != 0 else 0.0
+
+        return jaccard_coefficient
+
     def generate_interest_vector(self, user_interests, all_interests):
         vector = np.zeros(len(all_interests), dtype=int)
         for i, interest in enumerate(all_interests):
@@ -68,11 +106,6 @@ class GroupRepository:
     def generate_user_interest_vector(self, user_profile_id):
         interest_repo = InterestRepository()
         all_interests = interest_repo.get_all()
-
-        # only for if we want to use logged in user
-        # profile_repo = ProfileRepository()
-        # user_profile_id =
-        # profile_repo.get_profile_id_by_user_account(user_account_id)
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -395,9 +428,8 @@ class GroupRepository:
         old_data = group_member.dict()
         return GroupMemberOut(id=id, user_profile_id=profile_id, **old_data)
 
-    # Commented out this method as we are setting
-    # all response models inside of function
-    # def group_in_to_out(self, id: int, group: GroupIn):
-    #     old_data = group.dict()
-    #     print(id, group)
-    #     return GroupOut(id=id, **old_data)
+    def group_id_to_group_member_in(self, group_id: int):
+        return GroupMemberIn(group_id=group_id)
+
+    def focus_id_to_group_in(self, focus_id: int):
+        return GroupIn(focus_id=focus_id)

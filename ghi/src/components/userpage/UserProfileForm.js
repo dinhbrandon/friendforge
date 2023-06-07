@@ -45,7 +45,10 @@ return (
         <div className="bottom-body">
         <h2>Interests:</h2>
         <div className="interests-container">
-
+            <ul>
+                {profile.interests?.map((interest, index) => (
+                <li key={index}>{interest}</li>
+                ))}
             </ul>
         </div>
     </div>

@@ -26,6 +26,7 @@
     background-color: #1f1f1f;
     color: #efeded;
     padding: 20px;
+    margin: 0px, 50px;
     text-align: center;
     font-size: 30px;
 }
@@ -35,5 +36,5 @@
     color: #efeded;
     padding: 20px;
     text-align: center;
-    font-size: 25px;
+    font-size: 25px; 
 }

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import useProfile from "../useProfile.js";
 
 
 function ForgeGroup() {
   const { token } = useToken();
-  const { profile } = useProfile(token);
   
-
   const [focuses, setFocus] = useState([]);
   const [selectedFocus, setSelectedFocus] = useState("")
 
@@ -18,38 +15,35 @@ async function loadFocuses() {
     if (response.ok) {
       const data = await response.json();
       setFocus(data);
-      // console.log(data)
+
     }
-    }
-// console.log(selectedFocus)
-async function forgeSubmit(e) {
-    e.preventDefault()
-    console.log(parseInt(selectedFocus))
-    const focusData = {
-      focus_id: parseInt(selectedFocus)
-    }
-    // console.log(focusData)
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/forge`, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(focusData),
-    });
-        if (response.ok) {
-            setSelectedFocus()
-            console.log(selectedFocus)
-        } else {
-            console.log("Could not post to Forge API")
-        }
     }
 
+async function forgeSubmit(e) {
+  e.preventDefault();
+  console.log(parseInt(selectedFocus));
+  
+  const url = `${process.env.REACT_APP_API_HOST}/forge?focus_id=${parseInt(selectedFocus)}`;
+  
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.ok) {
+    setSelectedFocus("");
+    console.log(selectedFocus);
+  } else {
+    console.log("Could not fetch Forge API");
+  }
+}
+
   useEffect(() => {
-    if (profile) {
       loadFocuses();
-    }
-  }, [profile]);
+  }, []);
 
     return (
     <>

@@ -20,12 +20,11 @@ router = APIRouter()
 @router.post("/forge")
 def enter_forge(
     focus_id: int,
+    response: Response,
     repo: GroupRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    print("this is being triggered")
     user_account_id = account_data["id"]
-    print("BACKEND:", focus_id)
     return repo.forge(int(focus_id), user_account_id)
 
 

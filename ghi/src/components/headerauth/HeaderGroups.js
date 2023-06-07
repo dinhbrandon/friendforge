@@ -49,7 +49,7 @@ function HeaderGroups() {
         })}
 
         <li>
-          <a>View All</a>
+          <a href="/mygroups">View All</a>
         </li>
       </ul>
     </div>

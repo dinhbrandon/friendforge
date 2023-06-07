@@ -41,7 +41,7 @@ function HeaderToken() {
         >
           <li>Welcome {user.username}!</li>
           <li>
-            <a href="">Profile</a>
+            <a href="/profile">Profile</a>
           </li>
           <li>
             <a href="">Settings</a>

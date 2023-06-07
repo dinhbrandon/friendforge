@@ -1,0 +1,40 @@
+.top-body {
+    background-color: #1f1f1f;
+    color: #efeded;
+    padding: 20px;
+    text-align: center;
+    font-size: 40px;
+}
+
+.img-prof {
+    display: block;
+    background-color: #1f1f1f;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15%;
+    }
+
+.mid-body {
+    background-color: #1f1f1f;
+    color: #efeded;
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.bottom-body {
+    background-color: #1f1f1f;
+    color: #efeded;
+    padding: 20px;
+    margin: 0px, 50px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.interests-container {
+    background-color: #1f1f1f;
+    color: #efeded;
+    padding: 20px;
+    text-align: center;
+    font-size: 25px; 
+}

@@ -39,7 +39,7 @@ function MyGroups() {
               <div className="w-24 h-full bg-primary"></div>
             </div>
             <div className="flex flex-wrap sm:flex-row flex-col py-6 mb-12">
-              <h1 className="sm:w-2/5 text-gray-900 font-medium title-font text-2xl mb-2 sm:mb-0">
+              <h1 className="sm:w-2/5 text-secondary font-medium title-font text-2xl mb-2 sm:mb-0">
                 My Groups
               </h1>
             </div>
@@ -55,12 +55,12 @@ function MyGroups() {
                       src={group.photo || people}
                     />
                   </div>
-                  <h2 className="text-xl font-medium title-font text-gray-900 mt-5">
-                    {group.name}
+                  <h2 className="text-xl font-medium title-font text-secondary">
+                    {group.name || "My Group"}
                   </h2>
                   <a
-                    className="text-indigo-500 inline-flex items-center mt-3"
-                    href=""
+                    className="text-secondary inline-flex items-center mt-3"
+                    href={`/group/${group.group_id}`}
                   >
                     See Group
                     <svg

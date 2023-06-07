@@ -1,43 +1,27 @@
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends
-from fastapi.responses import HTMLResponse
-from queries.chatroom import MessageRepository
-import json
+from fastapi import APIRouter, Depends
+from queries.chatroom import MessageRepository, MessageOut
+from typing import List
 
-# from authenticator import authenticator
+
+connections = []
+
 
 router = APIRouter()
 
 
-@router.get("/chatroom")
-def homepage():
-    with open("index.html") as f:
-        return HTMLResponse(f.read())
+@router.get("/messages/{group_id}", response_model=List[MessageOut])
+def get_messages_by_group_id(
+    group_id: int,
+    repo: MessageRepository = Depends(),
+):
+    return repo.get_by_group_id(group_id)
 
 
-connections = []
-# print("#1", connections)
-
-
-@router.websocket("/ws")
-async def websocket_endpoint(
-    websocket: WebSocket,
+@router.post("/messages")
+async def create_message(
+    content: str,
     profile_id: int,
     group_id: int,
     repo: MessageRepository = Depends(),
 ):
-    await websocket.accept()
-    connections.append(websocket)
-    print("2-connections", connections)
-    print("5-websocket", websocket)
-    try:
-        while True:
-            data = await websocket.receive_text()
-            print(data)
-            message = repo.create(profile_id, group_id, data)
-            print("3", data)  # content of message sent
-            print("6", message)
-            for connection in connections:
-                await connection.send_text(json.dumps(message))
-                print("4", connection)
-    except WebSocketDisconnect:
-        connections.remove(websocket)
+    return repo.create(int(profile_id), int(group_id), content)

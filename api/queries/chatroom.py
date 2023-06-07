@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from queries.pool import pool
+from typing import List
 
 
 class MessageIn(BaseModel):
@@ -13,7 +14,7 @@ class MessageOut(MessageIn):
 
 
 class MessageRepository:
-    def create(self, profile_id, group_id, message) -> MessageOut | None:
+    def create(self, profile_id, group_id, content) -> MessageOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -25,23 +26,45 @@ class MessageRepository:
                             (%s, %s, %s)
                         RETURNING id;
                         """,
-                        [profile_id, group_id, message],
+                        [profile_id, group_id, content],
                     )
                     id = result.fetchone()[0]
+                    print("New message ID:", id)
                     return self.message_in_to_out(
-                        id, profile_id, group_id, message
+                        id, profile_id, group_id, content
                     )
         except Exception as e:
-            print(e)
-            return {"message": "Create did not work"}
+            print("Error during message creation:", e)
+            return None
 
     def message_in_to_out(
-        self, id: int, profile_id: int, group_id: int, message: str
-    ):
-        # old_data = message.dict()
+        self, id: int, profile_id: int, group_id: int, content: str
+    ) -> MessageOut:
         return MessageOut(
-            id=id, profile_id=profile_id, group_id=group_id, content=message
+            id=id, profile_id=profile_id, group_id=group_id, content=content
         )
 
-
-connections = {}
+    def get_by_group_id(self, group_id: int) -> List[MessageOut]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT id, profile_id, group_id, content
+                        FROM messages
+                        WHERE group_id = %s;
+                        """,
+                        [group_id],
+                    )
+                    results = db.fetchall()
+                    messages = []
+                    for result in results:
+                        message_id, profile_id, group_id, content = result
+                        message = self.message_in_to_out(
+                            message_id, profile_id, group_id, content
+                        )
+                        messages.append(message)
+                    return messages
+        except Exception as e:
+            print("Error during message retrieval:", e)
+            return []

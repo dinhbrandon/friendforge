@@ -1,0 +1,5 @@
+.chat-fix {
+    width: 100%;
+    height: 70vh;
+    overflow: auto;
+}

@@ -1,5 +1,4 @@
 import React from 'react'
-import GroupCard from '../components/forge/groupcard'
 import './style/forge.css'
 import people from "../components/forge/people.png";
 import ForgeGroup from '../components/forge/enterforge';

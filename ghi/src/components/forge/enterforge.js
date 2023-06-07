@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from "react";
-import useUser from "../useUser";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import useProfile from "../useProfile.js";
 
 
 function ForgeGroup() {
   const { token } = useToken();
-  const { user } = useUser(token);
+  const { profile } = useProfile(token);
+  
 
   const [focuses, setFocus] = useState([]);
   const [selectedFocus, setSelectedFocus] = useState("")
-  const [existingGroups, setExistingGroups] = useState([])
 
-
-async function loadGroups() {
-  const response = await fetch(`${process.env.REACT_APP_API_HOST}/groups`);
-  if (response.ok) {
-    const data = await response.json();
-    console.log("Groups:", data)
-    setExistingGroups(data);
-  }
-}
 
 
 async function loadFocuses() {
@@ -27,75 +18,43 @@ async function loadFocuses() {
     if (response.ok) {
       const data = await response.json();
       setFocus(data);
+      // console.log(data)
     }
     }
-
-async function addMember(group_id) {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/group/member`, {
+// console.log(selectedFocus)
+async function forgeSubmit(e) {
+    e.preventDefault()
+    console.log(parseInt(selectedFocus))
+    const focusData = {
+      focus_id: parseInt(selectedFocus)
+    }
+    // console.log(focusData)
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/forge`, {
         method: "POST",
         headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ group_id }),
+        body: JSON.stringify(focusData),
     });
         if (response.ok) {
-            console.log("Added to group:", group_id)
+            setSelectedFocus()
+            console.log(selectedFocus)
         } else {
-            console.log("Failed to add member to group:", group_id)
+            console.log("Could not post to Forge API")
         }
     }
 
   useEffect(() => {
-    loadFocuses();
-    loadGroups();
-  }, []);
-
-  const handleFocusChange = (event) => {
-    setSelectedFocus(event.target.value);
-  };
-
-  const checkAndAddToGroup = async () => {
-    console.log("Existing Groups:", existingGroups)
-    let existingGroup = null;
-    for (const group of existingGroups) {
-      if (group.focus_id == selectedFocus && group.number_of_members < 5) {
-        existingGroup = group;
-        break;
-      }
+    if (profile) {
+      loadFocuses();
     }
-
-    if (existingGroup) {
-        await addMember(existingGroup.id);
-        console.log("Added to existing group:", existingGroup)
-    } else {
-        const response = await fetch(`${process.env.REACT_APP_API_HOST}/groups`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-
-            },
-            body: JSON.stringify({ focus_id: selectedFocus }),
-        });
-
-        if (response.ok) {
-            const newGroup = await response.json();
-            console.log("Created new group:", newGroup)
-            await addMember(newGroup.group_id);
-            console.log("Profile added to new group:", newGroup);
-            setExistingGroups([...existingGroups, newGroup]);
-        } else {
-            console.log("Failed to create new group.");
-        }
-    }
-
-  }
+  }, [profile]);
 
     return (
     <>
-    <div className="join">
-        <select className="select join-item" onChange={handleFocusChange}>
+    <form className="join" onSubmit={(e) => forgeSubmit(e)}>
+        <select className="select join-item" onChange={(e) => setSelectedFocus(e.target.value)}>
             <option disabled selected>Focus</option>
             {focuses.map((focus) => (
             <option key={focus.id} value={focus.id}>
@@ -104,9 +63,9 @@ async function addMember(group_id) {
             ))}
         </select>
         <div className="indicator">
-            <button className="btn join-item" onClick={checkAndAddToGroup} disabled={!selectedFocus}>Forge</button>
+            <button className="btn join-item" disabled={!selectedFocus}>Forge</button>
         </div>
-    </div>
+    </form>
     </>
   );
 }

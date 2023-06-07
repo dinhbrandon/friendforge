@@ -19,18 +19,20 @@ router = APIRouter()
 
 @router.post("/forge")
 def enter_forge(
-    focus_id=None,
+    focus_id: int,
     repo: GroupRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
+    print("this is being triggered")
     user_account_id = account_data["id"]
-    return repo.forge(focus_id, user_account_id)
+    print("BACKEND:", focus_id)
+    return repo.forge(int(focus_id), user_account_id)
 
 
 @router.get("/match_strength")
 def get_match_strength(
-        user_profile_id_1=None,
-        user_profile_id_2=None,
+        user_profile_id_1: int,
+        user_profile_id_2: int,
         repo: GroupRepository = Depends(),
         account_data: dict = Depends(authenticator.get_current_account_data),
 

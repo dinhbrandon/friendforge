@@ -51,7 +51,7 @@ build-front-end-job:
     # CI/CD variables, that value will override the value here.
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
-    PUBLIC_URL: https://blacksmith-collaborative.gitlab.io/friendforge
+    PUBLIC_URL: https://blacksmith-collaborative.gitlab.io
     REACT_APP_SAMPLE_SERVICE_API_HOST: https://sample-service.WEBSERVICE_NAME.mod3projects.com
   script:
     - cd ghi

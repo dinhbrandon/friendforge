@@ -26,7 +26,6 @@ function MyGroups() {
             const id = profile.id;
             loadGroups(id);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profile]);
 
     return (
@@ -78,9 +77,7 @@ function MyGroups() {
                             );
                         })}
                     </div>
-                    <button className="btn btn-secondary my-10">
-                        <a href="/friendforge/forge">Find a Group!</a>
-                    </button>
+                        <a className="btn btn-secondary my-10" href="/friendforge/forge">Find a Group!</a>
                 </div>
             </section>
         </>

@@ -36,7 +36,7 @@ function ForgeGroup() {
 
         if (response.ok) {
             setSelectedFocus("");
-            navigate("/friendforge/mygroups");
+            navigate("/mygroups");
         } else {
             console.log("Could not fetch Forge API");
         }

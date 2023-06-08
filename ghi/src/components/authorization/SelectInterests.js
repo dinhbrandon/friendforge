@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useNavigate } from "react-router-dom";
 
 function SelectInterests() {
     const { token } = useToken();
     const [interest, setInterest] = useState([]);
+    const navigate = useNavigate();
 
     async function loadInterest() {
         const response = await fetch(
@@ -23,12 +25,10 @@ function SelectInterests() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Get all checked interests
         const checkedInterests = interest.filter(
             (type) => document.getElementById(`interest-${type.id}`).checked
         );
 
-        // Send individual POST requests for each checked interest
         checkedInterests.forEach(async (checkedInterest) => {
             const interest_id = checkedInterest.id;
             const interestData = {
@@ -48,9 +48,8 @@ function SelectInterests() {
             );
 
             if (response.ok) {
-                // Handle success
+                navigate("/profile");
             } else {
-                // Handle error
             }
         });
     };

@@ -35,7 +35,7 @@ function CreateProfileForm() {
             setAboutMe("");
             setProfilePhoto("");
             setLocation("");
-            navigate("/friendforge/signup/profile/interests");
+            navigate("/signup/profile/interests");
         }
     };
 

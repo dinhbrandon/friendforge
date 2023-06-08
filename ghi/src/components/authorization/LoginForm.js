@@ -13,7 +13,7 @@ function LoginForm() {
         e.preventDefault();
         login(email, password);
         e.target.reset();
-        navigate("/friendforge/mygroups");
+        navigate("/mygroups");
     };
 
     return (

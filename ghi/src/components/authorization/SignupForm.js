@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import { useNavigate } from "react-router-dom";
 
 function SignupForm() {
     const [email, setEmail] = useState("");
@@ -12,7 +11,6 @@ function SignupForm() {
     const [phone_number, setPhoneNumber] = useState("");
     const { register } = useToken();
     const { login } = useToken();
-    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,7 +27,6 @@ function SignupForm() {
         register(accountData, `${process.env.REACT_APP_API_HOST}/users`);
         login(email, password);
         e.target.reset();
-        navigate("/friendforge/signup/profile");
     };
 
     return (

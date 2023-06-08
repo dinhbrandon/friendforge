@@ -59,7 +59,7 @@ function MyGroups() {
                                     </h2>
                                     <a
                                         className="text-secondary inline-flex items-center mt-3"
-                                        href={`/group/${group.group_id}`}
+                                        href={`/friendforge/group/${group.group_id}`}
                                     >
                                         See Group
                                         <svg
@@ -79,7 +79,7 @@ function MyGroups() {
                         })}
                     </div>
                     <button className="btn btn-secondary my-10">
-                        <a href="/forge">Find a Group!</a>
+                        <a href="/friendforge/forge">Find a Group!</a>
                     </button>
                 </div>
             </section>

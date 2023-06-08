@@ -13,17 +13,20 @@ function HeaderToken() {
 
     const handleLogout = () => {
         logout();
-        navigate("/");
+        navigate("/friendforge/");
     };
 
     return (
         <>
             <div className="menu menu-horizontal px-1 text-base-content ">
-                <a href="/" className="btn btn-ghost rounded-btn">
+                <a href="/friendforge/" className="btn btn-ghost rounded-btn">
                     HOME
                 </a>
 
-                <a href="/forge" className="btn btn-ghost rounded-btn">
+                <a
+                    href="/friendforge/forge"
+                    className="btn btn-ghost rounded-btn"
+                >
                     FORGE
                 </a>
             </div>
@@ -43,13 +46,13 @@ function HeaderToken() {
                 >
                     <li>Welcome {user.username}!</li>
                     <li>
-                        <a href="/profile">Profile</a>
+                        <a href="/friendforge/profile">Profile</a>
                     </li>
                     <li>
-                        <a href="/#">Settings</a>
+                        <a href="/friendforge/">Settings</a>
                     </li>
                     <li>
-                        <a onClick={handleLogout} href="/">
+                        <a onClick={handleLogout} href="/friendforge/">
                             Logout
                         </a>
                     </li>

@@ -57,7 +57,10 @@ function GroupMembers({ token, groupId }) {
                                     {member.first_name}
                                 </h3>
                                 member bio goes here
-                                <a className="link link-accent" href="/#">
+                                <a
+                                    className="link link-accent"
+                                    href="/friendforge/"
+                                >
                                     View Full Profile
                                 </a>
                             </div>

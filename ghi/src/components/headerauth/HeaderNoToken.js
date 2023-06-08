@@ -4,7 +4,7 @@ import LoginForm from "../authorization/LoginForm";
 function HeaderNoToken() {
   return (
     <>
-      <a href="/signup" className="btn btn-ghost rounded-btn">
+      <a href="/friendforge/signup" className="btn btn-ghost rounded-btn">
         SIGN UP
       </a>
 

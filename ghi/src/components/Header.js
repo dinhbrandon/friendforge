@@ -28,7 +28,7 @@ export default function Header() {
             <nav className="bg-base-100">
                 <div className="navbar bg-base-100">
                     <div className="flex-1">
-                        <a className="header-logo" href="/">
+                        <a className="header-logo" href="/friendforge">
                             <img src={logo} alt="logo" />
                         </a>
                     </div>
@@ -44,7 +44,7 @@ export default function Header() {
         <nav className="bg-base-100">
             <div className="navbar bg-base-100">
                 <div className="flex-1">
-                    <a className="header-logo" href="/">
+                    <a className="header-logo" href="/friendforge">
                         <img src={logo} alt="logo" />
                     </a>
                 </div>

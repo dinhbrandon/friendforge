@@ -45,6 +45,7 @@ function CreateInterest() {
                             placeholder="name"
                             name="name"
                             required
+                            className="input input-primary"
                         />
                     </div>
 

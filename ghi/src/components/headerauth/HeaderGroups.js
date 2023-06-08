@@ -42,7 +42,7 @@ function HeaderGroups() {
                 {groups.map((group) => {
                     return (
                         <li key={group.group_id}>
-                            <a href={`/group/${group.group_id}`}>
+                            <a href={`/friendforge/group/${group.group_id}`}>
                                 {group.name || "A Group"}
                             </a>
                         </li>
@@ -50,7 +50,7 @@ function HeaderGroups() {
                 })}
 
                 <li>
-                    <a href="/mygroups">View All</a>
+                    <a href="/friendforge/mygroups">View All</a>
                 </li>
             </ul>
         </div>

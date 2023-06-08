@@ -20,7 +20,7 @@ import MyGroups from "./screens/MyGroups";
 function App() {
     const domain = /https:\/\/[^/]+/;
     //VERIFY IF CORRECT???
-    const basename = process.env.PUBLIC_URL.replace(domain, "");
+    const basename = process.env.PUBLIC_URL.replace(domain, "/friendforge");
 
     return (
         <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>

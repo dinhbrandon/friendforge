@@ -123,8 +123,6 @@ def delete_user_profile_interest(
 
     if profile_id:
         user_interests = repo.get_interests_user_profile(profile_id)
-        # all_junctions = repo.get_all_interest_junctions()
-        # all_junction_ids = [junction.id for junction in all_junctions]
         list_user_interests = [
             interest["user_profile_interest_id"] for interest in user_interests
         ]

@@ -9,6 +9,7 @@ from routers import groups
 from routers import user_profile
 from routers import chatroom
 from routers import account_type
+from routers import friendships
 
 
 app = FastAPI()
@@ -20,17 +21,8 @@ app.include_router(groups.router)
 app.include_router(user_profile.router)
 app.include_router(chatroom.router)
 app.include_router(account_type.router)
+app.include_router(friendships.router)
 
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=[
-#         os.environ.get("CORS_HOST", "http://localhost:3000")
-#     ],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
 
 origins = [
     "http://localhost:3000",

@@ -7,8 +7,6 @@ class ProfileIn(BaseModel):
     about_me: str
     profile_photo: str
     location: str
-    # user_account_id: int ---> this field is removed and
-    # will now populate automatically based on authenticated user
 
 
 class ProfileOutCreation(BaseModel):

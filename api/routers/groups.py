@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Response
 from authenticator import authenticator
 from typing import Union, List
+from queries.response_types import Error
 from queries.groups import (
-    Error,
     GroupIn,
     GroupOut,
     GroupRepository,
@@ -60,7 +60,7 @@ def create_group(
     focus: GroupIn,
     response: Response,
     repo: GroupRepository = Depends(),
-    # account_data: dict = Depends(authenticator.get_current_account_data)
+    account_data: dict = Depends(authenticator.get_current_account_data)
 ):
     return repo.create(focus)
 

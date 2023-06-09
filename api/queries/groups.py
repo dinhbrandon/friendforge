@@ -2,11 +2,8 @@ from pydantic import BaseModel
 from queries.pool import pool
 from typing import List, Union, Optional
 from queries.interests import InterestRepository
+from queries.response_types import Error
 import numpy as np
-
-
-class Error(BaseModel):
-    message: str
 
 
 class ProfileOut(BaseModel):
@@ -60,7 +57,6 @@ class GroupMemberOut(BaseModel):
 class GroupRepository:
 
     def forge(self, focus_id, user_account_id):
-        print("USER ACCOUNT ID:", user_account_id)
         all_groups = self.get_groups()
         eligible_groups = []
         for group in all_groups:
@@ -68,10 +64,8 @@ class GroupRepository:
                     group['number_of_members'] < 5):
                 eligible_groups.append(group)
         if not eligible_groups:
-            print("No eligible groups")
             group_in_focus_id = self.focus_id_to_group_in(focus_id)
             self.create(group_in_focus_id)
-            print("New group created")
             all_groups = self.get_groups()
 
             for group in all_groups:
@@ -80,11 +74,8 @@ class GroupRepository:
                     eligible_groups.append(group)
 
         if eligible_groups:
-            print("User added to an existing group")
             target_group = eligible_groups[0]
-            print("target group:", target_group)
             group_in = self.group_id_to_group_member_in(target_group['id'])
-            print("Group in:", group_in)
             self.create_group_member(group_in, user_account_id)
 
     def get_match_percentage(self, profile_1, profile_2):
@@ -257,7 +248,7 @@ class GroupRepository:
                         (pig.user_profile_id = user_profile.id)
                         WHERE pig.group_id = %s
                         """,
-                        [group_id],
+                        [group_id]
                     )
                     members = []
                     rows = result.fetchall()

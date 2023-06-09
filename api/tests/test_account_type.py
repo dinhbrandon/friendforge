@@ -21,7 +21,7 @@ def test_get_account_type():
 
 class EmptyOneRepository:
     def get_one(self, account_type_id):
-        return {"id": account_type_id, "type": "Some Account Type"}
+        return {"id": account_type_id, "type": "Type"}
 
 
 def test_get_one_type():

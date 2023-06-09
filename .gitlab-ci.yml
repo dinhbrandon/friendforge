@@ -31,6 +31,8 @@ lint-test-job:
 #
 # # Run the unit tests
 # api-unit-tests-job:
+#   variables: PUT DATABASE URL HERE
+#     Signing key here as well
 #   image: python:3-bullseye
 #   stage: test
 #   needs:

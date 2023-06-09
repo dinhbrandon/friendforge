@@ -41,7 +41,7 @@ class FriendshipRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    
+
                     result = db.execute(
                         """
                         SELECT *
@@ -51,7 +51,7 @@ class FriendshipRepository:
                         """,
                         [user_profile_id, user_profile_id]
                     )
-                    
+
                     friend_ids = []
                     rows = result.fetchall()
 
@@ -65,16 +65,14 @@ class FriendshipRepository:
                             friend_ids.append(friendship["profile_1"])
                         else:
                             friend_ids.append(friendship["profile_id2"])
-                    
+
                     profile_repo = ProfileRepository()
                     friends = []
 
                     for friend_id in friend_ids:
                         friends.append(profile_repo.get_one(friend_id))
-                    
+
                     return friends
         except Exception as e:
             print(e)
             return {"message": "Could not get user's friends"}
-
-

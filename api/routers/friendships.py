@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Response
 from authenticator import authenticator
-from typing import Union, List
+from typing import Union
 from queries.user_profile import ProfileRepository
 from queries.response_types import Error
 from queries.friendships import (

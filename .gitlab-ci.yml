@@ -36,6 +36,8 @@ api-unit-tests-job:
   needs:
     - lint-test-job
   variables:
+    DATABASE_URL: ${DATABASE_URL}
+    SIGNING_KEY: ${SIGNING_KEY}
   script:
     - cd api
     - pip install -r requirements.txt

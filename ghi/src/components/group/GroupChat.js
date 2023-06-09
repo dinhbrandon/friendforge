@@ -31,7 +31,7 @@ function GroupChat({ groupId, token }) {
         }
         const interval = setInterval(() => {
             loadMessages();
-        }, 100000);
+        }, 1000);
 
         return () => {
             clearInterval(interval);

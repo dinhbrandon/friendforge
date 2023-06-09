@@ -26,6 +26,7 @@ function MyGroups() {
             const id = profile.id;
             loadGroups(id);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profile]);
 
     return (

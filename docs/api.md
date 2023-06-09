@@ -4,7 +4,7 @@
 
 - `/interests`
     - `GET`, `POST`
-- `/interests/<int:pk>`
+- `/interests/{interest_id}`
     - `GET`, `POST`
 
 The input includes name and the output includes the name and the id of the new interest. Admin accounts are able to create new interests and view a list of all interests.
@@ -28,7 +28,7 @@ Output:
 
 - `/group_focus`
     - `GET`, `POST`
-- `/group_focus/<int:pk>`
+- `/group_focus/{group_focus_id}`
     - `GET`, `PUT`, `DELETE`
 
 The input includes the focus name and the output includes the name and the id of the new focus. Admin accounts are able to create new group focuses and view a list of all focuses.
@@ -52,10 +52,10 @@ Output:
 
 - `/account_type`
     - `GET`, `POST`
-- `/account_type/<int:pk>`
+- `/account_type/{account_type_id}`
     - `GET`, `DELETE`
 
-The input includes the account type and the output includes the type and the id of the new type.Account type is set to null initially and upon creating an account, users are assigned to a "type" of 1. Admins are account type 2.
+The input includes the account type and the output includes the type and the id of the new type.
 
 Input:
 `
@@ -75,10 +75,10 @@ Output:
 ## User Accounts
 - `/users`
     - `GET`, `POST`
-- `/users/<int:pk>`
+- `/users/{user_id}`
     - `GET`, `DELETE`
 
-After inputting user account information, the output will include all fields plus authorization information.
+After inputting user account information, the output will include all fields plus authorization information and id.
 
 Input:
 `
@@ -116,10 +116,10 @@ Output:
 
 - `/profile`
     - `GET`, `POST`
-- `/profile/<int:pk>`
+- `/profile/{profile_id}`
     - `GET`, `DELETE`
 
-All input fields are returned in the profile output in addition to the user's account id as a foreign key.
+All input fields are returned in the profile output in addition to the user's account id as a foreign key and an id.
 
 Input:
 `
@@ -145,7 +145,7 @@ Output:
 
 - `/profile/interests`
     - `POST`
-- `/profile/<int:pk>/interests`
+- `/profile/{profile_id}/interests`
     - `GET`, `DELETE`
 
 The input is an interest_id and the output inludes interest_id, the signed in user's user_profile_id, and the id of this association between the two.
@@ -169,7 +169,7 @@ Output:
 ## Groups
 - `/groups`
     - `GET`, `POST`
-- `/groups/<int:pk>`
+- `/groups/{group_id}`
     - `GET`, `PUT`, `DELETE`
 
 The input is a focus_id and the id of the group created.
@@ -212,5 +212,50 @@ Output:
   "id": int,
   "group_id": int,
   "user_profile_id": int
+}
+`
+
+## Forge
+- `/forge`
+    - `POST`
+
+The input is a focus_id and since a member is being added to a group, the output is the same as a 'post' to profiles in group.
+
+Input:
+`
+{
+  "focus_id": int
+}
+`
+Output:
+`
+{
+  "id": int,
+  "group_id": int,
+  "user_profile_id": int
+}
+`
+
+## Messages
+- `/messages`
+    - `POST`
+- `/messages/{group_id}`
+    - `GET`
+Input:
+`
+{
+  "content": string,
+  "user_profile_id": int,
+  "group_id": int
+}
+`
+
+Output:
+`
+{
+  "id": int,
+  "content": string,
+  "user_profile_id": int,
+  "group_id": int
 }
 `

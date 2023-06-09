@@ -13,7 +13,7 @@ function HeaderToken() {
 
     const handleLogout = () => {
         logout();
-        navigate("/");
+        navigate("/friendforge");
     };
 
     if (profile.id) {

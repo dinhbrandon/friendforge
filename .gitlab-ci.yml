@@ -45,6 +45,7 @@ api-unit-tests-job:
     - pip install jwtdown_fastapi
     - pip install uvicorn[standard]
     - pip install psycopg[binary,pool]
+    - pip install numpy
 
     # - pip install -r requirements.txt
     - python -m pytest

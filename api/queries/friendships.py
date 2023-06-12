@@ -47,6 +47,19 @@ class FriendshipRepository:
         except Exception as e:
             print(e)
             return {"message": "Could not create friend request"}
+        
+    
+    def accept(self, friend_request_id: int, receiver_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+
+                    result = db.execute(
+                        """
+                        SELECT status
+                        FROM friend_requests
+                        """
+                    )
 
     def get(self, user_profile_id: int):
         try:

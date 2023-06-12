@@ -12,7 +12,7 @@ from queries.friendships import (
 router = APIRouter()
 
 
-@router.post("/friendship/request")
+@router.post("/friendship")
 def friend_request(
     receiver_id: int,
     message: Optional[str] = None,
@@ -24,6 +24,19 @@ def friend_request(
     sender_id = profile_repository.get_profile_id_by_user_account(
         user_account_id)
     return repo.request(sender_id, receiver_id, message)
+
+
+@router.put("/friendship/{friend_request_id}")
+def accept_friend_request(
+    friend_request_id: int,
+    repo: FriendshipRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    receiver_account_id = account_data["id"]
+    profile_repository = ProfileRepository()
+    receiver_id = profile_repository.get_profile_id_by_user_account(
+        receiver_account_id)
+    return repo.accept(friend_request_id, receiver_id)
 
 
 # @router.post("/friendship", response_model=Union[FriendshipOut, Error])

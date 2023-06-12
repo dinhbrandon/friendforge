@@ -29,18 +29,26 @@ lint-test-job:
     - pip install flake8
     - flake8 api
 #
-# # Run the unit tests
-# api-unit-tests-job:
-#   variables: PUT DATABASE URL HERE
-#     Signing key here as well
-#   image: python:3-bullseye
-#   stage: test
-#   needs:
-#     - lint-test-job
-#   script:
-#     - cd api
-#     - pip install -r requirements.txt
-#     - python -m pytest
+# Run the unit tests
+api-unit-tests-job:
+  image: python:3-bullseye
+  stage: test
+  needs:
+    - lint-test-job
+  variables:
+    DATABASE_URL: ${DATABASE_URL}
+    SIGNING_KEY: ${SIGNING_KEY}
+  script:
+    - cd api
+    - pip install pytest
+    - pip install fastapi[all]
+    - pip install jwtdown_fastapi
+    - pip install uvicorn[standard]
+    - pip install psycopg[binary,pool]
+    - pip install numpy
+
+    # - pip install -r requirements.txt
+    - python -m pytest
 
 # Build the React/JavaScript front-end
 build-front-end-job:

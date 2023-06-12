@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Message from "./Message";
-// import SendMessage from "./SendMessage";
+// import EmojiPicker from "./EmojiPicker";
 import useProfile from "../useProfile";
 import "./chatbox.css";
 
@@ -98,14 +98,17 @@ function GroupChat({ groupId, token }) {
                     className="join w-4/5 my-1 w-full"
                 >
                     <textarea
-                        className="input join-item input input-bordered w-4/5"
+                        className="input join-item input input-bordered w-5/6"
                         placeholder="message..."
                         id="message"
                         name="message"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                     />
-                    <button className="btn btn-secondary join-item w-1/5">
+                    <button
+                        submit
+                        className="btn btn-secondary join-item w-1/6"
+                    >
                         Send
                     </button>
                 </form>

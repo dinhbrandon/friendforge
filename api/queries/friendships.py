@@ -40,6 +40,7 @@ class FriendshipRepository:
                     requester_data = []
                     for row in rows:
                         profile_data = profile_repo.get_one(row[1])
+                        profile_data["request_info"] = row
                         requester_data.append(profile_data)
                     return requester_data
         except Exception as e:

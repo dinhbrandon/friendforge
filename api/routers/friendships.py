@@ -24,9 +24,14 @@ def friend_request(
         user_account_id)
 
     friends = repo.get(sender_id)
-
-    for friend in friends:
-        if receiver_id != friend["id"] and receiver_id != sender_id:
+    if friends:
+        for friend in friends:
+            if receiver_id != friend["id"] and receiver_id != sender_id:
+                return repo.request(sender_id, receiver_id, message)
+            else:
+                return {"message": "Not an eligible friend request"}
+    else:
+        if receiver_id != sender_id:
             return repo.request(sender_id, receiver_id, message)
         else:
             return {"message": "Not an eligible friend request"}

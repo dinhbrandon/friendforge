@@ -201,7 +201,7 @@ class ProfileRepository:
                         """
                         SELECT UP.id, UP.about_me, UP.profile_photo,
                         UP.location, UP.user_account_id, UA.username,
-                        UA.first_name, UA.date_of_birth
+                        UA.first_name, UA.last_name, UA.date_of_birth
                         FROM user_profile AS UP
                         JOIN user_account AS UA ON UP.user_account_id = UA.id
                         WHERE UP.id = %s
@@ -224,7 +224,8 @@ class ProfileRepository:
                             "user_account_id": row[4],
                             "username": row[5],
                             "first_name": row[6],
-                            "date_of_birth": row[7],
+                            "last_name": row[7],
+                            "date_of_birth": row[8],
                             "interests": interest_names,
                         }
                         return profile_data

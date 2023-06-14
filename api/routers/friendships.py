@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from authenticator import authenticator
-from typing import Union, Optional
+from typing import Optional
 from queries.user_profile import ProfileRepository
-from queries.response_types import Error
 from queries.friendships import (
     FriendshipOut,
     FriendshipRepository,
@@ -31,6 +30,17 @@ def friend_request(
             return repo.request(sender_id, receiver_id, message)
         else:
             return {"message": "Not an eligible friend request"}
+
+@router.get("/friendship/{profile_id}/requests")
+def get_friend_requests(
+    repo: FriendshipRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    user_account_id = account_data["id"]
+    profile_repository = ProfileRepository()
+    profile_id = profile_repository.get_profile_id_by_user_account(
+        user_account_id)
+    return repo.get_all_requests(profile_id)
 
 
 @router.put("/friendship/{receiver_id}/{sender_id}/accept")

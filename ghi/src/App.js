@@ -16,6 +16,7 @@ import GroupHome from "./screens/GroupHome";
 import "./App.css";
 import UserProfile from "./screens/UserProfile";
 import MyGroups from "./screens/MyGroups";
+import Friends from "./screens/Friends";
 
 function App() {
     const domain = /https:\/\/[^/]+/;
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/group/:id" element={<GroupHome />} />
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/mygroups" element={<MyGroups />} />
+                    <Route path="/friends" element={<Friends />} />
                     {/* routes for admin AdminPannel pages */}
                     <Route path="/admin" element={<AdminPannel />} />
                     <Route path="/admin/focus" element={<AdminFocus />} />

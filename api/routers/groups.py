@@ -118,9 +118,7 @@ def add_member(
     return repo.create_group_member(group_member, user_account_id)
 
 
-@router.get(
-    "/group/{group_id}/members", response_model=Union[List[ProfileOut], Error]
-)
+@router.get("/group/{group_id}/members")
 def get_members(
     group_id: int,
     repo: GroupRepository = Depends(),

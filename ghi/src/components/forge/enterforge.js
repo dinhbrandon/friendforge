@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function ForgeGroup() {
     const { token } = useToken();
     const [focuses, setFocus] = useState([]);
-    const [selectedFocus, setSelectedFocus] = useState("");
+    const [selectedFocus, setSelectedFocus] = useState("Select Focus");
     const navigate = useNavigate();
 
     async function loadFocuses() {
@@ -20,6 +20,9 @@ function ForgeGroup() {
 
     async function forgeSubmit(e) {
         e.preventDefault();
+        if (selectedFocus === "Select Focus"){
+            return;
+        }
         console.log(parseInt(selectedFocus));
 
         const url = `${
@@ -35,7 +38,7 @@ function ForgeGroup() {
         });
 
         if (response.ok) {
-            setSelectedFocus("");
+            setSelectedFocus("Select Focus");
             navigate("/mygroups");
         } else {
             console.log("Could not fetch Forge API");
@@ -53,7 +56,7 @@ function ForgeGroup() {
                     className="select join-item"
                     onChange={(e) => setSelectedFocus(e.target.value)}
                 >
-                    <option disabled>Focus</option>
+                    <option>Select Focus</option>
                     {focuses.map((focus) => (
                         <option key={focus.id} value={focus.id}>
                             {focus.name}
@@ -61,7 +64,7 @@ function ForgeGroup() {
                     ))}
                 </select>
                 <div className="indicator">
-                    <button className="btn join-item">
+                    <button className="btn join-item" disabled={selectedFocus === "Select Focus"}>
                         Forge
                     </button>
                 </div>

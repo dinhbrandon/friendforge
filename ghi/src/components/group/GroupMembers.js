@@ -75,7 +75,7 @@ function GroupMembers({ token, groupId }) {
                                 <h3 className="text-center text-lg font-bold text-secondary">
                                     {member.first_name}
                                 </h3>
-                                member bio goes here
+                                {member.about_me}
                                 <a
                                     className="link link-accent" onClick={(e) => sendFriendRequest(e, member.id)}
                                     // href="/friendforge/"

@@ -61,7 +61,7 @@ function ForgeGroup() {
                     ))}
                 </select>
                 <div className="indicator">
-                    <button className="btn join-item" disabled={!selectedFocus}>
+                    <button className="btn join-item">
                         Forge
                     </button>
                 </div>

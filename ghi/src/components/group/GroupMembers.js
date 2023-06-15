@@ -25,6 +25,25 @@ function GroupMembers({ token, groupId }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
 
+    async function sendFriendRequest(e, receiver_id) {
+      e.preventDefault();
+
+      const url = `${process.env.REACT_APP_API_HOST}/friendship/${receiver_id}`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        console.log("Successfully sent request")
+      } else{
+          console.log("Could not accept friend request");
+      }
+
+    }
+
     return (
         <div className="bg-base-100 text-center p-100 w-1/5">
             <h1 className="text-2xl text-primary text-accent font-bold">
@@ -57,6 +76,12 @@ function GroupMembers({ token, groupId }) {
                                     {member.first_name}
                                 </h3>
                                 member bio goes here
+                                <a
+                                    className="link link-accent" onClick={(e) => sendFriendRequest(e, member.id)}
+                                    // href="/friendforge/"
+                                >
+                                    Add friend
+                                </a>
                                 <a
                                     className="link link-accent"
                                     href="/friendforge/"

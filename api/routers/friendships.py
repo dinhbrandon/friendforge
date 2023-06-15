@@ -11,7 +11,7 @@ from queries.friendships import (
 router = APIRouter()
 
 
-@router.post("/friendship")
+@router.post("/friendship/{receiver_id}")
 def friend_request(
     receiver_id: int,
     message: Optional[str] = None,

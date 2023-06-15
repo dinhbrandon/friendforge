@@ -3,7 +3,7 @@ import PendingRequests from "../components/friend/pendingFriendRequests";
 function Friends(){
     return (
         <div className="flex">
-        <div className="w-1/2">
+        <div className="w-1/8">
             <MyFriends />
         </div>
         <div className="w-1/2">

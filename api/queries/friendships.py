@@ -105,7 +105,7 @@ class FriendshipRepository:
 
         except Exception as e:
             print(e)
-            return {"message": "Could not accept friend request."}   
+            return {"message": "Could not accept friend request."}
 
     def reject(self, receiver_id: int, sender_id: int):
         try:

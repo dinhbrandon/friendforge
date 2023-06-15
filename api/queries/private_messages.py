@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from queries.pool import pool
-from typing import Optional
-from queries.user_profile import ProfileRepository
+# from queries.user_profile import ProfileRepository
 
 
 class PrivateMessageIn(BaseModel):
@@ -20,7 +19,8 @@ class PrivateMessageOut(BaseModel):
 
 class PrivateMessageRepository:
 
-    def create(self, user_profile_id1: int, user_profile_id2: int, content: str):
+    def create(self, user_profile_id1: int,
+               user_profile_id2: int, content: str):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:

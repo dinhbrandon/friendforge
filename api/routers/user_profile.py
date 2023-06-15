@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Depends, Response
-from typing import Union, List, Optional
+from typing import Union, List
 from queries.user_profile import (
     ProfileIn,
-    ProfileOut,
     ProfileOutCreation,
     ProfileRepository,
     Error,

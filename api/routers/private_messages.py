@@ -12,7 +12,8 @@ from queries.private_messages import (
 router = APIRouter()
 
 
-@router.post("/private_message", response_model=Union[PrivateMessageOut, Error])
+@router.post("/private_message", response_model=Union[
+    PrivateMessageOut, Error])
 def create_private_message(
     user_profile_id2: int,
     content: str,

@@ -1,9 +1,8 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends
 from authenticator import authenticator
 from typing import Optional
 from queries.user_profile import ProfileRepository
 from queries.friendships import (
-    FriendshipOut,
     FriendshipRepository,
 )
 
@@ -35,6 +34,7 @@ def friend_request(
             return repo.request(sender_id, receiver_id, message)
         else:
             return {"message": "Not an eligible friend request"}
+
 
 @router.get("/friendship/{profile_id}/requests")
 def get_friend_requests(
@@ -73,7 +73,7 @@ def reject_friend_request(
     profile_repository = ProfileRepository()
     receiver_id = profile_repository.get_profile_id_by_user_account(
         receiver_account_id)
-    
+
     return repo.reject(receiver_id, sender_id)
 
 

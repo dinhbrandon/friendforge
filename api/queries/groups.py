@@ -262,7 +262,8 @@ class GroupRepository:
                     for member in members:
                         result = db.execute(
                             """
-                        SELECT UP.id, UP.profile_photo, UP.about_me, UA.first_name, UA.last_name, pig.id
+                        SELECT UP.id, UP.profile_photo, UP.about_me,
+                            UP.location, UA.first_name, UA.last_name, pig.id
                         FROM user_profile AS UP
                         JOIN user_account UA ON (UP.user_account_id = UA.id)
                         JOIN profiles_in_group pig ON
@@ -279,12 +280,12 @@ class GroupRepository:
                             "id": row[0],
                             "profile_photo": row[1],
                             "about_me": row[2],
-                            "first_name": row[3],
-                            "last_name": row[4],
-                            "relational_id": row[5],
+                            "location": row[3],
+                            "first_name": row[4],
+                            "last_name": row[5],
+                            "relational_id": row[6],
                         }
                         group_member_info_list.append(group_member_info)
-                        print(group_member_info_list)
                     return group_member_info_list
         except Exception as e:
             print(e)

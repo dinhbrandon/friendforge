@@ -11,7 +11,6 @@ from queries.groups import (
     GroupMemberIn,
     GroupMemberOut,
     SingleGroupOut,
-    ProfileOut,
 )
 
 router = APIRouter()

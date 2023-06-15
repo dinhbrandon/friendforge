@@ -20,7 +20,7 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             sender_id INTEGER NOT NULL REFERENCES user_profile (id) ON DELETE CASCADE,
             receiver_id INTEGER NOT NULL REFERENCES user_profile (id) ON DELETE CASCADE,
-            message VARCHAR(1000),
+            message VARCHAR(150),
             status VARCHAR(100) NOT NULL,
             created_at TIMESTAMP NOT NULL,
             deleted_at TIMESTAMP,

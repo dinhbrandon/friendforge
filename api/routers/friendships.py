@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from authenticator import authenticator
-from typing import Union, Optional
+from typing import Optional
 from queries.user_profile import ProfileRepository
-from queries.response_types import Error
 from queries.friendships import (
     FriendshipOut,
     FriendshipRepository,
@@ -12,7 +11,7 @@ from queries.friendships import (
 router = APIRouter()
 
 
-@router.post("/friendship")
+@router.post("/friendship/{receiver_id}")
 def friend_request(
     receiver_id: int,
     message: Optional[str] = None,
@@ -25,12 +24,28 @@ def friend_request(
         user_account_id)
 
     friends = repo.get(sender_id)
-
-    for friend in friends:
-        if receiver_id != friend["id"] and receiver_id != sender_id:
+    if friends:
+        for friend in friends:
+            if receiver_id != friend["id"] and receiver_id != sender_id:
+                return repo.request(sender_id, receiver_id, message)
+            else:
+                return {"message": "Not an eligible friend request"}
+    else:
+        if receiver_id != sender_id:
             return repo.request(sender_id, receiver_id, message)
         else:
             return {"message": "Not an eligible friend request"}
+
+@router.get("/friendship/{profile_id}/requests")
+def get_friend_requests(
+    repo: FriendshipRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    user_account_id = account_data["id"]
+    profile_repository = ProfileRepository()
+    profile_id = profile_repository.get_profile_id_by_user_account(
+        user_account_id)
+    return repo.get_all_requests(profile_id)
 
 
 @router.put("/friendship/{receiver_id}/{sender_id}/accept")

@@ -33,6 +33,13 @@ function HeaderToken() {
                     >
                         FORGE
                     </a>
+
+                    <a
+                        href="/friendforge/friends"
+                        className="btn btn-ghost rounded-btn"
+                    >
+                        FRIENDS
+                    </a>
                 </div>
                 <HeaderGroups />
                 <div className="dropdown dropdown-end">

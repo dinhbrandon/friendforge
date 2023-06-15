@@ -23,6 +23,30 @@ class FriendRequestOut(BaseModel):
 
 class FriendshipRepository:
 
+    def get_all_requests(self, profile_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM friend_requests
+                        WHERE receiver_id = %s
+                        """,
+                        [profile_id]
+                    )
+                    profile_repo = ProfileRepository()
+                    rows = result.fetchall()
+                    requester_data = []
+                    for row in rows:
+                        profile_data = profile_repo.get_one(row[1])
+                        profile_data["request_info"] = row
+                        requester_data.append(profile_data)
+                    return requester_data
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get friend requests"}
+
     def request(self, sender_id: int, receiver_id: int, message: str):
         try:
             with pool.connection() as conn:

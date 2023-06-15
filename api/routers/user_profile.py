@@ -65,13 +65,13 @@ def get_all_profiles(
     return repo.get_all()
 
 
-@router.get("/profile/{profile_id}", response_model=Optional[ProfileOut])
+@router.get("/profile/{profile_id}")
 def get_one_profile(
     profile_id: int,
     response: Response,
     repo: ProfileRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
-) -> ProfileOut:
+):
     profile = repo.get_one(profile_id)
     return profile
 

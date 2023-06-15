@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useProfile from "../useProfile";
-// eslint-disable-next-line react-hooks/exhaustive-deps
+
 function MyFriends(){
     const [friends, setFriends] = useState([]);
     const { token } = useToken();
@@ -27,6 +27,7 @@ function MyFriends(){
         const id = profile.id;
         loadFriends(id);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [profile]);
     return(
         <div className="drawer lg:drawer-open">

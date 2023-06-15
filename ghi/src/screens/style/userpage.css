@@ -1,40 +1,42 @@
-.top-body {
-    background-color: #1f1f1f;
-    color: #efeded;
+.top-header {
+    background-color: #111111;
+    font-family: "Chakra Petch", sans-serif;
+    color: #D8B646;
+    font-weight: 400;
     padding: 20px;
     text-align: center;
     font-size: 40px;
 }
 
+.top-body{
+    background-color: #111111;
+    color: #efeded;
+    padding: 10px;
+    text-align: center;
+    font-size: 10px;
+}
+.body {
+    color: #efeded;
+    text-align: center;
+    font-size: 25px;
+    margin: 0 auto;
+
+}
+
 .img-prof {
-    display: block;
-    background-color: #1f1f1f;
     margin-left: auto;
     margin-right: auto;
     width: 15%;
     }
 
-.mid-body {
-    background-color: #1f1f1f;
-    color: #efeded;
-    padding: 20px;
-    text-align: center;
-    font-size: 20px;
-}
-
 .bottom-body {
-    background-color: #1f1f1f;
-    color: #efeded;
-    padding: 20px;
-    margin: 0px, 50px;
-    text-align: center;
-    font-size: 30px;
+    background-color: #111111;
+    font-family: "Chakra Petch", sans-serif;
+    color: #D8B646;
+    font-weight: 400;
 }
 
 .interests-container {
-    background-color: #1f1f1f;
     color: #efeded;
-    padding: 20px;
-    text-align: center;
-    font-size: 25px; 
+    font-size: 25px;
 }

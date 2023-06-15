@@ -14,7 +14,7 @@ import CreateProfile from "./screens/CreateProfile";
 import Forge from "./screens/Forge";
 import GroupHome from "./screens/GroupHome";
 import "./App.css";
-import UserProfile from "./screens/UserProfile";
+import UserPage from "./screens/UserPage";
 import MyGroups from "./screens/MyGroups";
 import Friends from "./screens/Friends";
 
@@ -37,7 +37,7 @@ function App() {
                     />
                     <Route path="/forge" element={<Forge />} />
                     <Route path="/group/:id" element={<GroupHome />} />
-                    <Route path="/profile" element={<UserProfile />} />
+                    <Route path="/profile" element={<UserPage />} />
                     <Route path="/mygroups" element={<MyGroups />} />
                     <Route path="/friends" element={<Friends />} />
                     {/* routes for admin AdminPannel pages */}

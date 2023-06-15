@@ -18,7 +18,7 @@ const UserPage = () => {
                             <div className="top-header">
                                 <h1>{user.first_name} {user.last_name}</h1>
                             </div>
-                            <img src={profile.profile_photo} />
+                            <img src={profile.profile_photo} alt="user"/>
                         </div>
                         <div>
                             <div class="bottom-body flex flex-col md:flex-col items-center md:text-left text-center">

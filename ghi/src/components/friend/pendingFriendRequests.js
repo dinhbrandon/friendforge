@@ -117,6 +117,7 @@ function PendingRequests(){
             </div>
           );
         }
+        return null;
       })}
     </tbody>
   </table>

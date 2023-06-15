@@ -38,7 +38,7 @@ function MyFriends(){
                     {friends.map((friend) => {
                         return(
                             <li>
-                                <a>
+                                <a href="/friendforge/friends">
                                     <div className="mask mask-squircle w-8 h-8">
                                         <img src={friend.profile_photo} alt="Avatar Tailwind CSS Component" />
                                     </div>

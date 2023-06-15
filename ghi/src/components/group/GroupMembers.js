@@ -79,7 +79,7 @@ function GroupMembers({ token, groupId }) {
                                 {member.about_me}
                                 <a
                                     className="link link-accent" onClick={(e) => sendFriendRequest(e, member.id)}
-                                    // href="/friendforge/"
+                                    href="/friendforge/"
                                 >
                                     Add friend
                                 </a>

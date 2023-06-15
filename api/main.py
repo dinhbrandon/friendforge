@@ -10,6 +10,7 @@ from routers import user_profile
 from routers import chatroom
 from routers import account_type
 from routers import friendships
+from routers import private_messages
 
 
 app = FastAPI()
@@ -22,6 +23,7 @@ app.include_router(user_profile.router)
 app.include_router(chatroom.router)
 app.include_router(account_type.router)
 app.include_router(friendships.router)
+app.include_router(private_messages.router)
 
 
 origins = [

@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 
 function GroupMembers({ token, groupId }) {
     const [members, setMembers] = useState([]);
+    const [groupName, setGroupName] = useState("");
+    const [groupFocus, setGroupFocus] = useState("")
 
     async function loadMembers() {
         const response = await fetch(
-            `${process.env.REACT_APP_API_HOST}/group/${groupId}/members`,
+            `${process.env.REACT_APP_API_HOST}/groups/${groupId}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -14,7 +16,9 @@ function GroupMembers({ token, groupId }) {
         );
         if (response.ok) {
             const data = await response.json();
-            setMembers(data);
+            setMembers(data.members);
+            setGroupName(data.name)
+            setGroupFocus(data.focus)
         }
     }
 
@@ -47,8 +51,11 @@ function GroupMembers({ token, groupId }) {
     return (
         <div className="bg-base-100 text-center p-100 w-1/5">
             <h1 className="text-2xl text-primary text-accent font-bold">
-                Members
+                {groupName}
             </h1>
+            <h2 className="text-sm opacity-50">
+                Fellow {groupFocus}
+            </h2>
             {members.map((member) => (
                 <div
                     className="flex flex-col justify-center items-center m-5"

@@ -15,12 +15,10 @@ function HomeNoToken() {
                     />
                     <div>
                         <h1 className="text-5xl font-bold">
-                            Gathering Made Easy!
+                            Friend Forge (BETA)
                         </h1>
                         <p className="py-10">
-                            Provident cupiditate voluptatem et in. Quaerat
-                            fugiat ut assumenda excepturi exercitationem quasi.
-                            In deleniti eaque aut repudiandae et a id nisi.
+                            Making friends for any reason, at any time, and any place in the world.
                         </p>
                     </div>
                 </div>
@@ -31,12 +29,10 @@ function HomeNoToken() {
                 <div className="hero-content text-center text-neutral-content">
                     <div className="max-w-lg">
                         <h1 className="mb-5 text-5xl font-bold pt-20">
-                            Get matched with people just like you!
+                            Gathering made easy!
                         </h1>
                         <p className="mb-5">
-                            Provident cupiditate voluptatem et in. Quaerat
-                            fugiat ut assumenda excepturi exercitationem quasi.
-                            In deleniti eaque aut repudiandae et a id nisi.
+                            Let's forge some new friendships on your terms. 
                         </p>
                         <HomeStats />
                     </div>

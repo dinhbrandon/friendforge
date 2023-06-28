@@ -18,14 +18,17 @@ function Steps() {
                 <div className="flex flex-wrap -m-4">
                     <div className="p-4 md:w-1/3 ">
                         <div className="flex rounded-lg h-full p-8 flex-col bg-accent text-neutral">
+                            <h2 className="text-xs tracking-widest font-medium title-font mb-1">
+                                STEP 1
+                            </h2>
                             <div className="flex items-center mb-3">
                                 image here
                             </div>
                             <div className="flex-grow">
                                 <p className="leading-relaxed text-base">
-                                    Blue bottle crucifix vinyl post-ironic four
-                                    dollar toast vegan taxidermy. Gastropub
-                                    indxgo juice poutine.
+                                    Create your account and tell everyone a little bit about yourself.
+                                    Select all of the things that you're interested and add it to
+                                    your profile.
                                 </p>
                             </div>
                         </div>
@@ -33,14 +36,16 @@ function Steps() {
 
                     <div className="p-4 md:w-1/3">
                         <div className="flex rounded-lg h-full p-8 flex-col bg-accent text-neutral">
+                            <h2 className="text-xs tracking-widest font-medium title-font mb-1">
+                                STEP 2
+                            </h2>
                             <div className="flex items-center mb-3">
                                 image here
                             </div>
                             <div className="flex-grow">
                                 <p className="leading-relaxed text-base">
-                                    Blue bottle crucifix vinyl post-ironic four
-                                    dollar toast vegan taxidermy. Gastropub
-                                    indxgo juice poutine.
+                                    Think of the kind of friend group you're trying to build
+                                    and select it from the dropdown menu in the forge.
                                 </p>
                             </div>
                         </div>
@@ -48,14 +53,16 @@ function Steps() {
 
                     <div className="p-4 md:w-1/3">
                         <div className="flex rounded-lg h-full p-8 flex-col bg-accent text-neutral">
+                            <h2 className="text-xs tracking-widest font-medium title-font mb-1">
+                                STEP 3
+                            </h2>
                             <div className="flex items-center mb-3">
                                 image here
                             </div>
                             <div className="flex-grow">
                                 <p className="leading-relaxed text-base">
-                                    Blue bottle crucifix vinyl post-ironic four
-                                    dollar toast vegan taxidermy. Gastropub
-                                    indxgo juice poutine.
+                                   Get intelligently matched into the friend group of your choice
+                                   with other people who are also looking for the same type of friends.
                                 </p>
                             </div>
                         </div>

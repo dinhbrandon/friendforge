@@ -23,7 +23,6 @@ function ForgeGroup() {
         if (selectedFocus === "Select Focus"){
             return;
         }
-        console.log(parseInt(selectedFocus));
 
         const url = `${
             process.env.REACT_APP_API_HOST

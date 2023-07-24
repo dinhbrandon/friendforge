@@ -17,7 +17,6 @@ function MyFriends(){
     );
         if (response.ok) {
             const data = await response.json();
-            console.log(data)
             setFriends(data);
         }
     };
@@ -29,6 +28,7 @@ function MyFriends(){
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [profile]);
+
     return(
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -37,8 +37,8 @@ function MyFriends(){
                     <li className="text-xl">My Friends</li>
                     {friends.map((friend) => {
                         return(
-                            <li>
-                                <a href="/friendforge/friends">
+                            <li key={friend.id}>
+                                <a href={`/friendforge/profile/${friend.username}`}>
                                     <div className="mask mask-squircle w-8 h-8">
                                         <img src={friend.profile_photo} alt="Avatar Tailwind CSS Component" />
                                     </div>
@@ -48,9 +48,7 @@ function MyFriends(){
                                 </a>
                             </li>
                         )
-                    }
-
-                    )}
+                    })}
                 </ul>
             </div>
         </div>

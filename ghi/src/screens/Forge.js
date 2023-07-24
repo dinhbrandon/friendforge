@@ -6,8 +6,8 @@ import ForgeGroup from "../components/forge/enterforge";
 function Forge() {
     return (
         <>
-            <div className="h-screen flex items-center justify-center">
-                <div className="card w-96 glass">
+            <div className="flex items-center justify-center">
+                <div className="card w-96 glass hover:scale-100 flex flex-col justify-center items-center">
                     <figure>
                         <img src={people} alt="People" />
                     </figure>

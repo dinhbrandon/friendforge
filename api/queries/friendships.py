@@ -23,6 +23,48 @@ class FriendRequestOut(BaseModel):
 
 class FriendshipRepository:
 
+    def check_status(self, user_1: int, user_2: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    # Check if the users are already friends
+                    db.execute(
+                        """
+                        SELECT *
+                        FROM friendships
+                        WHERE (user_profile_id1 = %s AND user_profile_id2 = %s)
+                        OR (user_profile_id1 = %s AND user_profile_id2 = %s)
+                        """,
+                        [user_1, user_2, user_2, user_1]
+                    )
+                    result = db.fetchone()
+                    if result is not None:
+                        return {"relationship_status": "Friends"}
+
+                    # Check if there is a pending
+                    # friend request between the users
+                    db.execute(
+                        """
+                        SELECT *
+                        FROM friend_requests
+                        WHERE ((sender_id = %s AND receiver_id = %s)
+                        OR (sender_id = %s AND receiver_id = %s))
+                        AND status = 'Pending'
+                        """,
+                        [user_1, user_2, user_2, user_1]
+                    )
+                    result = db.fetchone()
+                    if result is not None:
+                        return {"relationship_status": "Pending Friendship"}
+
+                    # If no results from either query, the users are not
+                    # friends and have no pending requests
+                    return {"relationship_status": "Not Friends"}
+
+        except Exception as e:
+            print(e)
+            return {"message": "Could not determine friendship status"}
+
     def get_all_requests(self, profile_id: int):
         try:
             with pool.connection() as conn:

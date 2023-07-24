@@ -75,7 +75,32 @@ class ProfileRepository:
             print(e)
             # return {"message": "Could not get all interests"}
 
-    def get_profile_id_by_user_account(self, user_account_id: int) -> int:
+    def get_profile_by_username(self, username: str):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT up.id
+                        FROM user_profile up
+                        INNER JOIN user_account ua
+                        ON up.user_account_id = ua.id
+                        WHERE ua.username = %s
+                        """,
+                        [username],
+                    )
+
+                    row = db.fetchone()
+                    if row:
+                        profile = self.get_one(row[0])
+                        return profile
+                    else:
+                        return None
+        except Exception as e:
+            print(e)
+            return {"message": "This user has no profile created."}
+
+    def get_profile_id_by_user_account(self, user_account_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -210,9 +235,9 @@ class ProfileRepository:
                     )
                     interests = self.get_interests_user_profile(profile_id)
 
-                    interest_names = []
-                    for interest in interests:
-                        interest_names.append(interest["name"])
+                    # interest_names = []
+                    # for interest in interests:
+                    #     interest_names.append(interest["name"])
 
                     row = db.fetchone()
                     if row:
@@ -226,7 +251,7 @@ class ProfileRepository:
                             "first_name": row[6],
                             "last_name": row[7],
                             "date_of_birth": row[8],
-                            "interests": interest_names,
+                            "interests": interests,
                         }
                         return profile_data
                     else:

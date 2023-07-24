@@ -19,13 +19,14 @@ router = APIRouter()
 # Added function for front-end use
 
 
-@router.get("/profile_id/get", response_model=Union[int, Error])
+@router.get("/get_profile/{user_id}")
 def get_profile_id(
     user_id: int,
     repo: ProfileRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     profile_id = repo.get_profile_id_by_user_account(user_id)
+
     return profile_id
 
 
@@ -72,6 +73,17 @@ def get_one_profile(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     profile = repo.get_one(profile_id)
+    return profile
+
+
+@router.get("/profile/user/{username}")
+def get_profile_by_username(
+    username: str,
+    response: Response,
+    repo: ProfileRepository = Depends(),
+    # account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    profile = repo.get_profile_by_username(username)
     return profile
 
 

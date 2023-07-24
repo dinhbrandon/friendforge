@@ -1,9 +1,9 @@
 steps = [
     [
-        ## Create the table
+        # Create the table
         """
         CREATE TABLE user_account (
-		    id SERIAL PRIMARY KEY NOT NULL,
+            id SERIAL PRIMARY KEY NOT NULL,
             email VARCHAR(1000) NOT NULL UNIQUE,
             username VARCHAR(1000) NOT NULL UNIQUE,
             password VARCHAR(1000) NOT NULL,
@@ -11,7 +11,8 @@ steps = [
             first_name VARCHAR(25) NOT NULL,
             last_name VARCHAR(25) NOT NULL,
             phone_number VARCHAR(15) NOT NULL UNIQUE,
-            account_type_id INTEGER NOT NULL REFERENCES account_type(id)
+            account_type_id INTEGER NOT NULL
+            REFERENCES account_type(id) DEFAULT 1
         );
         """,
         """

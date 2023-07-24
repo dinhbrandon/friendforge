@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useProfile from "../components/useProfile";
 import people from "../screens/images/people.png";
+import ConfirmLeave from "../components/confirmLeave";
 
 function MyGroups() {
     const [groups, setGroups] = useState([]);
+    const [groupToLeave, setGroupToLeave] = useState(null);
     const { token } = useToken();
     const { profile } = useProfile(token);
 
@@ -21,6 +23,7 @@ function MyGroups() {
             setGroups(data);
         }
     };
+
     useEffect(() => {
         if (profile && profile.id) {
             const id = profile.id;
@@ -29,59 +32,55 @@ function MyGroups() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profile]);
 
+    const handleLeaveGroup = (group) => {
+        setGroupToLeave(group);
+    };
+
+    const handleLeaveConfirmed = (groupId) => {
+        setGroups(groups.filter(group => group.id !== groupId));
+        setGroupToLeave(null);
+    };
+
+    const handleLeaveCanceled = () => {
+        setGroupToLeave(null);
+    };
+
     return (
-        <>
-            <section className="text-gray-600 body-font">
-                <div className="container px-15 py-24 mx-auto">
-                    <div className="flex flex-col">
-                        <div className="h-1 bg-gray-200 rounded overflow-hidden">
-                            <div className="w-24 h-full bg-primary"></div>
-                        </div>
-                        <div className="flex flex-wrap sm:flex-row flex-col py-6 mb-12">
-                            <h1 className="sm:w-2/5 text-secondary font-medium title-font text-2xl mb-2 sm:mb-0">
-                                My Groups
-                            </h1>
-                        </div>
-                    </div>
-                    <div className="flex flex-wrap sm:-m-2 -mx-2 -mb-6 -mt-4">
-                        {groups.map((group) => {
-                            return (
-                                <div key={group.group_id}>
-                                    <div className="p-6 rounded-lg h-64 overflow-hidden">
-                                        <img
-                                            alt="content"
-                                            className="object-cover object-center h-full w-full"
-                                            src={group.photo || people}
-                                        />
-                                    </div>
-                                    <h2 className="text-xl font-medium title-font text-secondary">
-                                        {group.name || "My Group"}
-                                    </h2>
-                                    <a
-                                        className="text-secondary inline-flex items-center mt-3"
-                                        href={`/friendforge/group/${group.group_id}`}
-                                    >
-                                        See Group
-                                        <svg
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            className="w-4 h-4 ml-2"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path d="M5 12h14M12 5l7 7-7 7"></path>
-                                        </svg>
-                                    </a>
+        <div className="flex w-auto">
+            <div className="carousel bg-base w-full">
+                {groups.map((group) => (
+                    <div key={group.id} className="hover:scale-105 transition-transform duration-200 carousel-item mr-6 mb-4 mt-4">
+                        <a href={`/friendforge/group/${group.id}`}>
+                            <div className="card flex flex-col justify-center items-center w-100 h-100">
+                                <h2 className="text-xl font-medium title-font text-secondary">
+                                    {group.name ? group.name : `${group.focus} #00${group.id}`}
+                                </h2>
+                                <figure>
+                                    <img
+                                    alt={group.name || "My Group"}
+                                    src={group.icon_photo || people}
+                                    className="w-40 h-40 object-cover mask mask-hexagon"
+                                    />
+                                </figure>
+                                <div className="avatar-group -space-x-6 mt-2">
+                                    {group.members.map((member, index) => (
+                                        <div key={index} className="avatar">
+                                            <div className="w-12">
+                                                <img src={member.profile_photo} alt={`Member ${member.first_name} ${member.last_name}`} />
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            );
-                        })}
+                            </div>
+                        </a>
+                        <button className="badge badge-sm" onClick={() => handleLeaveGroup(group)}>
+                            X
+                        </button>
                     </div>
-                        <a className="btn btn-secondary my-10" href="/friendforge/forge">Find a Group!</a>
-                </div>
-            </section>
-        </>
+                ))}
+                {groupToLeave && <ConfirmLeave group={groupToLeave} onCancel={handleLeaveCanceled} onConfirm={handleLeaveConfirmed} />}
+            </div>
+        </div>
     );
 }
 

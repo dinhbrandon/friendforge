@@ -84,3 +84,13 @@ def get_friends(
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
     return repo.get(user_profile_id)
+
+
+@router.get("/friendship/check/{user_1}/{user_2}")
+def friendship_status(
+    user_1: int,
+    user_2: int,
+    repo: FriendshipRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
+):
+    return repo.check_status(user_1, user_2)

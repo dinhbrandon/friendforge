@@ -4,7 +4,7 @@ import "./style/adminpannel.css";
 function AdminPannel() {
     return (
         <div className="admin-pannel">
-            <h1 className="center-txt extra-p60">Admin Pannel</h1>
+            <h1 className="center-txt extra-p60">Admin Panel</h1>
             <a href="/friendforge/admin/groups">Groups</a>
             <br />
             <a href="/friendforge/admin/focus">Focuses</a>

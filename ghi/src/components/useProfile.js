@@ -8,7 +8,7 @@ function useProfile(token) {
 
     const getID = async () => {
         const res = await fetch(
-            `${process.env.REACT_APP_API_HOST}/profile_id/get?user_id=${user.id}`,
+            `${process.env.REACT_APP_API_HOST}/get_profile/${user.id}`,
             {
                 credentials: "include",
                 headers: {
@@ -38,6 +38,20 @@ function useProfile(token) {
         }
     };
 
+    const updateProfile = async () => {
+        if (user.id) {
+            await getID();
+        }
+        if (id) {
+            await getProfile();
+        }
+    };
+
+    useEffect(() => {
+        updateProfile();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user.id, token]);
+
     useEffect(() => {
         if (user.id) {
             getID();
@@ -52,7 +66,7 @@ function useProfile(token) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id, token]);
 
-    return { profile };
+    return { profile, updateProfile };
 }
 
 export default useProfile;

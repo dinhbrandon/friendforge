@@ -4,11 +4,7 @@ import LoginForm from "../authorization/LoginForm";
 function HeaderNoToken() {
   return (
     <>
-      <a href="/friendforge/signup" className="btn btn-ghost rounded-btn">
-        SIGN UP
-      </a>
-
-      <label htmlFor="my-modal-4" className="btn btn-ghost rounded-btn">
+      <label htmlFor="my-modal-4" className="btn btn-outline rounded-btn">
         LOG IN
       </label>
       <input type="checkbox" id="my-modal-4" className="modal-toggle" />

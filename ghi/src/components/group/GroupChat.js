@@ -105,10 +105,7 @@ function GroupChat({ groupId, token }) {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                     />
-                    <button
-                        submit
-                        className="btn btn-secondary join-item w-1/6"
-                    >
+                    <button type="submit" className="btn btn-secondary join-item w-1/6">
                         Send
                     </button>
                 </form>

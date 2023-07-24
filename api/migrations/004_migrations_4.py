@@ -19,7 +19,8 @@ steps = [
         """
         CREATE TABLE profiles_in_group (
             id SERIAL PRIMARY KEY NOT NULL,
-            user_profile_id INTEGER NOT NULL REFERENCES user_profile(id) ON DELETE CASCADE,
+            user_profile_id INTEGER NOT NULL REFERENCES user_profile(id)
+            ON DELETE CASCADE,
             group_id INTEGER NOT NULL REFERENCES groups(id) ON DELETE CASCADE
         );
         """,

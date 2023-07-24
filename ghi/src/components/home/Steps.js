@@ -1,13 +1,13 @@
 import React from "react";
-// import stepone from "./stepone.png";
-// import steptwo from "./steptwo.png";
-// import stepthree from "./stepthree.png";
+import stepone from "./stepone.png";
+import steptwo from "./steptwo.png";
+import stepthree from "./stepthree.png";
 
 function Steps() {
     return (
         <section className="body-font">
             <div className="container px-5 py-20 mx-auto">
-                <div className="flex flex-col text-center w-full mb-20">
+                <div className="flex flex-col text-center w-full mb-10">
                     <h2 className="text-xs tracking-widest font-medium title-font mb-1">
                         LEARN HOW
                     </h2>
@@ -21,9 +21,9 @@ function Steps() {
                             <h2 className="text-xs tracking-widest font-medium title-font mb-1">
                                 STEP 1
                             </h2>
-                            <div className="flex items-center mb-3">
-                                image here
-                            </div>
+                            <figure>
+                                <img src={stepone} alt="People" />
+                            </figure>
                             <div className="flex-grow">
                                 <p className="leading-relaxed text-base">
                                     Create your account and tell everyone a little bit about yourself.
@@ -39,9 +39,9 @@ function Steps() {
                             <h2 className="text-xs tracking-widest font-medium title-font mb-1">
                                 STEP 2
                             </h2>
-                            <div className="flex items-center mb-3">
-                                image here
-                            </div>
+                            <figure>
+                                <img src={steptwo} alt="People" />
+                            </figure>
                             <div className="flex-grow">
                                 <p className="leading-relaxed text-base">
                                     Think of the kind of friend group you're trying to build
@@ -56,9 +56,9 @@ function Steps() {
                             <h2 className="text-xs tracking-widest font-medium title-font mb-1">
                                 STEP 3
                             </h2>
-                            <div className="flex items-center mb-3">
-                                image here
-                            </div>
+                            <figure>
+                                <img src={stepthree} alt="People" />
+                            </figure>
                             <div className="flex-grow">
                                 <p className="leading-relaxed text-base">
                                    Get intelligently matched into the friend group of your choice

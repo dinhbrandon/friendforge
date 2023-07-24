@@ -45,5 +45,6 @@ function FriendRequestForm() {
         </>
     );
 }
+}
 
 export default FriendRequestForm;

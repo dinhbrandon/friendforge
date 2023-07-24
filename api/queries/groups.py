@@ -58,25 +58,36 @@ class GroupRepository:
 
     def forge(self, focus_id, user_account_id):
         all_groups = self.get_groups()
-        eligible_groups = []
-        for group in all_groups:
-            if (group['focus_id'] == focus_id and
-                    group['number_of_members'] < 5):
-                eligible_groups.append(group)
+        eligible_groups = [group for group in all_groups
+                           if group['focus_id'] == focus_id
+                           and group['number_of_members'] < 5]
+        # for group in all_groups:
+        #     if (group['focus_id'] == focus_id and
+        #             group['number_of_members'] < 5):
+        #         eligible_groups.append(group)
         if not eligible_groups:
             group_in_focus_id = self.focus_id_to_group_in(focus_id)
             self.create(group_in_focus_id)
             all_groups = self.get_groups()
+            eligible_groups = [group for group in all_groups
+                               if group['focus_id'] == focus_id
+                               and group['number_of_members'] < 5]
 
-            for group in all_groups:
-                if (group['focus_id'] == focus_id and
-                        group['number_of_members'] < 5):
-                    eligible_groups.append(group)
+        if not eligible_groups:
+            raise Exception('Error creating or finding eligible group')
 
-        if eligible_groups:
-            target_group = eligible_groups[0]
-            group_in = self.group_id_to_group_member_in(target_group['id'])
-            self.create_group_member(group_in, user_account_id)
+        target_group = eligible_groups[0]
+        group_in = self.group_id_to_group_member_in(target_group['id'])
+        self.create_group_member(group_in, user_account_id)
+        # for group in all_groups:
+        #     if (group['focus_id'] == focus_id and
+        #             group['number_of_members'] < 5):
+        #         eligible_groups.append(group)
+
+        # if eligible_groups:
+        #     target_group = eligible_groups[0]
+        #     group_in = self.group_id_to_group_member_in(target_group['id'])
+        #     self.create_group_member(group_in, user_account_id)
 
     def get_match_percentage(self, profile_1, profile_2):
         profile_1_vector = self.generate_user_interest_vector(profile_1)
@@ -235,7 +246,7 @@ class GroupRepository:
             print(e)
             return {"message": "Could not get group"}
 
-    def get_members_in_group(self, group_id: int) -> ProfileOut:
+    def get_members_in_group(self, group_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -263,7 +274,8 @@ class GroupRepository:
                         result = db.execute(
                             """
                         SELECT UP.id, UP.profile_photo, UP.about_me,
-                            UP.location, UA.first_name, UA.last_name, pig.id
+                            UP.location, UA.first_name, UA.last_name,
+                            UA.username, pig.id
                         FROM user_profile AS UP
                         JOIN user_account UA ON (UP.user_account_id = UA.id)
                         JOIN profiles_in_group pig ON
@@ -283,7 +295,8 @@ class GroupRepository:
                             "location": row[3],
                             "first_name": row[4],
                             "last_name": row[5],
-                            "relational_id": row[6],
+                            "username": row[6],
+                            "relational_id": row[7],
                         }
                         group_member_info_list.append(group_member_info)
                     return group_member_info_list
@@ -291,27 +304,24 @@ class GroupRepository:
             print(e)
             return {"message": "Could not get members"}
 
-    def get_profile_groups(self, profile_id: int) -> GroupUpdateOut:
+    def get_profile_groups(self, profile_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT G.id, G.name, G.icon_photo
+                        SELECT G.id
                         FROM groups AS G
                         JOIN profiles_in_group pig ON (G.id = pig.group_id)
                         WHERE pig.user_profile_id = %s
                         """,
                         [profile_id],
                     )
-                    groups = result.fetchall()
+                    group_ids = result.fetchall()
+
                     group_list = []
-                    for group in groups:
-                        group_info = {
-                            "group_id": group[0],
-                            "name": group[1],
-                            "photo": group[2],
-                        }
+                    for group_id in group_ids:
+                        group_info = self.get_one_group(group_id[0])
                         group_list.append(group_info)
                     return group_list
         except Exception as e:

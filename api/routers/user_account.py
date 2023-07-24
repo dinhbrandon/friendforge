@@ -24,12 +24,6 @@ class UserAccountForm(BaseModel):
     password: str
 
 
-# class AccountUpdateForm(UserAccountForm):
-#         first_name: str
-#         last_name: str
-#         phone_number: str
-
-
 class AccountToken(Token):
     account: UserAccountOut
 
@@ -116,8 +110,6 @@ def delete_user_account(
     return repo.delete(user_id)
 
 
-# Need to figure out how to get one user by
-# ID without conflicting w/ acct create
 @router.get("/users/{user_id}", response_model=Optional[UserAccountOut])
 def get_one_user_account(
     user_id: int,

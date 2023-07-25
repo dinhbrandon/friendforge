@@ -31,18 +31,19 @@ function HeaderToken() {
                                 </a>
 
                                 <a
-                                    href="/friendforge/forge"
+                                    href=""
                                     className="btn btn-ghost rounded-btn"
                                 >
-                                    FORGE
+                                    NOTIFICATIONS
                                 </a>
 
                                 <a
-                                    href="/friendforge/friends"
+                                    href=""
                                     className="btn btn-ghost rounded-btn"
                                 >
-                                    FRIENDS
+                                    MESSAGES
                                 </a>
+
                             </div>
                             {/* <HeaderGroups /> */}
                             <div className="dropdown dropdown-end">
@@ -63,7 +64,13 @@ function HeaderToken() {
                                         <a href={`/friendforge/profile/${profile.username}`}>Profile</a>
                                     </li>
                                     <li>
-                                        <a href="/friendforge/">Settings</a>
+                                        <a href={`/friendforge/friends/`}>Friends</a>
+                                    </li>
+                                    <li>
+                                        <a href={`/friendforge/mygroups/`}>My groups</a>
+                                    </li>
+                                    <li>
+                                        <a href="/friendforge/">Settings - in dev.</a>
                                     </li>
                                     <li>
                                         <a 

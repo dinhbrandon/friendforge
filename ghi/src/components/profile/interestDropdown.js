@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import useProfile from "./useProfile";
+import useProfile from "../useProfile";
 
 function InterestDropdown() {
     const { token } = useToken();

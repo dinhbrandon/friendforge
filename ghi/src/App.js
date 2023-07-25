@@ -17,9 +17,9 @@ import "./App.css";
 import GetProfile from "./screens/GetProfile";
 import MyGroups from "./screens/MyGroups";
 import Friends from "./screens/Friends";
-import InterestDropdown from './components/interestDropdown'
-
+import InterestDropdown from "./components/profile/interestDropdown";
 import LoginPage from "./screens/LoginPage";
+import EditProfile from "./components/profile/editProfile";
 
 function App() {
     const domain = /https:\/\/[^/]+/;
@@ -41,6 +41,7 @@ function App() {
                         />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/interestdropdown" element={<InterestDropdown />} />
+                        <Route path="/editprofile/:username" element={<EditProfile />} />
                         <Route path="/forge" element={<Forge />} />
                         <Route path="/group/:id" element={<GroupHome />} />
                         <Route path="/profile/:username" element={<GetProfile />} />

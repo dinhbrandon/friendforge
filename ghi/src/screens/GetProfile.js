@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useProfile from "../components/useProfile";
 import './style/userpage.css';
-import InterestDropdown from "../components/interestDropdown";
+import InterestDropdown from "../components/profile/interestDropdown";
+import EditProfile from "../components/profile/editProfile";
 
 const GetProfile = () => {
     const { token } = useToken();
@@ -38,17 +39,31 @@ const GetProfile = () => {
                     <img className="mx-auto h-24 w-24 rounded-full" src={profile.profile_photo} alt="User Profile" />
                     <h2 className="mt-6 text-2xl font-semibold text-white-900">{profile.first_name} {profile.last_name}</h2>
                 </div>
-                <div className="mt-5 text-sm text-white-700">
+                <div className="mt-5 text-sm text-white-700 flex">
                     <h3 className="text-lg font-medium">About Me</h3>
-                    <p className="mt-2">{profile.about_me}</p>
+                    {isOwnProfile && (
+                        <div>
+                        <button onClick={() => window.my_modal_2.showModal()}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </button>
+                        <dialog id="my_modal_2" className="modal-box bg-base">
+                            <button className="btn btn-sm btn-circle btn-white absolute right-2 top-2" onClick={() => window.my_modal_2.close()}>
+                                ✕
+                            </button>
+                            <EditProfile profile={profile} refreshProfile={loadProfile} />
+                        </dialog>
+                        </div>
+                    )}
                 </div>
+                <p className="mt-2 text-sm">{profile.about_me}</p>
                 <div className="mt-5 text-sm text-white-700">
                     <h3 className="text-lg font-medium">Location</h3>
                     <p className="mt-2">{profile.location}</p>
                 </div>
                 <div className="mt-5 text-sm text-white-700 flex items-center">
                     <h3 className="text-lg font-medium">Interests</h3>
-
                     {isOwnProfile && (
                     <div>
                         <button onClick={() => window.my_modal_3.showModal()}> 
@@ -67,7 +82,6 @@ const GetProfile = () => {
                     )}
                 
                 </div>
-
 
                     <ul className="grid grid-cols-4">
                         {profile.interests?.map((interest, index) => (

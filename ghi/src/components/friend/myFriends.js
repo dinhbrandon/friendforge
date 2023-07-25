@@ -33,7 +33,7 @@ function MyFriends(){
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-side"> 
-                <ul className="menu p-4 w-80 h-full text-base-content">
+                <ul className="menu p-4 w-50 h-full text-base-content">
                     <li className="text-xl">My Friends</li>
                     {friends.map((friend) => {
                         return(

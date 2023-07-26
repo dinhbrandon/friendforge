@@ -31,14 +31,14 @@ function HeaderToken() {
                                 </a>
 
                                 <a
-                                    href=""
+                                    href="/friendforge/"
                                     className="btn btn-ghost rounded-btn"
                                 >
                                     NOTIFICATIONS
                                 </a>
 
                                 <a
-                                    href=""
+                                    href="/friendforge/"
                                     className="btn btn-ghost rounded-btn"
                                 >
                                     MESSAGES

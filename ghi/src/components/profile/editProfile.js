@@ -70,7 +70,7 @@ const EditProfile = (profile) => {
                 />
 
                 <p className="mt-2 text-white text-center">Current Profile Photo</p>
-                <img className="mt-2 mb-2 mx-auto block avatar rounded-full" src={profile.profile.profile_photo}/>
+                <img className="mt-2 mb-2 mx-auto block avatar rounded-full" src={profile.profile.profile_photo} alt=''/>
 
                 <button
                 className="bg-primary text-white font-bold py-2 px-4 rounded"

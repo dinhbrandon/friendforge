@@ -8,7 +8,7 @@ function Home() {
     const { token } = useToken();
 
     if (token) {
-        return <HomeToken />
+        return <HomeToken token={token} />
         
         
     }

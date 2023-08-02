@@ -107,46 +107,48 @@ function CreateProfileForm() {
                             </div>
 
                             <div className="form-control">
-                            <Autocomplete
-                                id="location-autocomplete"
-                                freeSolo
-                                options={locations}
-                                getOptionLabel={(option) => {
-                                    let label = `${option.name}, ${option.country}`;
-                                    if (option.region) {
-                                        label = `${option.name}, ${option.region}, ${option.country}`;
-                                    }
-                                    return label;
-                                }}
-                                value={location}
-                                onInputChange={(event, newInputValue) => {
-                                    setInputValue(newInputValue);
-                                }}
-                                onChange={(event, newValue) => {
-                                    setLocation(newValue);
-                                    setOpen(false);  // Close dropdown menu after selection
-                                }}
-                                open={inputValue.length > 0 && open}
-                                onOpen={() => {
-                                    setOpen(true);
-                                }}
-                                onClose={() => {
-                                    setOpen(false);
-                                }}
-                                disableClearable
-                                renderInput={(params) => (
-                                    <TextField 
-                                        {...params} 
-                                        className="your-tailwind-classes" 
-                                        InputProps={{
-                                            ...params.InputProps,
-                                            className: "more-tailwind-classes",
-                                        }} 
-                                        label="Location" 
-                                        variant="filled" 
-                                    />
-                                )}
+                                <Autocomplete
+    id="location-autocomplete"
+    freeSolo
+    options={locations}
+    getOptionLabel={(option) => {
+        let label = `${option.name}, ${option.country}`;
+        if (option.region) {
+            label = `${option.name}, ${option.region}, ${option.country}`;
+        }
+        return label;
+    }}
+    value={location}
+    onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+    }}
+    onChange={(event, newValue) => {
+        setLocation(newValue);
+        setOpen(false);  // Close dropdown menu after selection
+    }}
+    open={inputValue.length > 0 && open}
+    onOpen={() => {
+        setOpen(true);
+    }}
+    onClose={() => {
+        setOpen(false);
+    }}
+    disableClearable
+    renderInput={(params) => (
+        <TextField 
+            {...params} 
+            className="your-tailwind-classes" 
+            InputProps={{
+                ...params.InputProps,
+                className: "more-tailwind-classes",
+            }} 
+            label="Nearest Region" 
+            variant="filled"
+            required  // Here is the required prop
+        />
+    )}
 />
+
                             </div>
 
                             <div>

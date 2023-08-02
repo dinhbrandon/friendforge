@@ -7,13 +7,14 @@ function GroupMembers({ token, groupId }) {
     const [groupName, setGroupName] = useState("");
     const [groupFocus, setGroupFocus] = useState("");
     const [groupIcon, setGroupIcon] = useState("");
+    const [groupLocation, setGroupLocation] = useState("");
     const [friendshipStatuses, setFriendshipStatuses] = useState({});
     const [loading, setLoading] = useState(true);
     const { profile } = useProfile(token);
 
     const loadMembers = useCallback(async () => {
         const response = await fetch(
-            `${process.env.REACT_APP_API_HOST}/groups/${groupId}`,
+            `${process.env.REACT_APP_API_HOST}/groups/id/${groupId}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -26,6 +27,7 @@ function GroupMembers({ token, groupId }) {
             setGroupName(data.name);
             setGroupFocus(data.focus);
             setGroupIcon(data.icon_photo)
+            setGroupLocation(data.location)
         }
     }, [token, groupId]);
 
@@ -113,6 +115,7 @@ return (
             </dialog>
         </div>
         <h2 className="text-md opacity-50">{groupFocus}</h2>
+        <h2 className="text-md opacity-50">{groupLocation}</h2>
         {members.map((member) => (
             <div
                 className="flex flex-col justify-center items-center m-5"

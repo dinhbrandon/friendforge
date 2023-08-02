@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function useMemberProfile({ profileId, token }) {
     const [userProfile, setUserProfile] = useState([]);
@@ -22,6 +22,7 @@ function useMemberProfile({ profileId, token }) {
     useEffect(() => {
         if (profileId && token) {
             getUserProfile();
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }
     }, [token, profileId]);
 

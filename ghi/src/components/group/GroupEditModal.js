@@ -22,7 +22,7 @@ function GroupEditModal(data) {
     };
 
     const response = await fetch(
-      `${process.env.REACT_APP_API_HOST}/groups/${data.groupId}`,
+      `${process.env.REACT_APP_API_HOST}/groups/id/${data.groupId}`,
       {
         method: "PUT",
         headers: {

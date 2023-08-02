@@ -110,6 +110,15 @@ class LocationRepository:
             print(e)
             return {"message": "Could not create location"}
 
+    def bulk_create(self, locations):
+        results = []
+
+        for location in locations:
+            result = self.create(location)
+            results.append(result)
+
+        return results
+
     def delete(self, location_id: int) -> Union[Error, None]:
         try:
             with pool.connection() as conn:

@@ -20,6 +20,7 @@ import Friends from "./screens/Friends";
 import InterestDropdown from "./components/profile/interestDropdown";
 import LoginPage from "./screens/LoginPage";
 import EditProfile from "./components/profile/editProfile";
+import Explore from "./screens/Explore";
 
 function App() {
     const domain = /https:\/\/[^/]+/;
@@ -44,6 +45,7 @@ function App() {
                         <Route path="/editprofile/:username" element={<EditProfile />} />
                         <Route path="/forge" element={<Forge />} />
                         <Route path="/group/:id" element={<GroupHome />} />
+                        <Route path="/explore/" element={<Explore />} />
                         <Route path="/profile/:username" element={<GetProfile />} />
                         <Route path="/mygroups" element={<MyGroups />} />
                         <Route path="/friends" element={<Friends />} />

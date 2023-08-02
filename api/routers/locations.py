@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response
-from typing import Union
+from typing import Union, List
 from queries.locations import (
     LocationIn,
     LocationOut,
@@ -23,6 +23,15 @@ def get_location(
     repo: LocationRepository = Depends(),
 ) -> Union[Error, LocationOut]:
     return repo.get_one(location_id)
+
+
+@router.post("/bulk/locations")
+def create_bulk_locations(
+    locations: List[LocationIn],
+    response: Response,
+    repo: LocationRepository = Depends(),
+):
+    return repo.bulk_create(locations)
 
 
 @router.post("/locations", response_model=Union[LocationOut, Error])

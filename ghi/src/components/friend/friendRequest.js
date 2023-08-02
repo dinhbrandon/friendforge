@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
-function FriendRequestForm() {
+function FriendRequestForm({ member }) {
+    const { token } = useToken()
+    // eslint-disable-next-line no-unused-vars
     const [message, setMessage] = useState("");
-
+    // eslint-disable-next-line no-unused-vars
     async function sendFriendRequest(e, receiver_id) {
       e.preventDefault();
 

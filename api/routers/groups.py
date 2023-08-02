@@ -16,6 +16,15 @@ from queries.groups import (
 router = APIRouter()
 
 
+@router.get("/groups/{location}")
+def group_by_location(
+    location: str,
+    repo: GroupRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    return repo.get_by_location(location)
+
+
 @router.post("/forge")
 def enter_forge(
     focus_id: int,
@@ -86,7 +95,8 @@ def delete_group(
     return repo.delete(group_id)
 
 
-@router.put("/groups/{group_id}", response_model=Union[GroupUpdateOut, Error])
+@router.put("/groups/id/{group_id}",
+            response_model=Union[GroupUpdateOut, Error])
 def edit_group(
     group_id: int,
     group: GroupUpdateIn,
@@ -97,7 +107,7 @@ def edit_group(
     return repo.update(group_id, group)
 
 
-@router.get("/groups/{group_id}", response_model=Union[SingleGroupOut, Error])
+@router.get("/groups/id/{group_id}")
 def get_one(
     group_id: int,
     repo: GroupRepository = Depends(),

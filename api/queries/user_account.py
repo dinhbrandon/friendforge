@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Union
+import re
 
 # from datetime import date
 from queries.pool import pool
@@ -136,6 +137,22 @@ class UserAccountQueries:  # Queries should be a parameter
         self, user_account: UserAccountIn, hashed_password: str
     ) -> UserAccountOutWithPassword:
         try:
+            # Validate email
+            email_pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+            if not re.match(email_pattern, user_account.email):
+                return {"message": "Invalid email format"}
+            # Validate phone number
+            phone_pattern = r'^\d{10}$'
+            if not re.match(phone_pattern, user_account.phone_number):
+                return {"message": "Invalid phone number format"}
+
+            # Validate and format first and last names
+            if (not user_account.first_name.isalpha() or
+                    not user_account.last_name.isalpha()):
+                return {"message": "Names should only contain letters"}
+            formatted_first_name = user_account.first_name.capitalize()
+            formatted_last_name = user_account.last_name.capitalize()
+
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
@@ -153,8 +170,8 @@ class UserAccountQueries:  # Queries should be a parameter
                             user_account.username,
                             hashed_password,
                             user_account.date_of_birth,
-                            user_account.first_name,
-                            user_account.last_name,
+                            formatted_first_name,
+                            formatted_last_name,
                             user_account.phone_number,
                             user_account.account_type_id,
                         ],

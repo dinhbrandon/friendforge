@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from queries.pool import pool
 from typing import List, Union, Optional
 from queries.interests import InterestRepository
+from queries.user_profile import ProfileRepository
 from queries.response_types import Error
 import numpy as np
 
@@ -15,6 +16,7 @@ class ProfileOut(BaseModel):
 
 class GroupIn(BaseModel):
     focus_id: int
+    location: str
 
 
 class GroupOut(BaseModel):
@@ -28,6 +30,7 @@ class SingleGroupOut(BaseModel):
     focus: str
     name: Optional[str]
     icon_photo: Optional[str]
+    location: str
     chatroom_id: Optional[str]
     members: Optional[list]
     number_of_members: Optional[int]
@@ -56,22 +59,51 @@ class GroupMemberOut(BaseModel):
 
 class GroupRepository:
 
+    def get_by_location(self, location: str):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT *
+                        FROM groups
+                        WHERE location LIKE %s
+                        ORDER BY id;
+                        """,
+                        ('%' + location + '%',)
+                    )
+                    result = db.fetchall()
+
+                    return [self.get_one_group(record[0]) for record in result]
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get groups by location due to error"}
+
     def forge(self, focus_id, user_account_id):
+        profile_repository = ProfileRepository()
+        profile_id = profile_repository.get_profile_id_by_user_account(
+            user_account_id)
+        profile_data = profile_repository.get_one(profile_id)
         all_groups = self.get_groups()
         eligible_groups = [group for group in all_groups
                            if group['focus_id'] == focus_id
-                           and group['number_of_members'] < 5]
-        # for group in all_groups:
-        #     if (group['focus_id'] == focus_id and
-        #             group['number_of_members'] < 5):
-        #         eligible_groups.append(group)
+                           and group['number_of_members'] < 5
+                           and group['location'] ==
+                           profile_data['location']
+                           ]
+
         if not eligible_groups:
-            group_in_focus_id = self.focus_id_to_group_in(focus_id)
+            group_in_focus_id = self.focus_id_to_group_in(
+                focus_id,
+                profile_data["location"])
             self.create(group_in_focus_id)
             all_groups = self.get_groups()
             eligible_groups = [group for group in all_groups
                                if group['focus_id'] == focus_id
-                               and group['number_of_members'] < 5]
+                               and group['number_of_members'] < 5
+                               and group['location'] ==
+                               profile_data['location']
+                               ]
 
         if not eligible_groups:
             raise Exception('Error creating or finding eligible group')
@@ -79,15 +111,6 @@ class GroupRepository:
         target_group = eligible_groups[0]
         group_in = self.group_id_to_group_member_in(target_group['id'])
         self.create_group_member(group_in, user_account_id)
-        # for group in all_groups:
-        #     if (group['focus_id'] == focus_id and
-        #             group['number_of_members'] < 5):
-        #         eligible_groups.append(group)
-
-        # if eligible_groups:
-        #     target_group = eligible_groups[0]
-        #     group_in = self.group_id_to_group_member_in(target_group['id'])
-        #     self.create_group_member(group_in, user_account_id)
 
     def get_match_percentage(self, profile_1, profile_2):
         profile_1_vector = self.generate_user_interest_vector(profile_1)
@@ -151,7 +174,6 @@ class GroupRepository:
                     )
                     rows = db.fetchall()
                     members = [row[0] for row in rows]
-                    print(members)
 
                     if profile_id in members:
                         db.execute(
@@ -210,14 +232,13 @@ class GroupRepository:
                     result = db.execute(
                         """
                         SELECT g.id, g.focus_id, gf.name,
-                        g.name, g.icon_photo, g.chatroom_id
+                        g.name, g.icon_photo, g.location, g.chatroom_id
                         FROM groups g
                         JOIN group_focus gf ON gf.id = g.focus_id
                         WHERE g.id = %s
                         """,
                         [group_id],
                     )
-
                     group_members = self.get_members_in_group(group_id)
 
                     members = []
@@ -235,11 +256,11 @@ class GroupRepository:
                             "focus": row[2],
                             "name": row[3],
                             "icon_photo": row[4],
-                            "chatroom_id": row[5],
+                            "location": row[5],
+                            "chatroom_id": row[6],
                             "members": members,
                             "number_of_members": num_members,
                         }
-
                     return group_info
 
         except Exception as e:
@@ -355,17 +376,21 @@ class GroupRepository:
                     result = db.execute(
                         """
                         INSERT INTO groups (
-                            focus_id
+                            focus_id,
+                            location
                         )
-                        VALUES (%s)
+                        VALUES (%s, %s)
                         RETURNING id;
                         """,
                         [
                             group.focus_id,
+                            group.location
                         ],
                     )
                     id = result.fetchone()[0]
-                    group_out = GroupOut(group_id=id, focus_id=group.focus_id)
+                    group_out = GroupOut(group_id=id,
+                                         focus_id=group.focus_id,
+                                         location=group.location)
                     return group_out
 
         except Exception as e:
@@ -440,5 +465,5 @@ class GroupRepository:
     def group_id_to_group_member_in(self, group_id):
         return GroupMemberIn(group_id=group_id)
 
-    def focus_id_to_group_in(self, focus_id):
-        return GroupIn(focus_id=focus_id)
+    def focus_id_to_group_in(self, focus_id, location):
+        return GroupIn(focus_id=focus_id, location=location)

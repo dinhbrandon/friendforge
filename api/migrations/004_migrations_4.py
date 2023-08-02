@@ -7,6 +7,7 @@ steps = [
             focus_id INTEGER NOT NULL REFERENCES group_focus(id),
             name VARCHAR(1000) NULL,
             icon_photo TEXT NULL,
+            location TEXT NOT NULL,
             chatroom_id TEXT NULL
         );
         """,

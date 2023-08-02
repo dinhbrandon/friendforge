@@ -1,7 +1,7 @@
 import React from "react";
-import stepone from "./stepone.png";
-import steptwo from "./steptwo.png";
-import stepthree from "./stepthree.png";
+import stepone from "./assets/stepone.png";
+import steptwo from "./assets/steptwo.png";
+import stepthree from "./assets/stepthree.png";
 
 function Steps() {
     return (

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from 'react-router-dom';
-import useOutsideClick from '../hooks/useOutsideClick';
+import useOutsideClick from '../../hooks/useOutsideClick';
 
 function LoginForm() {
     const [email, setEmail] = useState("");

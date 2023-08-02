@@ -1,6 +1,6 @@
 import React from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import useProfile from "./useProfile";
+import useProfile from "../useProfile";
 
 function ConfirmLeave({ group, onCancel, onConfirm }) {
     const { token } = useToken();

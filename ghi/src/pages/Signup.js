@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import signupperson from "./images/signupperson.png";
-import SignupForm from "../components/authorization/SignupForm";
+import SignupForm from "../components/userauth/SignupForm";
 
 function Signup() {
     const [isEighteenOrOlder, setIsEighteenOrOlder] = useState(null);

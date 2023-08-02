@@ -2,25 +2,25 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Home from "./screens/Home";
-import Signup from "./screens/Signup";
-import AdminPannel from "./screens/AdminPannel";
-import SelectInterests from "./components/authorization/SelectInterests";
+import Home from "./pages/Home";
+import Signup from "./pages/Signup";
+import AdminPanel from "./pages/AdminPanel";
+import SelectInterests from "./components/getprofile/SelectInterests";
 import AdminFocus from "./components/adminpages/AdminFocus";
 import AdminGroups from "./components/adminpages/AdminGroups";
 import AdminInterests from "./components/adminpages/AdminInterests";
 import AdminUsers from "./components/adminpages/AdminUsers";
-import CreateProfile from "./screens/CreateProfile";
-import Forge from "./screens/Forge";
-import GroupHome from "./screens/GroupHome";
+import CreateProfile from "./pages/CreateProfile";
+import Forge from "./pages/Forge";
+import GroupHome from "./pages/GroupHome";
 import "./App.css";
-import GetProfile from "./screens/GetProfile";
-import MyGroups from "./screens/MyGroups";
-import Friends from "./screens/Friends";
-import InterestDropdown from "./components/profile/interestDropdown";
-import LoginPage from "./screens/LoginPage";
-import EditProfile from "./components/profile/editProfile";
-import Explore from "./screens/Explore";
+import GetProfile from "./pages/GetProfile";
+import MyGroups from "./pages/MyGroups";
+import Friends from "./pages/Friends";
+import InterestDropdown from "./components/getprofile/interestDropdown";
+import LoginPage from "./pages/LoginPage";
+import EditProfile from "./components/getprofile/editProfile";
+import Explore from "./pages/Explore";
 
 function App() {
     const domain = /https:\/\/[^/]+/;
@@ -49,8 +49,7 @@ function App() {
                         <Route path="/profile/:username" element={<GetProfile />} />
                         <Route path="/mygroups" element={<MyGroups />} />
                         <Route path="/friends" element={<Friends />} />
-                        {/* routes for admin AdminPannel pages */}
-                        <Route path="/admin" element={<AdminPannel />} />
+                        <Route path="/admin" element={<AdminPanel />} />
                         <Route path="/admin/focus" element={<AdminFocus />} />
                         <Route path="/admin/groups" element={<AdminGroups />} />
                         <Route

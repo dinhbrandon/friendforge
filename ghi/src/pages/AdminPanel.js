@@ -1,7 +1,7 @@
 import React from "react";
-import "./style/adminpannel.css";
+import "./style/adminpanel.css";
 
-function AdminPannel() {
+function AdminPanel() {
     return (
         <div className="admin-pannel">
             <h1 className="center-txt extra-p60">Admin Panel</h1>
@@ -17,4 +17,4 @@ function AdminPannel() {
     );
 }
 
-export default AdminPannel;
+export default AdminPanel;

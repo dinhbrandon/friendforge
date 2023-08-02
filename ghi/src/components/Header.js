@@ -1,8 +1,8 @@
 import React from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import logo from "./images/logo.png";
-import HeaderNoToken from "./headerauth/HeaderNoToken";
-import HeaderToken from "./headerauth/HeaderToken";
+import HeaderNoToken from "./header/HeaderNoToken";
+import HeaderToken from "./header/HeaderToken";
 import "./style/header.css";
 
 export default function Header() {

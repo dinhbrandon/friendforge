@@ -1,5 +1,5 @@
 import React from "react";
-import CreateProfileForm from "../components/authorization/CreateProfileForm";
+import CreateProfileForm from "../components/userauth/CreateProfileForm";
 
 function CreateProfile() {
     return (

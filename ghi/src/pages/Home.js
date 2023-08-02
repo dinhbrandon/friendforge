@@ -1,7 +1,7 @@
 import React from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import HomeNoToken from "../components/home/HomeNoToken";
-import HomeToken from "../components/home/HomeToken";
+import HomeNoToken from "../components/landingpage/HomeNoToken";
+import HomeToken from "../components/landingpage/HomeToken";
 import "./style/home.css";
 
 function Home() {

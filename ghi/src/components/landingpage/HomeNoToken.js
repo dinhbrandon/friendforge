@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { animateScroll as scroll } from 'react-scroll';
 import "../style/scroll.css";
 import Steps from "./Steps";
-import people1 from "./people1.png";
+import people1 from "./assets/people1.png";
 
 function HomeNoToken() {
     const secondHeroRef = useRef(null); // reference to the second hero

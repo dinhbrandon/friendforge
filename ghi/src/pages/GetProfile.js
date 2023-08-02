@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useProfile from "../components/useProfile";
 import './style/userpage.css';
-import InterestDropdown from "../components/profile/interestDropdown";
-import EditProfile from "../components/profile/editProfile";
+import InterestDropdown from "../components/getprofile/interestDropdown";
+import EditProfile from "../components/getprofile/editProfile";
 
 const GetProfile = () => {
     const { token } = useToken();

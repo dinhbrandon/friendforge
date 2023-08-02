@@ -1,7 +1,7 @@
 import React from "react";
 import "./style/forge.css";
 import people from "../components/forge/people.png";
-import ForgeGroup from "../components/forge/enterforge";
+import ForgeGroup from "../components/forge/forgeGroup";
 
 function Forge() {
     return (

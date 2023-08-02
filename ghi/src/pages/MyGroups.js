@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useProfile from "../components/useProfile";
-import people from "../screens/images/people.png";
-import ConfirmLeave from "../components/confirmLeave";
+import people from "./images/people.png";
+import ConfirmLeave from "../components/mygroups/confirmLeave";
 
 function MyGroups() {
     const [groups, setGroups] = useState([]);

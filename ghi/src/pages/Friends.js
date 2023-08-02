@@ -1,5 +1,5 @@
-import MyFriends from "../components/friend/myFriends";
-import PendingRequests from "../components/friend/pendingFriendRequests";
+import MyFriends from "../components/friends/myFriends";
+import PendingRequests from "../components/friends/pendingFriendRequests";
 function Friends(){
     return (
         <div className="flex">

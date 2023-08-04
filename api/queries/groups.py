@@ -81,9 +81,8 @@ class GroupRepository:
 
     def forge(self, focus_id, user_account_id):
         profile_repository = ProfileRepository()
-        profile_id = profile_repository.get_profile_id_by_user_account(
+        profile_data = profile_repository.get_profile_by_user_account(
             user_account_id)
-        profile_data = profile_repository.get_one(profile_id)
         all_groups = self.get_groups()
         eligible_groups = [group for group in all_groups
                            if group['focus_id'] == focus_id

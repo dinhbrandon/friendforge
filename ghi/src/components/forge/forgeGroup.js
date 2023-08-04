@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
 
 function ForgeGroup() {
-    const { token } = useToken();
+    const { token } = useAuthContext();
     const [focuses, setFocus] = useState([]);
     const [selectedFocus, setSelectedFocus] = useState("Select Focus");
     const navigate = useNavigate();

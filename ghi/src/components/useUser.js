@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 const useUser = (token) => {
   const [user, setUser] = useState([]);
 
-
   useEffect(() => {
     const getUser = async () => {
       const res = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {

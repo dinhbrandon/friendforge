@@ -1,11 +1,11 @@
-import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import React, { useState, useEffect } from 'react';
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
 
 const EditProfile = (profile) => {
-    const { token } = useToken();
+    const { token } = useAuthContext();
     const [profileAboutMe, setProfileAboutMe] = useState("")
     const [profilePhoto, setProfilePhoto] = useState("")
     const [profileLocation, setProfileLocation] = useState(undefined);

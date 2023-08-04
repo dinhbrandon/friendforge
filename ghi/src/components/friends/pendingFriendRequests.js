@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
-import useProfile from "../useProfile";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useUserContext } from "../../hooks/UserProvider";
 
 function PendingRequests(){
   const [friendRequests, setFriendRequests] = useState([]);
-  const { token } = useToken();
-  const { profile } = useProfile(token);
+  const { token } = useAuthContext();
+  const { profile } = useUserContext();
 
   const loadFriendRequests = async (id) => {
   const response = await fetch(
@@ -22,9 +22,8 @@ function PendingRequests(){
     };
     
   useEffect(() => {
-      if (profile && profile.id) {
-          const id = profile.id;
-          loadFriendRequests(id);
+      if (profile) {
+          loadFriendRequests(profile.id);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);

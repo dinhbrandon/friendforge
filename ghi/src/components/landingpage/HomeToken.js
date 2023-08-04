@@ -2,15 +2,14 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserProfileValidator from '../userProfileValidator';
 import "../style/navwheel.css";
-import useProfile from '../useProfile';
+import { useUserContext } from '../../hooks/UserProvider';
 
 
-function HomeToken(token) {
-  const { profile } = useProfile(token.token);
+function HomeToken() {
   const navigate = useNavigate();
-
-
-
+  const { profile } = useUserContext();
+  console.log(profile)
+  
   return (
 <UserProfileValidator>
   {hasProfile => (

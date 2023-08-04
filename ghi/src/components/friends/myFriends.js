@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
-import useProfile from "../useProfile";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useUserContext } from "../../hooks/UserProvider";
+
 
 function MyFriends(){
     const [friends, setFriends] = useState([]);
-    const { token } = useToken();
-    const { profile } = useProfile(token);
+    const { token } = useAuthContext();
+    const { profile } = useUserContext();
 
     const loadFriends = async (id) => {
     const response = await fetch(
@@ -22,9 +23,8 @@ function MyFriends(){
     };
 
     useEffect(() => {
-    if (profile && profile.id) {
-        const id = profile.id;
-        loadFriends(id);
+    if (profile) {
+        loadFriends(profile.id);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [profile]);

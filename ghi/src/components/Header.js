@@ -1,12 +1,13 @@
-import React from "react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import logo from "./images/logo.png";
 import HeaderNoToken from "./header/HeaderNoToken";
 import HeaderToken from "./header/HeaderToken";
+
+
 import "./style/header.css";
 
 export default function Header() {
-    const { token } = useToken();
+    const { token } = useAuthContext();
 
     if (token) {
         return (
@@ -34,8 +35,7 @@ export default function Header() {
                     </a>
                 </div>
                 <div className="flex-none">
-                    {!token && <HeaderNoToken />}
-                    {token && <HeaderToken />}
+                    <HeaderNoToken />
                 </div>
             </div>
         </nav>

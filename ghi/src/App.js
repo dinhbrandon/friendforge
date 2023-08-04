@@ -21,14 +21,16 @@ import InterestDropdown from "./components/getprofile/interestDropdown";
 import LoginPage from "./pages/LoginPage";
 import EditProfile from "./components/getprofile/editProfile";
 import Explore from "./pages/Explore";
+import { UserProvider } from "./hooks/UserProvider";
+
 
 function App() {
     const domain = /https:\/\/[^/]+/;
-    //VERIFY IF CORRECT???
     const basename = process.env.PUBLIC_URL.replace(domain, "");
 
     return (
         <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
+            <UserProvider>
             <div className="flex flex-col min-h-screen justify-between">
                 <BrowserRouter basename={basename}>
                     <Header />
@@ -63,6 +65,7 @@ function App() {
                 </BrowserRouter>
                 <Footer />
             </div>
+            </UserProvider>
         </AuthProvider>
     );
 }

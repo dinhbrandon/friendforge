@@ -100,7 +100,7 @@ class ProfileRepository:
             print(e)
             return {"message": "This user has no profile created."}
 
-    def get_profile_id_by_user_account(self, user_account_id: int):
+    def get_profile_by_user_account(self, user_account_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -115,7 +115,7 @@ class ProfileRepository:
 
                     row = db.fetchone()
                     if row:
-                        return row[0]
+                        return self.get_one(row[0])
                     else:
                         return None
         except Exception as e:

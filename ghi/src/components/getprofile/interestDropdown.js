@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useUserContext } from "../../hooks/UserProvider";
 import useProfile from "../useProfile";
 
 function InterestDropdown() {
-    const { token } = useToken();
+    const { token } = useAuthContext();
     const { profile, updateProfile } = useProfile(token)
     const [interests, setInterests] = useState([]);
     const [selectedInterest, setSelectedInterest] = useState("Select Interests");

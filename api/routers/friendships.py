@@ -19,8 +19,8 @@ def friend_request(
 ):
     user_account_id = account_data["id"]
     profile_repository = ProfileRepository()
-    sender_id = profile_repository.get_profile_id_by_user_account(
-        user_account_id)
+    sender_id = profile_repository.get_profile_by_user_account(
+        user_account_id)["id"]
 
     friends = repo.get(sender_id)
     if friends:
@@ -43,8 +43,8 @@ def get_friend_requests(
 ):
     user_account_id = account_data["id"]
     profile_repository = ProfileRepository()
-    profile_id = profile_repository.get_profile_id_by_user_account(
-        user_account_id)
+    profile_id = profile_repository.get_profile_by_user_account(
+        user_account_id)["id"]
     return repo.get_all_requests(profile_id)
 
 
@@ -57,8 +57,8 @@ def accept_friend_request(
 ):
     receiver_account_id = account_data["id"]
     profile_repository = ProfileRepository()
-    receiver_id = profile_repository.get_profile_id_by_user_account(
-        receiver_account_id)
+    receiver_id = profile_repository.get_profile_by_user_account(
+        receiver_account_id)["id"]
     return repo.accept(receiver_id, sender_id)
 
 
@@ -71,8 +71,8 @@ def reject_friend_request(
 ):
     receiver_account_id = account_data["id"]
     profile_repository = ProfileRepository()
-    receiver_id = profile_repository.get_profile_id_by_user_account(
-        receiver_account_id)
+    receiver_id = profile_repository.get_profile_by_user_account(
+        receiver_account_id)["id"]
 
     return repo.reject(receiver_id, sender_id)
 

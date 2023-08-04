@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
-import useToken from "@galvanize-inc/jwtdown-for-react";
-import useProfile from "../components/useProfile";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useUserContext } from "../hooks/UserProvider";
 import './style/userpage.css';
 import InterestDropdown from "../components/getprofile/interestDropdown";
 import EditProfile from "../components/getprofile/editProfile";
 
 const GetProfile = () => {
-    const { token } = useToken();
-    const { profile: signedInProfile } = useProfile(token);
+    const { token } = useAuthContext();
+    const { profile: signedInProfile } = useUserContext();
     const { username } = useParams();
     const [profile, setProfile] = useState('')
 
@@ -52,7 +52,7 @@ const GetProfile = () => {
                             <button className="btn btn-sm btn-circle btn-white absolute right-2 top-2" onClick={() => window.my_modal_2.close()}>
                                 ✕
                             </button>
-                            <EditProfile profile={profile} refreshProfile={loadProfile} />
+                            <EditProfile profile={signedInProfile} refreshProfile={loadProfile} />
                         </dialog>
                         </div>
                     )}

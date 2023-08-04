@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import useUser from './useUser';
-import useToken from "@galvanize-inc/jwtdown-for-react";
-
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 const UserProfileValidator = ({ children }) => {
-  const { token } = useToken();
+  const { token } = useAuthContext();
   const { user } = useUser(token);
   const [hasProfile, setHasProfile] = useState(false);
 

@@ -1,11 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import GroupMembers from "../components/group/GroupMembers";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import GroupChat from "../components/group/GroupChat";
 
 function GroupHome() {
-    const { token } = useToken();
+    const { token } = useAuthContext();
     const { id } = useParams();
     return (
         <div className="flex">

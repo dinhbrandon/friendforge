@@ -23,7 +23,7 @@ def create_private_message(
 ):
     user_account_id = account_data["id"]
     profile_repository = ProfileRepository()
-    user_profile_id1 = profile_repository.get_profile_id_by_user_account(
+    user_profile_id1 = profile_repository.get_profile_by_user_account(
         user_account_id)
     return repo.create(user_profile_id1, user_profile_id2, content)
 

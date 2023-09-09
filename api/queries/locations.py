@@ -38,7 +38,7 @@ class LocationRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    results = db.execute(
                         """
                         SELECT id, name, region, country, latitude, longitude
                         FROM locations
@@ -46,7 +46,7 @@ class LocationRepository:
                         """,
                         (location_id,)
                     )
-                    record = db.fetchone()
+                    record = results.fetchone()
                     if record is None:
                         return {"message":
                                 f"Location with ID {location_id} not found"}
@@ -86,7 +86,7 @@ class LocationRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    results = db.execute(
                         """
                         INSERT INTO locations (
                             name,
@@ -102,7 +102,7 @@ class LocationRepository:
                          location.latitude,
                          location.longitude)
                     )
-                    location_id = db.fetchone()[0]
+                    location_id = results.fetchone()[0]
                     return {"message":
                             f"{location_id}: {location.name} created."}
 
@@ -150,7 +150,7 @@ class LocationRepository:
                             params.append(value)
                     sql_update = ", ".join(update_clauses)
 
-                    db.execute(
+                    results = db.execute(
                         f"""
                         UPDATE locations
                         SET {sql_update}
@@ -159,7 +159,7 @@ class LocationRepository:
                         """,
                         (*params, location_update.id)
                     )
-                    location_id = db.fetchone()[0]
+                    location_id = results.fetchone()[0]
                     return self.get_one(location_id)
 
         except Exception as e:

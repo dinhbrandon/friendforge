@@ -28,7 +28,7 @@ class FriendshipRepository:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     # Check if the users are already friends
-                    db.execute(
+                    results = db.execute(
                         """
                         SELECT *
                         FROM friendships
@@ -37,13 +37,13 @@ class FriendshipRepository:
                         """,
                         [user_1, user_2, user_2, user_1]
                     )
-                    result = db.fetchone()
+                    result = results.fetchone()
                     if result is not None:
                         return {"relationship_status": "Friends"}
 
                     # Check if there is a pending
                     # friend request between the users
-                    db.execute(
+                    results2 = db.execute(
                         """
                         SELECT *
                         FROM friend_requests
@@ -53,7 +53,7 @@ class FriendshipRepository:
                         """,
                         [user_1, user_2, user_2, user_1]
                     )
-                    result = db.fetchone()
+                    result = results2.fetchone()
                     if result is not None:
                         return {"relationship_status": "Pending Friendship"}
 

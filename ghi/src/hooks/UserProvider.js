@@ -1,31 +1,34 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useQuery } from "@tanstack/react-query";
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
     const { token } = useAuthContext();
-    const [user, setUser] = useState({});
-    const [profile, setProfile] = useState({});
 
-    console.log(token)
-    console.log("user", user)
-    console.log("profile", profile)
-
-    const getUser = async () => {
-        const response = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
+    const { data: user, error: userError, isLoading: userLoading } = useQuery(["user", token], async () => {
+        const res = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
             credentials: "include",
             headers: {
                 Authorization: `bearer ${token}`,
             },
         });
-        const result = await response.json();
-        setUser(result.account);
-    };
+        if (!res.ok) {
+            throw new Error("Failed to fetch user");
+        }
+        const result = await res.json();
+        return result.account;
+    }, {
+        enabled: !!token,
+        // TODO: Remove me before Query 5
+        // This is temporary to find errors
+        onError: console.error
+    });
 
-    const getProfile = async (userId) => {
+    const { data: profile, error: profileError, isLoading: profileLoading } = useQuery(["profile", user?.id, token], async () => {
         const res = await fetch(
-            `${process.env.REACT_APP_API_HOST}/get_profile/${userId}`,
+            `${process.env.REACT_APP_API_HOST}/get_profile/${user.id}`,
             {
                 credentials: "include",
                 headers: {
@@ -33,26 +36,28 @@ export function UserProvider({ children }) {
                 },
             }
         );
-        if (res.ok) {
-            const profileData = await res.json();
-            setProfile(profileData);
+
+        if (!res.ok) {
+            throw new Error("Failed to fetch profile");
         }
-    };
+        const profileData = await res.json();
+        return profileData;
+    }, {
+        enabled: !!user?.id && !!token,
+        onError: console.error
+    });
 
-    useEffect(() => {
-        if (token) {
-            getUser();
-        }
-    }, [token]);
+    console.log(token)
+    console.log("user", user)
+    console.log("profile", profile)
 
-    useEffect(() => {
-        if (user.id) {
-            getProfile(user.id);
-        }
-    }, [user]);
-
-
-
+    if (userError || profileError) {
+        return <div>
+            Failed to load user
+            {userError && <><h1>userError</h1><pre>{JSON.stringify(userError, null, 2)}</pre></>}
+            {profileError && <><h1>profileError</h1><pre>{JSON.stringify(profileError, null, 2)}</pre></>}
+        </div>;
+    }
 
     return (
         <UserContext.Provider value={{ user, profile }}>

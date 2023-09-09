@@ -9,8 +9,6 @@ function Home() {
 
     if (token) {
         return <HomeToken />
-        
-        
     }
 
     if (!token) {

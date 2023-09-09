@@ -48,7 +48,7 @@ class MessageRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    results = db.execute(
                         """
                         SELECT id, profile_id, group_id, content
                         FROM messages
@@ -56,9 +56,9 @@ class MessageRepository:
                         """,
                         [group_id],
                     )
-                    results = db.fetchall()
+                    results2 = results.fetchall()
                     messages = []
-                    for result in results:
+                    for result in results2:
                         message_id, profile_id, group_id, content = result
                         message = self.message_in_to_out(
                             message_id, profile_id, group_id, content

@@ -79,7 +79,7 @@ class ProfileRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    result = db.execute(
                         """
                         SELECT up.id
                         FROM user_profile up
@@ -90,7 +90,7 @@ class ProfileRepository:
                         [username],
                     )
 
-                    row = db.fetchone()
+                    row = result.fetchone()
                     if row:
                         profile = self.get_one(row[0])
                         return profile
@@ -104,7 +104,7 @@ class ProfileRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    result = db.execute(
                         """
                         SELECT id
                         FROM user_profile
@@ -113,10 +113,12 @@ class ProfileRepository:
                         [user_account_id],
                     )
 
-                    row = db.fetchone()
+                    row = result.fetchone()
                     if row:
+                        # print("FOUND ONE")
                         return self.get_one(row[0])
                     else:
+                        # print("DIDN'T FIND ONE")
                         return None
         except Exception as e:
             print(e)
@@ -141,7 +143,7 @@ class ProfileRepository:
     def get_interests_user_profile(self, user_profile_id):
         with pool.connection() as conn:
             with conn.cursor() as db:
-                db.execute(
+                result = db.execute(
                     """
                     SELECT interest.id, interest.name, upi.id
                     FROM interests interest
@@ -154,7 +156,7 @@ class ProfileRepository:
                 )
 
                 interests = []
-                rows = db.fetchall()
+                rows = result.fetchall()
                 for row in rows:
                     interest = {
                         "id": row[0],
@@ -222,7 +224,7 @@ class ProfileRepository:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     # Get profile details
-                    db.execute(
+                    result = db.execute(
                         """
                         SELECT UP.id, UP.about_me, UP.profile_photo,
                         UP.location, UP.user_account_id, UA.username,
@@ -233,14 +235,16 @@ class ProfileRepository:
                         """,
                         [profile_id],
                     )
-                    interests = self.get_interests_user_profile(profile_id)
 
                     # interest_names = []
                     # for interest in interests:
                     #     interest_names.append(interest["name"])
 
-                    row = db.fetchone()
+                    row = result.fetchone()
+
                     if row:
+                        interests = self.get_interests_user_profile(profile_id)
+
                         profile_data = {
                             "id": row[0],
                             "about_me": row[1],

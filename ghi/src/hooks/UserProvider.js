@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useContext, createContext } from 'react';
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -7,7 +7,7 @@ const UserContext = createContext();
 export function UserProvider({ children }) {
     const { token } = useAuthContext();
 
-    const { data: user, error: userError, isLoading: userLoading } = useQuery(["user", token], async () => {
+    const { data: user, error: userError} = useQuery(["user", token], async () => {
         const res = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
             credentials: "include",
             headers: {
@@ -26,7 +26,7 @@ export function UserProvider({ children }) {
         onError: console.error
     });
 
-    const { data: profile, error: profileError, isLoading: profileLoading } = useQuery(["profile", user?.id, token], async () => {
+    const { data: profile, error: profileError} = useQuery(["profile", user?.id, token], async () => {
         const res = await fetch(
             `${process.env.REACT_APP_API_HOST}/get_profile/${user.id}`,
             {

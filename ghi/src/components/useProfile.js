@@ -3,7 +3,7 @@ import useUser from "./useUser";
 
 function useProfile(token) {
     const [profile, setProfile] = useState([]);
-    const [id, setId] = useState("");
+    const [id] = useState("");
     const { user } = useUser(token);
 
     const getProfile = async () => {

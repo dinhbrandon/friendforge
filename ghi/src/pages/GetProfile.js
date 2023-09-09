@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from 'react-router-dom';
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { useUserContext } from "../hooks/UserProvider";
@@ -12,7 +12,7 @@ const GetProfile = () => {
     const { profile: signedInProfile } = useUserContext();
     const { username } = useParams();
 
-    const { data: profile, error: profileError, isLoading: profileLoading, refresh } = useQuery(["username_profile", username, token], async () => {
+    const { data: profile} = useQuery(["username_profile", username, token], async () => {
         const res = await fetch(
             `${process.env.REACT_APP_API_HOST}/profile/user/${username}`,
             {

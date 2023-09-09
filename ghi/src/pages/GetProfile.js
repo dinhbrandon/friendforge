@@ -56,7 +56,7 @@ const GetProfile = () => {
                                 <button className="btn btn-sm btn-circle btn-white absolute right-2 top-2" onClick={() => window.my_modal_2.close()}>
                                     ✕
                                 </button>
-                                <EditProfile profile={signedInProfile} refreshProfile={refresh} />
+                                <EditProfile profile={signedInProfile}/>
                             </dialog>
                         </div>
                     )}

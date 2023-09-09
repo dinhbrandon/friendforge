@@ -20,12 +20,12 @@ router = APIRouter()
 
 
 @router.get("/get_profile/{user_id}")
-def get_profile_id(
+def get_profile_by_user_id(
     user_id: int,
     repo: ProfileRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    profile_id = repo.get_profile_id_by_user_account(user_id)
+    profile_id = repo.get_profile_by_user_account(user_id)
 
     return profile_id
 
@@ -39,7 +39,7 @@ def update_profile(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     user_account_id = account_data["id"]
-    # profile_id = repo.get_profile_id_by_user_account(user_account_id)
+
     return repo.update(user_account_id, profile)
 
 
@@ -51,8 +51,8 @@ def create_profile(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     user_account_id = account_data["id"]
-    profile_id = repo.get_profile_id_by_user_account(user_account_id)
-    if profile_id is None:
+    profile_data = repo.get_profile_by_user_account(user_account_id)
+    if profile_data is None:
         return repo.create(user_account_id, profile)
     else:
         return {"Error": "Only one profile per account allowed."}
@@ -130,10 +130,10 @@ def delete_user_profile_interest(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     user_account_id = account_data["id"]
-    profile_id = repo.get_profile_id_by_user_account(user_account_id)
+    profile_data = repo.get_profile_by_user_account(user_account_id)
 
-    if profile_id:
-        user_interests = repo.get_interests_user_profile(profile_id)
+    if profile_data:
+        user_interests = repo.get_interests_user_profile(profile_data["id"])
         list_user_interests = [
             interest["user_profile_interest_id"] for interest in user_interests
         ]

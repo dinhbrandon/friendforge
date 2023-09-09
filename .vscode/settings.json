@@ -4,5 +4,8 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true
+  "python.linting.flake8Enabled": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
+  }
 }

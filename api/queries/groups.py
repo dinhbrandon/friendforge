@@ -63,7 +63,7 @@ class GroupRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    results = db.execute(
                         """
                         SELECT *
                         FROM groups
@@ -72,7 +72,7 @@ class GroupRepository:
                         """,
                         ('%' + location + '%',)
                     )
-                    result = db.fetchall()
+                    result = results.fetchall()
 
                     return [self.get_one_group(record[0]) for record in result]
         except Exception as e:
@@ -81,9 +81,8 @@ class GroupRepository:
 
     def forge(self, focus_id, user_account_id):
         profile_repository = ProfileRepository()
-        profile_id = profile_repository.get_profile_id_by_user_account(
+        profile_data = profile_repository.get_profile_by_user_account(
             user_account_id)
-        profile_data = profile_repository.get_one(profile_id)
         all_groups = self.get_groups()
         eligible_groups = [group for group in all_groups
                            if group['focus_id'] == focus_id
@@ -138,7 +137,7 @@ class GroupRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    results = db.execute(
                         """
                         SELECT user_profile_id, interest_id
                         FROM user_profile_interests
@@ -146,7 +145,7 @@ class GroupRepository:
                         """,
                         [user_profile_id],
                     )
-                    result = db.fetchall()
+                    result = results.fetchall()
                     user_interests = [record[1] for record in result]
                     interest_array = self.generate_interest_vector(
                         user_interests, all_interests
@@ -162,7 +161,7 @@ class GroupRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    results = db.execute(
                         """
                         SELECT pig.user_profile_id
                         FROM profiles_in_group AS pig
@@ -172,7 +171,7 @@ class GroupRepository:
                         """,
                         [group_id],
                     )
-                    rows = db.fetchall()
+                    rows = results.fetchall()
                     members = [row[0] for row in rows]
 
                     if profile_id in members:
@@ -210,14 +209,14 @@ class GroupRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    results = db.execute(
                         """
                         SELECT id
                         FROM groups
                         ORDER BY id;
                         """
                     )
-                    result = db.fetchall()
+                    result = results.fetchall()
 
                     return [self.get_one_group(record[0]) for record in result]
 

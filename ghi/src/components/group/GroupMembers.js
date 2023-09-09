@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import useProfile from "../useProfile";
+import { useUserContext } from "../../hooks/UserProvider";
 import GroupEditModal from "./GroupEditModal";
 
 function GroupMembers({ token, groupId }) {
@@ -10,7 +10,7 @@ function GroupMembers({ token, groupId }) {
     const [groupLocation, setGroupLocation] = useState("");
     const [friendshipStatuses, setFriendshipStatuses] = useState({});
     const [loading, setLoading] = useState(true);
-    const { profile } = useProfile(token);
+    const { profile } = useUserContext();
 
     const loadMembers = useCallback(async () => {
         const response = await fetch(

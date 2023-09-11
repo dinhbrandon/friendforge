@@ -50,6 +50,29 @@ topics = [
     "vibes girl today scrunchies vsco flask hydro glassblowing ideas snapchat",
     "try crafting video cool leather watched morning meditating feels refreshing",
     "started journaling activities daily concert mango tea stores new inspired",
+    "plans trick stamps bujo gryffindor downtown fomo skills af sustainable",
+    "ranch going drop masks tomorrow collab horseback dying vibe chill",
+    "volunteering animal shelter day local spent relatable prom arts upcycling",
+    "new look ready trick learned painting card amazed cover omg",
+    "let obsessed picnic cottagecore tomorrow beach swim bring hey weekend",
+    "pizza recipe went ideas bracelets story video martial fruit cuz",
+    "today intense arts tour class martial shots city great captured",
+    "new game indie brownie perfect steam underrated recipe bro trying",
+    "fashion blown sustainable documentary mind challenge watched bad tried viral",
+    "billie peaceful snacks total week thinking group dead study recommend",
+    "planning place spamming wanted journaling good hike watching sneaker river",
+    "chill bet skatepark place tea sesh recommend tried hyped bubble",
+    "binge webcomic series boba refreshing viral pottery body quilting masks",
+    "watching cute jeans tutorial today great thrift french harder caught",
+    "head mountains let weekend tour check setting rafting gryffindor breakdowns",
+    "retreat attending meditation thinking flexing game mural feedback eilish copped",
+    "surfing thinking found photoshoot insta city mural weekend taking coolest",
+    "biking upcycling yoga cool thinking trail clothes mountain ideas vocals",
+    "need book read rock spent riding ranch recommendations na bro",
+    "new lit drop na wait gon season recs feeling designed",
+    "start garden hyped vegetable flask worth soon quirkiest planking drop",
+    "good place know paragliding meditating refreshing morning feels tea playlist",
+    "sweater knitting finished thrilled theatre play catch therapy pics mountains",
     "skrrt aesthetic sale sculpting collab bring reality attending mountains bubble",
     "battle reef brilliant leather college copped garden bracelets setting read",
     "mix playlist eilish rock billie spotify judge camping plan trip",
@@ -108,6 +131,7 @@ predefined_interests = [
     "Astrology", "Eating"
 ]
 
+
 # Function to display top words for each topic
 def display_topics(model, feature_names, no_top_words):
     for topic_idx, topic in enumerate(model.components_):
@@ -119,7 +143,6 @@ def display_topics(model, feature_names, no_top_words):
 
 # Display dominant words for each topic
 display_topics(lda_model, vectorizer.get_feature_names_out(), 10)
-
 
 
 def map_topics_to_interests():

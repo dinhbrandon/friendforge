@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.decomposition import LatentDirichletAllocation
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import GridSearchCV
 import joblib
 
@@ -8,8 +8,8 @@ import joblib
 # import pyLDAvis
 # import pyLDAvis.sklearn
 
-NUM_TOPICS = 10  # This is an initial guess. You can adjust this based on results and domain knowledge.
-TOP_WORDS = 10  # Number of top words to display for each topic. Adjust as needed.
+NUM_TOPICS = 100  
+TOP_WORDS = 10  # Number of top words to display for each topic.
 
 def load_data():
     data = pd.read_csv("./data/training_data_v1_cleaned.csv")
@@ -37,7 +37,7 @@ def evaluate_model(model, data):
 
 def main():
     data = load_data()
-    vectorizer = TfidfVectorizer()  # Reinitialize vectorizer to retrieve terms later
+    vectorizer = CountVectorizer()  # Reinitialize vectorizer to retrieve terms later
     data_vectorized = vectorizer.fit_transform(data['Cleaned_Chat'])
     
     lda_model, lda_output = train_lda(data_vectorized)

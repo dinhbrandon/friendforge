@@ -9,9 +9,9 @@
 * Taylor Harris
 
 ## Design
-- [Data Models](docs/models.md)
-- [API Endpoints](docs/api.md)
-- [GHI WireFrame](docs/ghi-wireframe.md)
+- [Data Models](models.md)
+- [API Endpoints](api.md)
+- [GHI WireFrame](ghi-wireframe.md)
 
 ## What is FriendForge?
 FriendForge is a friend-group finding application. Making friends can be hard but FriendForge helps users to connect with like-minded people. Users fill out their profiles and then enter The Forge. Here, users choose the focus of the group they would like to join. Groups can be focused on interests such as reading, hiking, gaming, and much more. Options are nearly endless! Users are placed into groups of five based on their desired focus. Within a group, users are able to chat and connect with new friends! There's no limit to how many groups users can join, so you are free to connect with new friends who share whatever interests you may have!

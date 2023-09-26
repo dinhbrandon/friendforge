@@ -1,5 +1,5 @@
 # FriendForge
-![logo](logo.png)
+![logo](../logo.png)
 ---
 
 ## Team:
